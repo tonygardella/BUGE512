@@ -17,6 +17,7 @@
 * `A(t,r)` -- Area of region `r` at time `t`
 * `P_dens(t,r)` -- Population density of region `r` at time `t`
 * `P_growth(t,r)` -- Population growth of region `r` at time `t`
+* `CO2(t)` -- CO2 atmospheric concentration at time `t`
 
 ## Aggregate states:
 * Region (`r`) -- `"world"`
