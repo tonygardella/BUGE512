@@ -30,7 +30,7 @@ Parameters
                  CRT(t)           "Change in reg. mean temp. rel. to 1990"
 *for Af
                  gamma(r)        "Generic parameter...see tableA"
-                 CO2(t)           "CO2 concentration"
+                 CO2(t)           "CO2 Atmosp. concentration"
 
 *FOREST
                  F(t,r)          "Change in forestry consumer and produc.surplus"
