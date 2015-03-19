@@ -7,12 +7,20 @@
 
 ## Common Parameters:
 * `tol_param(r, s, "description")`
-* `temp(t)` -- Global mean temperature at time t
-* `sea_level(t)` -- Sea level
+* `temp(t)` -- Global mean temperature at time `t`
+* `RF(t)` -- Radiative forcing at time `t`
+* `SL(t)` -- Sea level at time `t`
+* `SLR(t)` -- Sea level rise at time `t`
+* `Y(t,r)` -- Income in region `r` at time `t`
+* `Y_pc(t, r)` -- Per capita income in region `r` at time `t`
+* `Y_pc_growth(t,r)` -- Growth rate of per-capita income of region `r` at time `t`
+* `A(t,r)` -- Area of region `r` at time `t`
+* `P_dens(t,r)` -- Population density of region `r` at time `t`
+* `P_growth(t,r)` -- Population growth of region `r` at time `t`
 
 ## Aggregate states:
-* Region (`r`) -- "world"
-* Sector (`s`) -- "all"
+* Region (`r`) -- `"world"`
+* Sector (`s`) -- `"all"`
 
 * E.g., a parameter that is region specific but encompasses all sectors: `tol_param(r, "all", "elevation")`
 * Or, a parameter that is not region or sector specific: `tol_param("world", "all", "income_elasticity")`
