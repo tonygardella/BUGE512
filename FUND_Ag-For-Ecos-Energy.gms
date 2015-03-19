@@ -5,7 +5,7 @@
 *Abbreviations:
 *        CC      = Climate change
 
-*All temperatures in °C, $ in 1995 USD
+*All temperatures in Â°C, $ in 1995 USD
 
 
 set r    /reg1*reg16/
@@ -30,7 +30,7 @@ Parameters
                  CRT(t)           "Change in reg. mean temp. rel. to 1990"
 *for Af
                  gamma(r)        "Generic parameter...see tableA"
-                 CO(t)           "CO2 concentration"
+                 CO2(t)           "CO2 concentration"
 
 *FOREST
                  F(t,r)          "Change in forestry consumer and produc.surplus"
@@ -57,7 +57,7 @@ Parameters
 *ENERGY
                  SH(t,r)         "Space heating"
                  SC(t,r)         "Space cooling"
-                 alpha3(r)       "Benchmark impact, dollar per °C, check table EFW, col6-7"
+                 alpha3(r)       "Benchmark impact, dollar per Â°C, check table EFW, col6-7"
                  inc(t,r)        "Income"
                  CT(t)           "Change in global mean temp. rel to 1990"
                  epsilon2        "Income elasticity of space heat. demand"               /0.8/
@@ -72,11 +72,11 @@ Equations
 Ar(t,r)  =       alpha(r) * (DELTAT(t,r)/0.04)**B + (1-(1/p)) * Ar(t-1,r);
 *Verify the second CRT in the following equation
 Al(t,r)  =       deltal(r) * CRT(t) + deltaq(r) * CRT(t);
-Af(t,r)  =       gamma(r) * log(CO(t)/275);
+Af(t,r)  =       gamma(r) * log(CO2(t)/275);
 A(t,r)   =       Ar(t,r) +Al(t,r)+Af(t,r);
 
-*FORESTRY (reuses log(CO(t)/275))
-F(t,r)   =       alpha2(r) * (y(t,r)/y("t1990",r))**epsilon * (0.5 * T(t)**beta + 0.5 * gamma2 * log(CO(t)/275));
+*FORESTRY (reuses log(CO2(t)/275))
+F(t,r)   =       alpha2(r) * (y(t,r)/y("t1990",r))**epsilon * (0.5 * T(t)**beta + 0.5 * gamma2 * log(CO2(t)/275));
                                                                                   t
 *ECOSYSTEMS (reuses y(t,r))
 *Check smax syntax
