@@ -12,41 +12,11 @@
 *   rtriangle(lower limit, upper limit)
 
 sets        
-    t       time                    / t0, t1 /
-    r       region                  / "world" /
-
-    vars    tol_param descriptions  / "time_preference",
-                                        "margU_consump_elasticity",
-                                        "climate_sensitivity", 
-                                        "SL_eft_Tb0", 
-                                        "SL_eft_Tb1", 
-                                        "SL_eft_Tb2", 
-                                        "SL_eft_rho", 
-                                        "SL_temp_sensitivity",
-                                        "dryland_loss",
-                                        "elevation",
-                                        "land_value",
-                                        "income_density",
-                                        "land_value_elasticity",
-                                        "wetland_loss_SLR",
-                                        "wetland_loss_coastalsqueeze",
-                                        "exposed_etland",
-                                        "W_service_value",
-                                        "W_income_normalization",
-                                        "WV_income_elasticity",
-                                        "W_popdens_normalization",
-                                        "WV_popdens_elasticity",
-                                        "WV_size_elasticity",
-                                        "coast_protection_cost",
-                                        "DV_income_elasticity"
-                                        /  
+    t       time                    / 2000, 2010 /
+    r       region                  / "world" / 
 ;
 
 parameters          
-    tol_param(r, vars)  "FUND parameters"
-;
-
-variables           
 * General States
     temp(t)                 Global mean temperature at time t
     Y(t,r)                  Income in region r at time t
@@ -78,26 +48,38 @@ variables
     NPVVW(t,r)              Net present value of wetland loss from coastal squeeze
     NPVVD(t,r)              Net present value of land loss without any protection
     Protection(t,r)         Fraction of coast protected in region r at time t
+
+* Global scalars
+    RHO     "Time preference"      / 0.5 /
+    ETA     "Marginul utility of consumption elasticity"    / 1.0 /
+
+* FUND parameters 
+    SLR_par_gl(*)   "Global parameters related to sea-level rise" /
+$include SLR_global_pars.dat
+/
 ;
 
+table SLR_par_r(r,*)    "Regional parameters related to sea-level rise"
+$include SLR_regional_pars.dat                    
+;
 
 *** Sea level equations ***
-eft = max(tol_param("world", "SL_eft_Tb0") + 
-            tol_param("world", "SL_eft_Tb1") * tol_param("world", "climate_sensitivity") + 
-            tol_param("world", "SL_eft_Tb2")* tol_param("world", "climate_sensitivity")**2,
+eft = max(SLR_par_gl("SL_eft_Tb0") + 
+            SLR_par_gl("SL_eft_Tb1") * SLR_par_gl("climate_sensitivity") + 
+            SLR_par_gl("SL_eft_Tb2")* SLR_par_gl("climate_sensitivity")**2,
         1);
 
 temp(t+1) = (1 - 1/eft) * temp(t) + (1/eft) * 
-    (tol_param("world", "climate_sensitivity")/(5.35*log(2))) * RF(t);
+    (SLR_par_gl("climate_sensitivity")/(5.35*log(2))) * RF(t);
 
-SL(t) = (1 - 1/(tol_param(r, "SL_eft_rho"))) * SL(t-1) +
-    tol_param(r, "SL_temp_sensitivity") * temp(t);
+SL(t) = (1 - 1/(SLR_par_r(r, "SL_eft_rho"))) * SL(t-1) +
+    SLR_par_r(r, "SL_temp_sensitivity") * temp(t);
 
 SLR(t) = SL(t) - SL(t-1);
 
 
 *** Dryland ***
-CD_potential(t,r) = min(tol_param(r, "dryland_loss") * SL(t)**(tol_param(r, "elevation"),
+CD_potential(t,r) = min(SLR_par_r(r, "dryland_loss") * SL(t)**(SLR_par_r(r, "elevation"),
                         A("t2000", r);
 
 D_potential(t,r) = CD_potential(t,r) - CD_actual(t-1,r);
@@ -106,43 +88,42 @@ D_actual(t,r) = (1 - Protection(t,r)) * D_potential(t,r);
 
 CD_actual(t,r) = CD_actual(t-1,r) + D_actual(t,r);
 
-VD(t,r) = tol_param(r, "land_value") * 
-    (Y(t,r) / A(t,r) / tol_param("world", "income_density")) ** 
-        tol_param("world", "land_value_elasticity");
+VD(t,r) = SLR_par_r(r, "land_value") * 
+    (Y(t,r) / A(t,r) / SLR_par_gl("income_density")) ** 
+        SLR_par_gl("land_value_elasticity");
 
 
 *** Wetland ***
-W(t, r) = tol_param(r, "wetland_loss_SLR") * SLR(t, r) + 
-    tol_param(r, "wetland_loss_coastalsqueeze") * Protection(t, r) * SLR(t, r);
+W(t, r) = SLR_par_r(r, "wetland_loss_SLR") * SLR(t, r) + 
+    SLR_par_r(r, "wetland_loss_coastalsqueeze") * Protection(t, r) * SLR(t, r);
 
-CW(t, r) = min(CW(t-1, r) + W(t-1, r), tol_param(r, "exposed_wetland"));
+CW(t, r) = min(CW(t-1, r) + W(t-1, r), SLR_par_r(r, "exposed_wetland"));
 
-VW(t, r) = tol_param("world", "W_service_value") * 
-        (Y_pc(t,r)/tol_param("world", "W_income_normalization")) ** 
-            tol_param("world", "WV_income_elasticity") *
-        (P_dens(t,r)/tol_param("world", "W_popdens_normalization")) ** 
-            tol_param("world", "WV_popdens_elasticity") *
-        (1 - CW(t,r)/tol_param(r, "W_1990")) **
-            tol_param("world", "WV_size_elasticity");
+VW(t, r) = SLR_par_gl("W_service_value") * 
+        (Y_pc(t,r)/SLR_par_gl("W_income_normalization")) ** 
+            SLR_par_gl("WV_income_elasticity") *
+        (P_dens(t,r)/SLR_par_gl("W_popdens_normalization")) ** 
+            SLR_par_gl("WV_popdens_elasticity") *
+        (1 - CW(t,r)/SLR_par_r(r, "W_1990")) **
+            SLR_par_gl("WV_size_elasticity");
 
 
 *** Protection costs ***
-consump_term(t,r) = tol_param("world", "time_preference") +
-                    tol_param("world", "margU_consump_elasticity") * g(t,r);
+consump_term(t,r) = RHO + ETA * Y_pc_growth(t,r);
 
 NPVVP(t,r) = (1 + consump_term(t,r)) / consump_term(t,r) 
-                * tol_param(r, "coast_protection_cost") * SLR(t);
+                * SLR_par_r(r, "coast_protection_cost") * SLR(t);
 
 NPVVW(t,r) = W(t,r) * VW(t,r) * (1 + consump_term) /
     (consump_term(t,r) -
-        tol_param("world", "WV_income_elasticity") * g(t,r) -
-        tol_param("world", "WV_popdens_elasticity") * p(t,r) -
-        tol_param("world", "WV_size_elasticity") * wetland_growth(t, r)
+        SLR_par_gl("WV_income_elasticity") * g(t,r) -
+        SLR_par_gl("WV_popdens_elasticity") * p(t,r) -
+        SLR_par_gl("WV_size_elasticity") * wetland_growth(t, r)
     );
 
 NPPVD(t,r) = D_potential(t,r) * VD(t,r) * 
     (1 + consump_term(t,r)) /
-        (consump_term(t,r) - tol_param("world", "DV_income_elasticity") * Y_dens(t,r));
+        (consump_term(t,r) - SLR_par_gl("DV_income_elasticity") * Y_dens(t,r));
     
 Protection(t,r) = max(0, 1 - 0.5 * (NPVVP(t,r) + NPVVW(t,r))/NPVVD(t,r));
 
