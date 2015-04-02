@@ -6,10 +6,9 @@
 sets
          t time periods /
          2010, 2015, 2020, 2025, 2030, 2035, 2040, 2045, 2050, 2055, 2060,
-         2065, 2070, 2075, 2080, 2085, 2090, 2095, 2100, 2105, 2110, 2115,
-         2120, 2125, 2130, 2135, 2140, 2145, 2150, 2155, 2160, 2165, 2170,
-         2175, 2180, 2185, 2190, 2195, 2200
-         /
+         2065, 2070, 2075, 2080, 2085, 2090, 2095, 2100/
+
+* 2105, 2110, 2115, 2120, 2125, 2130, 2135, 2140, 2145, 2150, 2155, 2160, 2165, 2170, 2175, 2180, 2185, 2190, 2195, 2200
 
          r regions /
          USA, CAN, WEU, JPK, ANZ, CEE, FSU, MDE, CAM, SAM, SAS, SEA, CHI,
@@ -104,7 +103,27 @@ sets
          /;
 
 parameters
-         temp(t,r) global mean temperature
+         temp(t) global mean temperature /
+                  2010        11.6989
+                  2015        11.8373
+                  2020        12.1969
+                  2025        12.3194
+                  2030        12.2645
+                  2035        12.2202
+                  2040        12.5091
+                  2045        12.572
+                  2050        12.5642
+                  2055        12.8808
+                  2060        12.9086
+                  2065        13.1473
+                  2070        13.2911
+                  2075        13.1729
+                  2080        13.1218
+                  2085        13.3003
+                  2090        13.7775
+                  2095        13.4196
+                  2100        13.338     /
+         preindustrial_temp degrees C based on scenario 42 /10.9985/
          reg_temp(t,r) regional mean temperature
          deaths_diarrhea(t,r) deaths due to diarrhea
          deaths_vector total deaths due to vector borne diseases
@@ -113,10 +132,13 @@ parameters
          deaths_vector_schis (t,r) deaths due to schistosomiasis
          value_life(t,r) value of a statisical life
          value_year_morb(t,r) value of a year of morbidity
-         change_cardio_res_hot_over65(t,r)climate induced mortality per 100000
+         change_cardio_res_hot_over65(t,r) climate induced mortality per 100000
          change_cardio_res_hot_under65(t,r)
          change_cardio_res_cold_over65(t,r)
          change_cardio_res_cold_under65(t,r)
+         deaths_cardio_res_heat(t,r) deaths due to heat related cardio-respiratory
+         deaths_cardio_res_cold(t,r) deaths due to cold related cardio-respiratory
+         total_loss_health(t,r) total $ lost due to deaths from climate change
 
          global_param_health(*)  Tol parameters /
                  "income_elas_diarrhea_mort"               -1.58
@@ -133,30 +155,7 @@ parameters
                  "schis_param"                             -0.1149
          /;
 
-         table temp(t,r) global mean temperature (degrees C)
-            USA         CAN         WEU         JPK         ANZ         CEE         FSU         MDE         CAM         SAM         SAS         SEA         CHI         NAF         SSA         SIS
-2010        20.0        20.0        20.0        20.0        20.0        20.0        20.0        20.0        20.0        20.0        20.0        20.0        20.0        20.0        20.0        20.0
-2015        20.5        20.5        20.5        20.5        20.5        20.5        20.5        20.5        20.5        20.5        20.5        20.5        20.5        20.5        20.5        20.5
-2020        21.0        21.0        21.0        21.0        21.0        21.0        21.0        21.0        21.0        21.0        21.0        21.0        21.0        21.0        21.0        21.0
-2025        21.5        21.5        21.5        21.5        21.5        21.5        21.5        21.5        21.5        21.5        21.5        21.5        21.5        21.5        21.5        21.5
-2030        22.0        22.0        22.0        22.0        22.0        22.0        22.0        22.0        22.0        22.0        22.0        22.0        22.0        22.0        22.0        22.0
-2035        22.5        22.5        22.5        22.5        22.5        22.5        22.5        22.5        22.5        22.5        22.5        22.5        22.5        22.5        22.5        22.5
-2040        23.0        23.0        23.0        23.0        23.0        23.0        23.0        23.0        23.0        23.0        23.0        23.0        23.0        23.0        23.0        23.0
-2045        23.5        23.5        23.5        23.5        23.5        23.5        23.5        23.5        23.5        23.5        23.5        23.5        23.5        23.5        23.5        23.5
-2050        24.0        24.0        24.0        24.0        24.0        24.0        24.0        24.0        24.0        24.0        24.0        24.0        24.0        24.0        24.0        24.0
-2055        24.5        24.5        24.5        24.5        24.5        24.5        24.5        24.5        24.5        24.5        24.5        24.5        24.5        24.5        24.5        24.5
-2060        25.0        25.0        25.0        25.0        25.0        25.0        25.0        25.0        25.0        25.0        25.0        25.0        25.0        25.0        25.0        25.0
-2065        25.5        25.5        25.5        25.5        25.5        25.5        25.5        25.5        25.5        25.5        25.5        25.5        25.5        25.5        25.5        25.5
-2070        26.0        26.0        26.0        26.0        26.0        26.0        26.0        26.0        26.0        26.0        26.0        26.0        26.0        26.0        26.0        26.0
-2075        26.5        26.5        26.5        26.5        26.5        26.5        26.5        26.5        26.5        26.5        26.5        26.5        26.5        26.5        26.5        26.5
-2080        27.0        27.0        27.0        27.0        27.0        27.0        27.0        27.0        27.0        27.0        27.0        27.0        27.0        27.0        27.0        27.0
-2085        27.5        27.5        27.5        27.5        27.5        27.5        27.5        27.5        27.5        27.5        27.5        27.5        27.5        27.5        27.5        27.5
-2090        28.0        28.0        28.0        28.0        28.0        28.0        28.0        28.0        28.0        28.0        28.0        28.0        28.0        28.0        28.0        28.0
-2095        28.5        28.5        28.5        28.5        28.5        28.5        28.5        28.5        28.5        28.5        28.5        28.5        28.5        28.5        28.5        28.5
-2100        29.0        29.0        29.0        29.0        29.0        29.0        29.0        29.0        29.0        29.0        29.0        29.0        29.0        29.0        29.0        29.0
-         ;
-
-         table Y_pc(t,r) GDP per capita (USD$)
+         table Y_pc(t,r) GDP per capita (USD$) need to pull from econ model
             USA          CAN          WEU           JPK          ANZ        CEE        FSU          MDE          CAM          SAM          SAS          SEA          CHI        NAF            SSA          SIS
 2010        48377        47465        118691        65269        30000      30000      30000        30000        30000        30000        30000        30000        30000        30000        30000        30000
 2015        56275        51068        129691        82105        30000      30000      30000        30000        30000        30000        30000        30000        30000        30000        30000        30000
@@ -179,7 +178,7 @@ parameters
 2100        695560       24504        4715686       6706197      120000     120000     120000       120000       120000       120000       120000       120000       120000       120000       120000       120000
          ;
 
-         table population(t,r)  in thousands
+         table population(t,r)  in thousands UN medium forecast incomplete aggregation
             USA           CAN          WEU          JPK           ANZ          CEE          FSU          MDE           CAM          SAM           SAS           SEA          CHI            NAF           SSA          SIS
 2010        312247        34126        19421        175807        26773        14385        21549        106676        11196        245741        180240        15845        1391371        121179        31028        549
 2015        325128        35871        19822        176568        28519        14129        21862        116603        11775        256837        193194        17278        1434055        131656        35756        583
@@ -202,7 +201,7 @@ parameters
 2100        462070        50882        22272        125019        47684        8124         16056        202163        11551        264479        242357        27354        1117507        197726        133306       704
          ;
 
-table regional_param_health(r,*)
+table regional_param_health(r,*) mort rates are placeholders
 $ondelim onlisting
 $include 'regional_health.csv'
 $offdelim offlisting
@@ -210,10 +209,7 @@ $offdelim offlisting
 
 loop(t,
 
-*-----------------------------
-*NEED GLOBAL TEMPERATURE INPUT
-*-----------------------------
-reg_temp(t,r) = temp(t,r) * regional_param_health(r,"reg_temp_conversion");
+reg_temp(t,r) = temp(t) * regional_param_health(r,"reg_temp_conversion");
 
 *DIARRHOEA
 
@@ -221,32 +217,34 @@ deaths_diarrhea(t,r) = regional_param_health(r,"mort_rate_diarrhea") *
          population(t,r) * (Y_pc(t,r) / Y_pc("2010",r))**
          global_param_health("income_elas_diarrhea_mort") *
          (reg_temp(t,r) * regional_param_health(r,"reg_temp_conversion")) /
-         regional_param_health(r,"preindustrial_temp"))**
+         preindustrial_temp**
          global_param_health("diarrhea_mort_response_warming");
 
 *VECTOR BORNE
 
 deaths_vector_malaria(t,r) = regional_param_health(r,"mort_rate_vec_malaria")
          * global_param_health("malaria_param") *
-         (reg_temp(t,r) - regional_param_health(r,"preindustrial_temp"))**
-         global_param_health("deg_nonlinearity_mortality_in_warming") *
-         (Y_pc(t,r) / Y_pc("2010",r))**
-         global_param_health("income_elas_vector_mort");
-deaths_vector_dengue(t,r) = regional_param_health(r,"mort_rate_vec_dengue")
-         * global_param_health("dengue_param") *
-         (reg_temp(t,r) - regional_param_health(r,"preindustrial_temp"))**
-         global_param_health("deg_nonlinearity_mortality_in_warming") *
-         (Y_pc(t,r) / Y_pc("2010", r))**
-         global_param_health("income_elas_vector_mort");
-deaths_vector_schis(t,r) = regional_param_health(r,"mort_rate_vec_schis")
-         * global_param_health("schis_param") *
-         (reg_temp(t,r) - regional_param_health(r,"preindustrial_temp"))**
+         (reg_temp(t,r) - preindustrial_temp)**
          global_param_health("deg_nonlinearity_mortality_in_warming") *
          (Y_pc(t,r) / Y_pc("2010",r))**
          global_param_health("income_elas_vector_mort");
 
-deaths_vector(t,r) = deaths_vector_malaria(t,r)+deaths_vector_dengue(t,r)+
-         deaths_vector_schis(t,r);
+deaths_vector_dengue(t,r) = regional_param_health(r,"mort_rate_vec_dengue")
+         * global_param_health("dengue_param") *
+         (reg_temp(t,r) - preindustrial_temp)**
+         global_param_health("deg_nonlinearity_mortality_in_warming") *
+         (Y_pc(t,r) / Y_pc("2010", r))**
+         global_param_health("income_elas_vector_mort");
+
+deaths_vector_schis(t,r) = regional_param_health(r,"mort_rate_vec_schis")
+         * global_param_health("schis_param") *
+         (reg_temp(t,r) - preindustrial_temp)**
+         global_param_health("deg_nonlinearity_mortality_in_warming") *
+         (Y_pc(t,r) / Y_pc("2010",r))**
+         global_param_health("income_elas_vector_mort");
+
+deaths_vector(t,r) = (deaths_vector_malaria(t,r)+deaths_vector_dengue(t,r)+
+         deaths_vector_schis(t,r)) * population(t,r) / 1000000;
 
 
 *MORBIDITY AND MORTALITY
@@ -254,6 +252,7 @@ deaths_vector(t,r) = deaths_vector_malaria(t,r)+deaths_vector_dengue(t,r)+
 value_life(t,r) = global_param_health("mort_morb_no_description_1") *
          (Y_pc(t,r) / global_param_health("normalization_constant"))**
          global_param_health("income_elas_value_of_life");
+
 value_year_morb(t,r) = global_param_health("mort_morb_no_description_2") *
          (Y_pc(t,r) / global_param_health("normalization_constant"))**
          global_param_health("income_elas_value_of_year_morb");
@@ -261,25 +260,47 @@ value_year_morb(t,r) = global_param_health("mort_morb_no_description_2") *
 *CARDIOVASCULAR AND RESPIRATORY
 
 change_cardio_res_hot_over65(t,r) = regional_param_health(r,"heat_over65_1") *
-         (reg_temp(t,r) - regional_param_health(r,"preindustrial_temp")) +
+         (reg_temp(t,r) - preindustrial_temp) +
          regional_param_health(r,"heat_over65_2") *
-         (reg_temp(t,r) - regional_param_health(r,"preindustrial_temp"))**2;
+         (reg_temp(t,r) - preindustrial_temp)**2;
+
 change_cardio_res_hot_under65(t,r) = regional_param_health(r,"heat_under65_1") *
-         (reg_temp(t,r) - regional_param_health(r,"preindustrial_temp")) +
+         (reg_temp(t,r) - preindustrial_temp) +
          regional_param_health(r,"heat_under65_2") *
-         (reg_temp(t,r) - regional_param_health(r,"preindustrial_temp"))**2;
-change_cardio_res_cold_over65(t,r) = regional_param_health(r,"cold_65_1") *
-         (reg_temp(t,r) - regional_param_health(r,"preindustrial_temp")) +
+         (reg_temp(t,r) - preindustrial_temp)**2;
+
+deaths_cardio_res_heat(t,r) = (change_cardio_res_hot_over65(t,r) +
+         change_cardio_res_hot_under65(t,r)) * population(t,r) / 100000 ;
+
+change_cardio_res_cold_over65(t,r) = regional_param_health(r,"cold_over65_1") *
+         (reg_temp(t,r) - preindustrial_temp) +
          regional_param_health(r,"cold_over65_2") *
-         (reg_temp(t,r) - regional_param_health(r,"preindustrial_temp"))**2;
-change_cardio_res_cold_over65(t,r) = regional_param_health(r,"cold_under65_1") *
-         (reg_temp(t,r) - regional_param_health(r,"preindustrial_temp")) +
+         (reg_temp(t,r) - preindustrial_temp)**2;
+
+change_cardio_res_cold_under65(t,r) = regional_param_health(r,"cold_under65_1") *
+         (reg_temp(t,r) - preindustrial_temp) +
          regional_param_health(r,"cold_under65_2") *
-         (reg_temp(t,r) - regional_param_health(r,"preindustrial_temp"))**2;
+         (reg_temp(t,r) - preindustrial_temp)**2;
 
-;
+deaths_cardio_res_cold(t,r) = (change_cardio_res_cold_over65(t,r) +
+         change_cardio_res_cold_under65(t,r)) * population(t,r) / 100000 ;
 
+*TOTAL VALUE $ LOST DUE TO CLIMATE CHANGE
+
+total_loss_health(t,r) = (deaths_diarrhea(t,r) + deaths_vector(t,r) +
+         deaths_cardio_res_heat(t,r) + deaths_cardio_res_cold(t,r)) *
+         value_life(t,r);
+*currently negative because of proxy values causing climate-induced mortality
+*from cold related cardio-respiratory diseases to decrease more than the other
+*deaths would increase . Missing/unsure how to incorporate urban factor from
+*equation HC.3
+
+);
+
+display total_loss_health;
+display reg_temp;
 display deaths_diarrhea;
 display deaths_vector;
 display value_life;
-display value_year_morb;
+display deaths_cardio_res_heat;
+display deaths_cardio_res_cold;

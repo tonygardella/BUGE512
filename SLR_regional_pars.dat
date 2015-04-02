@@ -1,3 +1,17 @@
-        "climate_sensitivity" "SL_eft_rho" "SL_temp_sensitivity" "dryland_loss" "DEM" "land_value" "income_density" "land_value_elasticity" "wetland_loss_SLR" "wetland_loss_coastalsqueeze" "exposed_wetland" "coast_protection_cost" /  
-region1
-region2
+          dryland_loss    DEM      land_value    wetland_loss_SLR    wetland_loss_coastalsqueeze    exposed_wetland    W_1990       coast_protection_cost
+USA       20000           0.583    1373498       11400               789                            31049              42828.8      95.3
+CAN       970             0.261    1170585       0                   0                              0                  130509.75    13
+WEU       4212            0.273    1004586       3210                903                            37202              95000.79     153.9
+JPK       2687            0.412    171553        573                 7                              3763               4609.85      75.5
+ANZ       3135            0.548    1514759       256                 183                            2511               55385.64     36.6
+EEU       1889            0.193    220274        38                  0                              5                  11297.61     3.1
+FSU       15138           0.555    5527204       0                   0                              0                  118955.64    54
+MDE       1621            0.628    601498        0                   0                              140                16247.05     18.9
+CAM       12004           0.678    509083        14775               238                            54279              76001.27     42.3
+LAM       29407           0.756    3131627       27234               4748                           278791             394296.21    117.6
+SAS       81275           0.93     1241785       14303               0                              65483              74226.89     172
+SEA       157286          0.812    1908853       50885               4                              289431             299546.88    169.7
+CHI       35000           0.708    973897        5879                1779                           19132              31321.6      118.4
+MAF       8354            0.337    445413        2649                0                              7928               9304.2       19
+SSA       126602          0.799    1395419       27847               345                            92617              236097.24    84.3
+SIS       1505            0.667    206778        1528                169                            5606               6271.74      16

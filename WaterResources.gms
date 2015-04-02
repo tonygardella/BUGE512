@@ -1,0 +1,323 @@
+    "Water resources"
+
+Sets
+         t time(years)  /2010, 2015, 2020, 2025, 2030, 2035, 2040, 2045, 2050, 2055, 2060, 2065, 2070, 2075, 2080, 2085, 2090, 2095, 2100, 2105, 2110, 2115, 2120, 2125, 2130, 2135, 2140, 2145, 2150, 2155, 2160, 2165, 2170, 2175, 2180, 2185, 2190, 2195, 2200 /
+         r regions / USA, CAN, WEU, JPK, ANZ, CEE, FSU, MDE, CAM, SAM, SAS, SEA, CHI,NAF, SSA, SIS/
+         c countries  /UnitedStatesofAmerica, Canada, Andorra, Austria, Belgium, Cyprus,
+         Denmark, Finland, France, Germany, Greece, Iceland, Ireland,
+         Italy, Liechtenstein, Luxembourg, Malta, Monaco, Netherlands,
+         Norway, Portugal, SanMarino, Spain, Sweden, Switzerland,
+         UnitedKingdom, Japan, SouthKorea, Australia, NewZealand, Albania,
+         BosniaHerzegovina, Bulgaria, Croatia, CzechRepublic, Hungary,
+         Macedonia, Poland, Romania, Slovakia, Slovenia, Yugoslavia,
+         Armenia, Azerbaijan, Belarus, Estonia, Georgia, Kazakhstan,
+         Kyrgyzstan, Latvia, Lithuania, Moldova, Russia, Tajikistan,
+         Turkmenistan, Ukraine, Uzbekistan, Bahrain, Iran, Iraq, Israel,
+         Jordan, Kuwait, Lebanon, Oman, Qatar, SaudiArabia, Syria, Turkey,
+         UnitedArabEmirates, Gaza, Yemen, Belize, CostaRica, ElSalvador,
+         Guatemala, Honduras, Mexico, Nicaragua, Panama, Argentina,
+         Bolivia, Brazil, Chile, Colombia, Ecuador, FrenchGuiana, Guyana,
+         Paraguay, Peru, Suriname, Uruguay, Venezuela, Afghanistan,
+         Bangladesh, Bhutan, India, Nepal, Pakistan, SriLanka, Brunei,
+         Cambodia, EastTimor, Indonesia, Laos, Malaysia, Myanmar,
+         PapuaNewGuinea, Philippines, Singapore, Taiwan, Thailand,
+         Vietnam, China, HongKong, NorthKorea, Macau, Mongolia, Algeria,
+         Egypt, Libya, Morocco, Tunisia, WesternSahara, Angola, Benin,
+         Botswana, BurkinaFaso, Burundi, Cameroon, CapeVerde,
+         CentralAfricanRepublic, Chad, Congo-Brazzaville, Congo-Kinshasa,
+         CotedIvoire, Djibouti, EquatorialGuinea, Eritrea, Ethiopia,
+         Gabon, Gambia, Ghana, Guinea, Guinea-Bissau, Kenya, Lesotho,
+         Liberia, Madagascar, Malawi, Mali, Mauritania, Mozambique,
+         Namibia, Niger, Nigeria, Rwanda, Senegal, SierraLeone, Somalia,
+         SouthAfrica, Sudan, Swaziland, Tanzania, Togo, Uganda, Zambia,
+         Zimbabwe, Antigua-Barbuda, Aruba, Bahamas, Barbados, Bermuda,
+         Comoros, Cuba, Dominica, DominicanRepublic, Fiji,
+         FrenchPolynesia, Grenada, Guadeloupe, Haiti, Jamaica, Kiribati,
+         Maldives, MarshallIslands, Martinique, Mauritius, Micronesia,
+         Nauru, NetherlandsAntilles, NewCaledonia, Palau, PuertoRico,
+         Reunion, Samoa, SaoTome-Principe, Seychelles, SolomonIslands,
+         StKitts-Nevis, StLucia, StVincent-Grenadines, Tonga,
+         Trinidad-Tobago, Tuvalu, Vanuatu, VirginIslands
+         /
+
+         rcmap(*,*) regional map /
+         USA.(UnitedStatesofAmerica)
+         CAN.(Canada)
+         WEU.(Andorra, Austria, Belgium, Cyprus, Denmark, Finland, France,
+              Germany, Greece, Iceland, Ireland, Italy, Liechtenstein,
+              Luxembourg, Malta, Monaco, Netherlands, Norway, Portugal,
+              SanMarino, Spain, Sweden, Switzerland, UnitedKingdom)
+         JPK.(Japan, SouthKorea)
+         ANZ.(Australia, NewZealand)
+         CEE.(Albania, BosniaHerzegovina, Bulgaria, Croatia,
+              CzechRepublic, Hungary, Macedonia, Poland, Romania,
+              Slovakia, Slovenia, Yugoslavia)
+         FSU.(Armenia, Azerbaijan, Belarus, Estonia, Georgia, Kazakhstan,
+              Kyrgyzstan, Latvia, Lithuania, Moldova, Russia, Tajikistan,
+              Turkmenistan, Ukraine, Uzbekistan)
+         MDE.(Bahrain, Iran, Iraq, Israel, Jordan, Kuwait, Lebanon, Oman,
+              Qatar, SaudiArabia, Syria, Turkey, UnitedArabEmirates, Gaza,
+              Yemen)
+         CAM.(Belize, CostaRica, ElSalvador, Guatemala, Honduras, Mexico,
+              Nicaragua, Panama)
+         SAM.(Argentina, Bolivia, Brazil, Chile, Colombia, Ecuador,
+              FrenchGuiana, Guyana, Paraguay, Peru, Suriname, Uruguay,
+              Venezuela)
+         SAS.(Afghanistan, Bangladesh, Bhutan, India, Nepal, Pakistan,
+              SriLanka)
+         SEA.(Brunei, Cambodia, EastTimor, Indonesia, Laos, Malaysia,
+              Myanmar, PapuaNewGuinea, Philippines, Singapore, Taiwan,
+              Thailand, Vietnam)
+         CHI.(China, HongKong, NorthKorea, Macau, Mongolia)
+         NAF.(Algeria, Egypt, Libya, Morocco, Tunisia, WesternSahara)
+         SSA.(Angola, Benin, Botswana, BurkinaFaso, Burundi, Cameroon,
+              CapeVerde, CentralAfricanRepublic, Chad, Congo-Brazzaville,
+              Congo-Kinshasa, CotedIvoire, Djibouti, EquatorialGuinea,
+              Eritrea, Ethiopia, Gabon, Gambia, Ghana, Guinea,
+              Guinea-Bissau, Kenya, Lesotho, Liberia, Madagascar, Malawi,
+              Mali, Mauritania, Mozambique, Namibia, Niger, Nigeria,
+              Rwanda, Senegal, SierraLeone, Somalia, SouthAfrica, Sudan,
+              Swaziland, Tanzania, Togo, Uganda, Zambia, Zimbabwe)
+         SIS.(Antigua-Barbuda, Aruba, Bahamas, Barbados, Bermuda, Comoros,
+              Cuba, Dominica, DominicanRepublic, Fiji, FrenchPolynesia,
+              Grenada, Guadeloupe, Haiti, Jamaica, Kiribati, Maldives,
+              MarshallIslands, Martinique, Mauritius, Micronesia, Nauru,
+              NetherlandsAntilles, NewCaledonia, Palau, PuertoRico,
+              Reunion, Samoa, SaoTome-Principe, Seychelles,
+              SolomonIslands, StKitts-Nevis, StLucia,
+              StVincent-Grenadines, Tonga, Trinidad-Tobago, Tuvalu,
+              Vanuatu, VirginIslands)
+         /;
+
+
+Parameters
+
+         W(t,r) " change in water resources in 1995 US dollar"
+         Alpha(r) "percent of 1990 GDP per degree celsius"
+         Y(t,r) "per capitia income"
+         Pop(t,r) "population size"
+         Temp(t) "mean global temp above pre-industrial degrees C "
+         Tau "technological progress in water supply and demand" / 0.005/
+         Beta  "impacts response to economic growth"   / 0.85/
+         N  "impacts response to population growth" / 0.85/
+         Gamma  "impacts response to warming" / 1/
+
+         TD(t,r) "damage duue to tropical storms 1995$ per year"
+         GDP(t,r) "gross domestic product 1995$ per year"
+         alpha_trop_storm(r) "current damage as fraction of GDP"
+         Y(t,r) "per capitia income"
+         Epsilon_trop_storm "income elasticity of storm damage" /-0.514/
+         delta_trop_storm  "how much wind speed increase per degree warming" /0.04/
+         Temp_trop_storm(t,r) "temperature increase since pre-industrial time in degrees C"
+         gamma_trop_storm  "the power of the wind in the cube of its speed" /3/
+
+         TM(t,r) "mortality due to Tropical Storms, in people per year"
+         Pop(t,r) "population size"
+         Beta_trop_storm(r) "current mortality as fraction of population"
+         Y(t,r) "per capita income 1995$ per person per year"
+         eta_trop_storm  "income elasticity of storm damage"  /-0.501/
+         delta_trop_storm "how much wind speed increase per degree warming" /0.04/
+         Temp_trop_storm(t,r) "temperature increase since pre-industrial time in degrees C"
+         gamma_trop_storm  "the power of the wind in the cube of its speed"  /3/
+
+         ETD(t,r) "damage from extra tropical storms"
+         GDP(t,r) "gross domestic product"
+         alpha_etrop_storm (r) "benchmark damage from extratropical cyclones for juust region"
+         Y(t,r) "per capita income"
+         epsilon_etrop_storm  "income elasticity of extra tropical storm damages" / -0.514/
+         delta_etrop_storm (r) "storm sensitivity to atmospheric CO2 concentrations for juust region"
+         CO2_con (t) "atmospheric CO2 concentrations.. time t, region???"
+         CO2_pre "CO2 concentrations in pre-industrial era"
+         gamma_etrop_storm  " is a param?? help get right shape maybe" /1/
+
+         ETM(t,r) "mortality from extratropical cyclones"
+         Pop(t,r) "population"
+         beta_etrop_storm(r) " benchmark mortality from extratropical cyclones JUST FOR REGION"
+         Y(t,r) "per capita income"
+         psi_etrop_storm  "income elasticity of extra tropical storm mortality" /-0.501/
+         delta_etrop_storm (r) "storm sensitivity to atmospheric CO2 concentrations for juust region"
+         CO2_con (t) "atmospheric CO2 concentrations.. time t, region???"
+         CO2_pre "CO2 concentrations in pre-industrial era"
+         gamma_etrop_storm  " is a param?? help get right shape maybe" /1/
+
+         table alpha(r) param defining benchmark impact of 1 degree C of warming on Water Resources
+               1dgre C wrmng H20
+USA            -0.000650 (0.000650)
+CAN            -0.000570 (0.000570)
+WEU            -0.000270 (0.000270)
+JPK             0.000003 (0.000003)
+ANZ             0.000003 (0.000003)
+EEU            -0.006970 (0.006970)
+FSU            -0.027540 (0.027540)
+MDE            -0.001330 (0.001330)
+CAM            -0.001300 (0.001300)
+SAM            -0.001400 (0.001400)
+SAS            -0.001560 (0.001560)
+SEA            -0.003140 (0.003140)
+CHI             0.005690 (0.005690)
+NAF            -0.009020 (0.009020)
+SSA            -0.003600 (0.003600)
+SIS            -0.001300 (0.001300)
+;
+         table  alpha_trop_storm(r)
+         alpha_trop
+USA      0.001469567
+CAN      7.35509E-06
+WEU      1.72941E-08
+JPK      0.000328676
+ANZ      0.000100282
+EEU      0
+FSU      1.71639E-05
+MDE      0
+CAM      0.0017726
+SAM      1.3063E-05
+SAS      0.000936454
+SEA      0.000414319
+CHI      0.001972917
+NAF      0
+SSA      5.91057E-05
+SIS      0.00573135
+;
+
+         table beta_trop_storm(r)
+         beta_trop
+USA      3.90602E-07
+CAN      4.8608E-09
+WEU      2.12624E-09
+JPK      5.43398E-07
+ANZ      6.68407E-08
+EEU      0
+FSU      7.09183E-09
+MDE      1.39312E-09
+CAM      8.21967E-06
+SAM      2.36703E-08
+SAS      6.91678E-06
+SEA      2.39815E-06
+CHI      2.86767E-07
+NAF      0
+SSA      1.43921E-07
+SIS      4.91454E-06
+;
+
+         table alpha_etrop_storm (r)
+    alpha_etrop
+USA 0.000120686
+CAN 0.000169725
+WEU 0.000209185
+JPK 1.04096E-05
+ANZ 0.000276264
+EEU 4.58675E-05
+FSU 4.4056E-05
+MDE 1.56247E-05
+CAM 4.4056E-05
+SAM 3.57676E-06
+SAS 0.000550631
+SEA 6.27064E-05
+CHI 0.000167734
+NAF 2.81278E-07
+SSA 0.000550631
+SIS 0.000426887
+;
+
+         table Beta_etrop_storm(r)
+    beta_etrop
+USA 0.2912144
+CAN 0.063117456
+WEU 0.121209462
+JPK 0.114939831
+ANZ 0.116317932
+EEU 0.050081393
+FSU 0.12684268
+MDE 0.052986905
+CAM 0.12684268
+SAM 0.046527794
+SAS 0.204864801
+SEA 0.08572204
+CHI 0.114203457
+NAF 0.038346516
+SSA 0.204864801
+SIS 1.577927496
+;
+
+         table delta_etrop_storm(r)
+    delta_etrop
+USA 0.04
+CAN 0.04
+WEU 0.04
+JPK 0.04
+ANZ 0.21
+EEU 0.04
+FSU 0.04
+MDE 0.04
+CAM 0.04
+SAM 0.21
+SAS 0.21
+SEA 0.04
+CHI 0.04
+NAF 0.04
+SSA 0.04
+SIS 0.13
+;
+
+         table pop(t,r)  in thousands
+            USA           CAN          WEU          JPK           ANZ          CEE          FSU          MDE           CAM          SAM           SAS           SEA          CHI            NAF           SSA          SIS
+2010        312247        34126        19421        175807        26773        14385        21549        106676        11196        245741        180240        15845        1391371        121179        31028        549
+2015        325128        35871        19822        176568        28519        14129        21862        116603        11775        256837        193194        17278        1434055        131656        35756        583
+2020        337983        37612        20164        176151        30254        13859        22048        126328        12296        266850        206055        18687        1466183        141659        40969        612
+2025        350626        39185        20482        174858        31941        13561        22072        135527        12732        275743        218319        20015        1483032        150615        46583        638
+2030        362629        40617        20758        172815        33544        13224        21933        143945        13096        283273        229461        21198        1487901        158574        52638        660
+2035        373468        41885        20988        170088        35072        12834        21702        152019        13368        289338        239287        22312        1483531        165899        59028        678
+2040        383165        43042        21185        166787        36565        12403        21420        159780        13557        293934        247645        23375        1470589        172789        65647        693
+2045        392111        44144        21357        163139        38048        11954        21069        167105        13665        297071        254392        24354        1449214        179145        72403        703
+2050        400853        45228        21505        159364        39513        11503        20633        173769        13691        298764        259479        25202        1420056        184670        79241        712
+2055        409370        46212        21609        155502        40864        11062        20129        179583        13652        299081        263114        25917        1385392        189160        86104        719
+2060        417764        47114        21691        151465        42093        10634        19597        184485        13550        298101        265322        26506        1348011        192596        92874        723
+2065        425909        47941        21777        147237        43211        10217        19061        188480        13393        295927        266107        26971        1310766        195127        99432        726
+2070        433489        48693        21881        142973        44231        9815         18534        191631        13187        292728        265456        27317        1274735        196939        105690       727
+2075        440248        49349        21994        138932        45147        9435         18020        194106        12937        288721        263457        27543        1239594        198217        111558       727
+2080        446113        49896        22099        135386        45944        9086         17538        196097        12653        284127        260306        27659        1206478        199074        116984       724
+2085        451196        50329        22181        132306        46597        8777         17106        197854        12351        279218        256314        27649        1178482        199530        121905       720
+2090        455588        50644        22242        129618        47106        8515         16727        199519        12055        274229        251800        27592        1156166        199497        126277       715
+2095        459254        50834        22273        127214        47473        8298         16383        201033        11785        269281        247082        27486        1136758        198879        130073       710
+2100        462070        50882        22272        125019        47684        8124         16056        202163        11551        264479        242357        27354        1117507        197726        133306       704
+;
+
+         table GDP(t,r) GDP per capita (USD$)
+            USA          CAN          WEU           JPK          ANZ        CEE        FSU          MDE          CAM          SAM          SAS          SEA          CHI        NAF            SSA          SIS
+2010        48377        47465        118691        65269        30000      30000      30000        30000        30000        30000        30000        30000        30000        30000        30000        30000
+2015        56275        51068        129691        82105        30000      30000      30000        30000        30000        30000        30000        30000        30000        30000        30000        30000
+2020        65246        48909        151832        104460       40000      40000      40000        40000        40000        40000        40000        40000        40000        40000        40000        40000
+2025        75646        46842        181475        133196       40000      40000      40000        40000        40000        40000        40000        40000        40000        40000        40000        40000
+2030        87705        44862        220117        170223       50000      50000      50000        50000        50000        50000        50000        50000        50000        50000        50000        50000
+2035        101686       42965        269697        218042       50000      50000      50000        50000        50000        50000        50000        50000        50000        50000        50000        50000
+2040        117895       41149        332699        279947       60000      60000      60000        60000        60000        60000        60000        60000        60000        60000        60000        60000
+2045        136689       39409        412276        360271       60000      60000      60000        60000        60000        60000        60000        60000        60000        60000        60000        60000
+2050        158478       37743        512406        464734       70000      70000      70000        70000        70000        70000        70000        70000        70000        70000        70000        70000
+2055        183741       36147        638093        600895       70000      70000      70000        70000        70000        70000        70000        70000        70000        70000        70000        70000
+2060        213031       34619        795614        778762       80000      80000      80000        80000        80000        80000        80000        80000        80000        80000        80000        80000
+2065        246990       33156        992836        1011606      80000      80000      80000        80000        80000        80000        80000        80000        80000        80000        80000        80000
+2070        286362       31754        1239606       1317053      90000      90000      90000        90000        90000        90000        90000        90000        90000        90000        90000        90000
+2075        332011       30412        1548244       1718542      90000      90000      90000        90000        90000        90000        90000        90000        90000        90000        90000        90000
+2080        384936       29126        1934158       2247284      100000     100000     100000       100000       100000       100000       100000       100000       100000       100000       100000       100000
+2085        446298       27895        2416614       2944896      100000     100000     100000       100000       100000       100000       100000       100000       100000       100000       100000       100000
+2090        517442       26715        3019697       3866924      110000     110000     110000       110000       110000       110000       110000       110000       110000       110000       110000       110000
+2095        000027       25586        3773510       5087596      110000     110000     110000       110000       110000       110000       110000       110000       110000       110000       110000       110000
+2100        695560       24504        4715686       6706197      120000     120000     120000       120000       120000       120000       120000       120000       120000       120000       120000       120000
+;
+
+
+
+;
+
+
+Equations
+
+         W(t+1,r) = min( Alpha(r)*Y("0",r)* (1- Tau)**(t-2000)*(Y(t,r)/Y("0",r))**Beta*(Pop(t,r)/Pop("0", r)**N*(Temp(t)/1.0)**gamma), Y(time,r)/10 );
+
+         TD(t+1,r) = alpha_trop_storm(r)* GDP(t,r) * ((Y(t,r)/Y("0",r))**epsilon_trop_storm) * [(1+ delta_trop_storm * Temp_trop_storm)**gamma_trop_storm -1] ;
+
+         TM(t+1,r) = beta_trop_storm(r)* pop(t,r) * ((Y(t,r)/Y("0",r))**eta_trop_storm) * [(1+ delta_trop_storm * Temp_trop_storm)**gamma_trop_storm -1]  ;
+
+         ETD(t+1,r) = alpha_etrop_storm(r) * GDP(t,r) * ((Y(t,r)/Y("0",r))**epsilon_etrop_storm) * delta_etrop_storm * [(CO2_con(t)/CO2_pre)**gamma_etrop_storm -1] ;
+
+         ETM(t+1,r) = beta_etrop_storm(r)* pop(t,r) * ((Y(t,r)/Y("0",r))** psi_etrop_storm) * delta_etrop_storm * [(CO2_con(t)/CO2_pre)**gamma_etrop_storm -1]
