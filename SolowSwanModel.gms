@@ -144,8 +144,9 @@ loop(t,
 
 display y_net
 
-$libinclude gnuplotxyz y_net t c
 $exit
+$libinclude gnuplotxyz y_net
+
 file outfile /result.txt/;
 put outfile;
 outfile.pc       =       6;
@@ -158,7 +159,7 @@ put /;
 loop(c,
          put c.tl;
          loop(t,
-                 put y(c,t);
+                 put y_net(c,t);
          );
          put /;
 );
