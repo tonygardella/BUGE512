@@ -76,26 +76,30 @@ parameters
          k(c,t)       capital
          i(c,t)       investment
          s(c)         savings
-         y(c,t)       output
+         y_gross(c,t) output
+         y_net(c,t)
          a(c,t)       tech
          l(c,t)       labor
          e(c,t)       emissions
          nyper        timestep                                      /5/
          lshr         labor share                                   /0.66/
-         AEEI         Autonomous energy emissionintensity           /1.023/
+         AEEI         Autonomous energy emissionintensity
          delta        depreciation                                  /0.05/
          omega        damage                                        /0.05/
-         pro          production growth coefficient                 /0.02/
+         prodgr       productivity growth coefficient               /0.02/
+         pro          productivity trend
 ;
 $ontext
 Units:
 K=2010 Capital stock at current PPPs (in mil. 2005US$) (ppp=purchasing power parity)
 rgdpl= 2010 PPP Converted GDP Per Capita (Laspeyres), derived from growth rates of c, g, i, at 2005 constant prices
 s = 2010 Investment Share of PPP Converted GDP Per Capita at 2005 constant prices [rgdpl]
-y= rgdpl* pop(2010)
+y= 2010 GDP at 2005 constant prices
 e=total GHG Emissions Including Land-Use Change and Forestry (MtCO2)
 population= thousands persons
 $offtext
+
+
 
 table initparam(*,*)  contains params rgdpl-y-e-k-s
 $ondelim onlisting
@@ -113,24 +117,51 @@ $offdelim offlisting
 
          s(c)              =     0.01 * initparam(c,"s");
 
-         y(c,"2010")       =     initparam(c,"y");
+         y_gross(c,"2010") =     initparam(c,"y");
 
          l(c,t)            =     pop(c,t);
 
-         a(c,"2010")       =     y(c,"2010") / [ l(c,"2010")**lshr * k(c,"2010")**(1 - lshr) ];
+         a(c,"2010")       =     y_gross(c,"2010") / [ l(c,"2010")**lshr * k(c,"2010")**(1 - lshr) ];
 
          e(c,"2010")       =     initparam(c,"e");
 
-         i(c,"2010")       =     s(c) * y(c,"2010");
+         i(c,"2010")       =     s(c) * y_gross(c,"2010");
+
+         AEEI(c,t)         =     1;
+
+         pro(c,t)          =    a(c,"2010") * exp(prodgr*ord(t)-1);
+
+        ;
 
 loop(t,
-*GLOBAL Salow-Swan economic growth model
-         y(c,t+1)=a(c,t)*(l(c,t)**(lshr)) * (k(c,t)**(1-lshr));
-         a(c,t+1)=y(c,t)*pro*(1-omega);
-         i(c,t+1)=s(c)*y(c,t)*nyper;
+*GLOBAL Solow-Swan economic growth model
+         y_gross(c,t+1)=pro(c,t)*l(c,t)**(lshr) * k(c,t)**(1-lshr);
+         y_net(C,t+1)= (1-omega)*y_gross(c,t);
+         i(c,t)=s(c)*y_net(c,t)*nyper;
          k(c,t+1)=i(c,t)+(1-delta)**nyper *k(c,t);
-         e(c,t+1)=e(c,t)*AEEI*y(c,t);
+         e(c,t)=AEEI(c,t)*initparam(c,"e")*y_net(c,t);
 );
 
-display a,y,i,k,e
+display y_net
+
+$libinclude gnuplotxyz y_net t c
+$exit
+file outfile /result.txt/;
+put outfile;
+outfile.pc       =       6;
+
+put "";
+loop(t,
+         put t.tl;
+);
+put /;
+loop(c,
+         put c.tl;
+         loop(t,
+                 put y(c,t);
+         );
+         put /;
+);
+
+putclose outfile;
 
