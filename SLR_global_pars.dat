@@ -1,13 +1,19 @@
-"SL_eft_Tb0"                ##
-"SL_eft_Tb1"                ##
-"SL_eft_Tb2"                ##
-"climate_sensitivity"       ##
-"income_density"            ##
-"land_value_elasticity"     ##
-"W_service_value"           ##
-"W_income_normalizaiton"    ##
-"W_popdens_normalization"   ##
-"WV_income_elasticity"      ##
-"WV_popdens_elasticity"     ##
-"WV_size_elasticity"        ##
-"DV_income_elasticity"      ##
+$Oneolcom
+*Parameter                   Value               Comment
+SL_eft_Tb0                  -42.7               !! Page 5
+SL_eft_Tb1                  29.1                !! Page 5
+SL_eft_Tb2                  0.001               !! Page 5
+climate_sensitivity         3                   !! Page 5; gamma(6.48 0.55)
+SL_eft_rho                  500                 !! Page 5; triang(250 1000)
+SL_temp_sensitivity         2                   !! Page 5; gamma(6 0.4)
+income_density              0.635               !! Page 11; Average of OECD in 1990; M$/km2
+land_value                  4                   !! Page 11; Darwin et al 1995; M$/km2; (2 <0)
+land_value_elasticity       1                   !! Page 11; (0.25)
+W_service_value             280000              !! Page 12-13; $/km2; (187000); Brander et al. 2006
+W_income_normalization      25000               !! Page 13; $/p/yr; Brander p.c.
+W_popdens_normalization     27.59               !! Page 13
+WV_income_elasticity        1.16                !! Page 13; (0.46 >0); Brander et al. 2006
+WV_popdens_elasticity       0.47                !! Page 13; (0.12 >0 <1); Brander et al. 2006
+WV_size_elasticity          -0.11               !! Page 13; (0.05 >-1 <0); Brander et al. 2006
+DV_income_elasticity        1                   !! Page 15; (0.2)
+$Offeolcom
