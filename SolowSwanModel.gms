@@ -98,14 +98,14 @@ PRT,QAT,ROU,RUS,RWA,STP,SAU,SEN,SRB,SLE,SGP,SVK,SVN,ZAF,ESP,LKA,SDN,SUR,SWZ,SWE,
 
 
 parameters
-         k(c,t)       capital
-         i(c,t)       investment
+         k(t,c)       capital
+         i(t,c)       investment
          s(c)         savings
-         y_gross(c,t) output
-         y_net(c,t)
-         a(c,t)       tech
-         l(c,t)       labor
-         e(c,t)       emissions
+         y_gross(t,c) output
+         y_net(t,c)
+         a(t,c)       tech
+         l(t,c)       labor
+         e(t,c)       emissions
          nyper        timestep                                      /5/
          lshr         labor share                                   /0.66/
          AEEI         Autonomous energy emissionintensity
@@ -139,40 +139,43 @@ $include population.csv
 $offdelim offlisting
 ;
 
-         k(c,"2010")       =     initparam(c,"k");
+         k("2010",c)       =     initparam("k",c);
 
-         s(c)              =     0.01 * initparam(c,"s");
+         s(c)              =     0.01 * initparam("s",c);
 
-         y_gross(c,"2010") =     initparam(c,"y");
+         y_gross("2010",c) =     initparam("y",c);
 
-         l(c,t)            =     pop(c,t);
+         l(t,c)            =     pop(t,c);
 
-         a(c,"2010")       =     y_gross(c,"2010") / [ l(c,"2010")**lshr * k(c,"2010")**(1 - lshr)];
+         a("2010",c)       =     y_gross("2010",c) / [ l("2010",c)**lshr * k("2010",c)**(1 - lshr)];
 
-         AEEI(c,t)         =     0.01 * 1;
+         AEEI(t,c)         =     0.01 * 1;
 
-         e(c,"2010")       =    initparam(c,"e");
+         e("2010",c)       =    initparam("e",c);
 
-         epsi(c,"2010")    =     y_gross(c,"2010")/e(c,"2010");
+         epsi("2010",c)    =     y_gross("2010",c)/e("2010",c);
 
-         pro(c,t)          =    a(c,"2010") * exp(prodgr*ord(t)-1);
+         pro(t,c)          =    a("2010",c) * exp(prodgr*ord(t)-1);
 
         ;
 
+
 loop(t,
 *GLOBAL Solow-Swan economic growth model
-         y_gross(c,t+1)=pro(c,t)*l(c,t)**(lshr) * k(c,t)**(1-lshr);
-         y_net(C,t)= (1-omega)*y_gross(c,t);
-         i(c,t)=s(c)*y_net(c,t)*nyper;
-         k(c,t+1)=i(c,t)+(1-delta)**nyper *k(c,t);
-         epsi(c,t+1)= epsi(c,t)*exp(- AEEI(c,t));
-         e(c,t+1)=epsi(c,t) * y_net(c,t)
+         y_gross(t+1,c)=pro(t,c)*l(t,c)**(lshr) * k(t,c)**(1-lshr);
+         y_net(t,c)= (1-omega)*y_gross(t,c);
+         i(t,c)=s(c)*y_net(t,c)*nyper;
+         k(t+1,c)=i(t,c)+(1-delta)**nyper *k(t,c);
+         epsi(t+1,c)= epsi(t,c)*exp(- AEEI(t,c));
+         e(t+1,c)=epsi(t,c) * y_net(t,c)
 );
 
 display y_net,e
 
 $exit
-$libinclude gnuplotxyz y_net
+
+$libinclude gnuplotxyz y_net e
+
 
 file outfile /result.txt/;
 put outfile;
