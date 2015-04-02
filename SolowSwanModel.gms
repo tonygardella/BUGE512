@@ -113,7 +113,7 @@ parameters
          omega        damage                                        /0.05/
          prodgr       productivity growth coefficient               /0.02/
          pro          productivity trend
-         epsi                                                       /0.192/
+         epsi         energy intensity
 ;
 $ontext
 Units:
@@ -151,7 +151,9 @@ $offdelim offlisting
 
          AEEI(c,t)         =     0.01 * 1;
 
-         e(c,"2010")       =     epsi  *exp(- AEEI(c,"2010")) * y_gross(c,"2010");
+         e(c,"2010")       =    initparam(c,"e");
+
+         epsi(c,"2010")    =     y_gross(c,"2010")/e(c,"2010");
 
          pro(c,t)          =    a(c,"2010") * exp(prodgr*ord(t)-1);
 
@@ -163,7 +165,8 @@ loop(t,
          y_net(C,t)= (1-omega)*y_gross(c,t);
          i(c,t)=s(c)*y_net(c,t)*nyper;
          k(c,t+1)=i(c,t)+(1-delta)**nyper *k(c,t);
-         e(c,t+1)=((epsi*exp(- AEEI(c,t))) * y_net(c,t))*0.000001
+         epsi(c,t+1)= epsi(c,t)*exp(- AEEI(c,t));
+         e(c,t+1)=epsi(c,t) * y_net(c,t)
 );
 
 display y_net,e
