@@ -71,6 +71,31 @@ COM,CRI,CIV,HRV,CYP,CZE,DNK,DJI,DOM,ECU,EGY,SLV,GNQ,EST,ETH,FJI,FIN,FRA,GAB,GMB,
 KAZ,KEN,KOR,KWT,KGZ,LAO,LVA,LBN,LSO,LBR,LTU,LUX,MKD,MDG,MWI,MYS,MDV,MLI,MLT,MRT,MUS,MEX,MDA,MNG,MNE,MAR,MOZ,NAM,NPL,NLD,NZL,NER,NGA,NOR,OMN,PAK,PAN,PRY,PER,PHL,POL,
 PRT,QAT,ROU,RUS,RWA,STP,SAU,SEN,SRB,SLE,SGP,SVK,SVN,ZAF,ESP,LKA,SDN,SUR,SWZ,SWE,CHE,SYR,TJK,TZA,THA,TGO,TTO,TUN,TUR,TKM,UGA,UKR,GBR,USA,URY,UZB,VEN,VNM,YEM,ZMB,ZWE
 /
+         r regions / USA, CAN, WEU, JPK, ANZ, CEE, FSU, MDE, CAM, SAM, SAS, SEA, CHI,NAF, SSA, SIS/
+
+         rcmap(*,*) regional map /
+         USA.(USA)
+         CAN.(CAN)
+         WEU.(AUT, BEL, CYP, DNK, FIN, FRA,DEU, GRC, ISL, IRL, ITA,LUX,
+              MLT,NLD, NOR, PRT,ESP, SWE, CHE, GBR)
+         JPK.(JPN,KOR)
+         ANZ.(AUS, NZL)
+         CEE.(BIH,BGR,HRV,CZE,HUN,MKD, POL,ROU,SVK,SVN)
+         FSU.(ARM, AZE, BLR, EST, GEO, KAZ,KGZ, LVA, LTU, MDA,RUS, TJK,
+              TKM, UKR, UZB)
+         MDE.(BHR, IRN, IRQ, ISR, JOR, KUW, LBN, OMN,QAT,SAU, SYR, TUR,YEM)
+         CAM.(BLZ, CRI, SLV, GTM, HND, MEX, PAN)
+         SAM.(ARG, BOL, BRA, CHL, COL, ECU,PRY,PER,SUR,URY,VEN)
+         SAS.(BGD, BTN, IND, NPL, PAK,LKA)
+         SEA.(BRN, KHM, IND, LAO, MYS, PHL, SGP, THA, VNM)
+         CHI.(CHN, MNG)
+         NAF.( EGY, MAR, TUN)
+         SSA.(BEN, BWA, BFA, BDI,CMR, CIV,DJI,GNQ, ETH, GAB, GMB, GHA, GIN,
+              GNB, KEN, LSO, LBR, MDG, MWI,MLI, MRT, MOZ, NAM, NER, NGA,
+              RWA, SEN, SLE, ZAF, SDN,SWZ, TZA, TGO, ZMB, ZWE)
+         SIS.(BHS, BRB,COM,DOM,FJI,JAM,MDV,MUS, STP, TTO)
+         /;
+
 
 parameters
          k(c,t)       capital
@@ -88,6 +113,7 @@ parameters
          omega        damage                                        /0.05/
          prodgr       productivity growth coefficient               /0.02/
          pro          productivity trend
+         epsi                                                       /0.192/
 ;
 $ontext
 Units:
@@ -121,13 +147,11 @@ $offdelim offlisting
 
          l(c,t)            =     pop(c,t);
 
-         a(c,"2010")       =     y_gross(c,"2010") / [ l(c,"2010")**lshr * k(c,"2010")**(1 - lshr) ];
+         a(c,"2010")       =     y_gross(c,"2010") / [ l(c,"2010")**lshr * k(c,"2010")**(1 - lshr)];
 
-         e(c,"2010")       =     initparam(c,"e");
+         AEEI(c,t)         =     0.01 * 1;
 
-         i(c,"2010")       =     s(c) * y_gross(c,"2010");
-
-         AEEI(c,t)         =     1;
+         e(c,"2010")       =     epsi  *exp(- AEEI(c,"2010")) * y_gross(c,"2010");
 
          pro(c,t)          =    a(c,"2010") * exp(prodgr*ord(t)-1);
 
@@ -136,13 +160,13 @@ $offdelim offlisting
 loop(t,
 *GLOBAL Solow-Swan economic growth model
          y_gross(c,t+1)=pro(c,t)*l(c,t)**(lshr) * k(c,t)**(1-lshr);
-         y_net(C,t+1)= (1-omega)*y_gross(c,t);
+         y_net(C,t)= (1-omega)*y_gross(c,t);
          i(c,t)=s(c)*y_net(c,t)*nyper;
          k(c,t+1)=i(c,t)+(1-delta)**nyper *k(c,t);
-         e(c,t)=AEEI(c,t)*initparam(c,"e")*y_net(c,t);
+         e(c,t+1)=((epsi*exp(- AEEI(c,t))) * y_net(c,t))*0.000001
 );
 
-display y_net
+display y_net,e
 
 $exit
 $libinclude gnuplotxyz y_net
