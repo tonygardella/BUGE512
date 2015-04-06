@@ -1,15 +1,23 @@
 *FUND  Agriculture, Forestry, Ecosystems and Energy.
-*First Draft, parameter syntax.
+*First Draft
 *Author: Paulo Arevalo
 
-*Abbreviations:
-*        CC      = Climate change
-
-*All temperatures in Â°C, $ in 1995 USD
+$ontext
+Abbreviations:
+     CC      = Climate change
+Units
+All temperatures in °C, $ in 1995 USD
+TODO
+-add DICE carbon at the beginning
+-read tables with include calls
+-set the loop to get a working code
+-Declare regional and global variables, sector and non sector dependent
+$offtext
 
 
 set r    /reg1*reg16/
-set t    /t2010*t2100/
+*Add 5 step period
+set t    /2010*2200/
 
 
 Parameters
@@ -27,7 +35,7 @@ Parameters
 *for Al
                  deltal(r)       "Regional change in ag. prod for warming of 2.5 above today"
                  deltaq(r)       "Optimal temp. for ag. in each region"
-                 CRT(t)           "Change in reg. mean temp. rel. to 1990"
+                 CRT(t)          "Change in reg. mean temp. rel. to 1990"
 *for Af
                  gamma(r)        "Generic parameter...see tableA"
                  CO2(t)           "CO2 Atmosp. concentration"
@@ -46,7 +54,7 @@ Parameters
                  alpha3          "P. such that the value equals $50 per person if per capita income equals the OECD avg in '90"
                  P(t,r)          "Pop. size in millions"
                  yb(r)           "Parameter, regionalized?"                              /30000/
-                 DT(t)           "Change in temperature, not regionalized?"
+                 DT(t)           "Change in temperature"
                  tau                                                                     /0.025/
                  sigma           "parameter, expert guess"                               /0.05/
                  Bo              "No. Species at time 0?"                                /14000000/
@@ -57,7 +65,7 @@ Parameters
 *ENERGY
                  SH(t,r)         "Space heating"
                  SC(t,r)         "Space cooling"
-                 alpha3(r)       "Benchmark impact, dollar per Â°C, check table EFW, col6-7"
+                 alpha3(r)       "Benchmark impact, dollar per °C, check table EFW, col6-7"
                  inc(t,r)        "Income"
                  CT(t)           "Change in global mean temp. rel to 1990"
                  epsilon2        "Income elasticity of space heat. demand"               /0.8/
@@ -70,14 +78,13 @@ Equations
 
 *AGRICULTURE
 Ar(t,r)  =       alpha(r) * (DELTAT(t,r)/0.04)**B + (1-(1/p)) * Ar(t-1,r);
-*Verify the second CRT in the following equation
-Al(t,r)  =       deltal(r) * CRT(t) + deltaq(r) * CRT(t);
+Al(t,r)  =       deltal(r) * CRT(t) + deltaq(r) * CRT(t)**2;
 Af(t,r)  =       gamma(r) * log(CO2(t)/275);
 A(t,r)   =       Ar(t,r) +Al(t,r)+Af(t,r);
 
 *FORESTRY (reuses log(CO2(t)/275))
 F(t,r)   =       alpha2(r) * (y(t,r)/y("t1990",r))**epsilon * (0.5 * T(t)**beta + 0.5 * gamma2 * log(CO2(t)/275));
-                                                                                  t
+                                                                                  
 *ECOSYSTEMS (reuses y(t,r))
 *Check smax syntax
 B(t)     =       smax(Bo/100,B(t-1)*(1-rho-sigma2 * (DT(t)**2/tau**2));
