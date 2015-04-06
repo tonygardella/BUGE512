@@ -71,31 +71,61 @@ COM,CRI,CIV,HRV,CYP,CZE,DNK,DJI,DOM,ECU,EGY,SLV,GNQ,EST,ETH,FJI,FIN,FRA,GAB,GMB,
 KAZ,KEN,KOR,KWT,KGZ,LAO,LVA,LBN,LSO,LBR,LTU,LUX,MKD,MDG,MWI,MYS,MDV,MLI,MLT,MRT,MUS,MEX,MDA,MNG,MNE,MAR,MOZ,NAM,NPL,NLD,NZL,NER,NGA,NOR,OMN,PAK,PAN,PRY,PER,PHL,POL,
 PRT,QAT,ROU,RUS,RWA,STP,SAU,SEN,SRB,SLE,SGP,SVK,SVN,ZAF,ESP,LKA,SDN,SUR,SWZ,SWE,CHE,SYR,TJK,TZA,THA,TGO,TTO,TUN,TUR,TKM,UGA,UKR,GBR,USA,URY,UZB,VEN,VNM,YEM,ZMB,ZWE
 /
+         r regions / USA, CAN, WEU, JPK, ANZ, CEE, FSU, MDE, CAM, SAM, SAS, SEA, CHI,NAF, SSA, SIS/
+
+         rcmap(*,*) regional map /
+         USA.(USA)
+         CAN.(CAN)
+         WEU.(AUT, BEL, CYP, DNK, FIN, FRA,DEU, GRC, ISL, IRL, ITA,LUX,
+              MLT,NLD, NOR, PRT,ESP, SWE, CHE, GBR)
+         JPK.(JPN,KOR)
+         ANZ.(AUS, NZL)
+         CEE.(BIH,BGR,HRV,CZE,HUN,MKD, POL,ROU,SVK,SVN)
+         FSU.(ARM, AZE, BLR, EST, GEO, KAZ,KGZ, LVA, LTU, MDA,RUS, TJK,
+              TKM, UKR, UZB)
+         MDE.(BHR, IRN, IRQ, ISR, JOR, KUW, LBN, OMN,QAT,SAU, SYR, TUR,YEM)
+         CAM.(BLZ, CRI, SLV, GTM, HND, MEX, PAN)
+         SAM.(ARG, BOL, BRA, CHL, COL, ECU,PRY,PER,SUR,URY,VEN)
+         SAS.(BGD, BTN, IND, NPL, PAK,LKA)
+         SEA.(BRN, KHM, IND, LAO, MYS, PHL, SGP, THA, VNM)
+         CHI.(CHN, MNG)
+         NAF.( EGY, MAR, TUN)
+         SSA.(BEN, BWA, BFA, BDI,CMR, CIV,DJI,GNQ, ETH, GAB, GMB, GHA, GIN,
+              GNB, KEN, LSO, LBR, MDG, MWI,MLI, MRT, MOZ, NAM, NER, NGA,
+              RWA, SEN, SLE, ZAF, SDN,SWZ, TZA, TGO, ZMB, ZWE)
+         SIS.(BHS, BRB,COM,DOM,FJI,JAM,MDV,MUS, STP, TTO)
+         /;
+
 
 parameters
-         k(c,t)       capital
-         i(c,t)       investment
+         k(t,c)       capital
+         i(t,c)       investment
          s(c)         savings
-         y(c,t)       output
-         a(c,t)       tech
-         l(c,t)       labor
-         e(c,t)       emissions
+         y_gross(t,c) output
+         y_net(t,c)
+         a(t,c)       tech
+         l(t,c)       labor
+         e(t,c)       emissions
          nyper        timestep                                      /5/
          lshr         labor share                                   /0.66/
-         AEEI         Autonomous energy emissionintensity           /1.023/
+         AEEI         Autonomous energy emissionintensity
          delta        depreciation                                  /0.05/
          omega        damage                                        /0.05/
-         pro          production growth coefficient                 /0.02/
+         prodgr       productivity growth coefficient               /0.02/
+         pro          productivity trend
+         epsi         energy intensity
 ;
 $ontext
 Units:
 K=2010 Capital stock at current PPPs (in mil. 2005US$) (ppp=purchasing power parity)
 rgdpl= 2010 PPP Converted GDP Per Capita (Laspeyres), derived from growth rates of c, g, i, at 2005 constant prices
 s = 2010 Investment Share of PPP Converted GDP Per Capita at 2005 constant prices [rgdpl]
-y= rgdpl* pop(2010)
+y= 2010 GDP at 2005 constant prices
 e=total GHG Emissions Including Land-Use Change and Forestry (MtCO2)
 population= thousands persons
 $offtext
+
+
 
 table initparam(*,*)  contains params rgdpl-y-e-k-s
 $ondelim onlisting
@@ -109,28 +139,60 @@ $include population.csv
 $offdelim offlisting
 ;
 
-         k(c,"2010")       =     initparam(c,"k");
+         k("2010",c)       =     initparam("k",c);
 
-         s(c)              =     0.01 * initparam(c,"s");
+         s(c)              =     0.01 * initparam("s",c);
 
-         y(c,"2010")       =     initparam(c,"y");
+         y_gross("2010",c) =     initparam("y",c);
 
-         l(c,t)            =     pop(c,t);
+         l(t,c)            =     pop(t,c);
 
-         a(c,"2010")       =     y(c,"2010") / [ l(c,"2010")**lshr * k(c,"2010")**(1 - lshr) ];
+         a("2010",c)       =     y_gross("2010",c) / [ l("2010",c)**lshr * k("2010",c)**(1 - lshr)];
 
-         e(c,"2010")       =     initparam(c,"e");
+         AEEI(t,c)         =     0.01 * 1;
 
-         i(c,"2010")       =     s(c) * y(c,"2010");
+         e("2010",c)       =    initparam("e",c);
+
+         epsi("2010",c)    =     y_gross("2010",c)/e("2010",c);
+
+         pro(t,c)          =    a("2010",c) * exp(prodgr*ord(t)-1);
+
+        ;
+
 
 loop(t,
-*GLOBAL Salow-Swan economic growth model
-         y(c,t+1)=a(c,t)*(l(c,t)**(lshr)) * (k(c,t)**(1-lshr));
-         a(c,t+1)=y(c,t)*pro*(1-omega);
-         i(c,t+1)=s(c)*y(c,t)*nyper;
-         k(c,t+1)=i(c,t)+(1-delta)**nyper *k(c,t);
-         e(c,t+1)=e(c,t)*AEEI*y(c,t);
+*GLOBAL Solow-Swan economic growth model
+         y_gross(t+1,c)=pro(t,c)*l(t,c)**(lshr) * k(t,c)**(1-lshr);
+         y_net(t,c)= (1-omega)*y_gross(t,c);
+         i(t,c)=s(c)*y_net(t,c)*nyper;
+         k(t+1,c)=i(t,c)+(1-delta)**nyper *k(t,c);
+         epsi(t+1,c)= epsi(t,c)*exp(- AEEI(t,c));
+         e(t+1,c)=epsi(t,c) * y_net(t,c)
 );
 
-display a,y,i,k,e
+display y_net,e
+
+$exit
+
+$libinclude gnuplotxyz y_net e
+
+
+file outfile /result.txt/;
+put outfile;
+outfile.pc       =       6;
+
+put "";
+loop(t,
+         put t.tl;
+);
+put /;
+loop(c,
+         put c.tl;
+         loop(t,
+                 put y_net(c,t);
+         );
+         put /;
+);
+
+putclose outfile;
 
