@@ -12,7 +12,13 @@
 *   rtriangle(lower limit, upper limit)
 
 sets        
-    t       time                    / 2000, 2010 /
+    t       time                    / 2000, 2005, 2010, 2015,
+                                    2020, 2025, 2030, 2035,
+                                    2040, 2045, 2050, 2055,
+                                    2060, 2065, 2070, 2075,
+                                    2080, 2085, 2090, 2095,
+                                    2100 /
+
     r       region                  / USA, CAN, WEU, JPK, ANZ, EEU,
                                       FSU, MDE, CAM, LAM, SAS, SEA,
                                       CHI, MAF, SSA, SIS /
@@ -32,7 +38,6 @@ parameters
     A(t,r)                  Area of region r at time t
 
 * Sea level rise
-    eft                     e folding time for sea level rise
     SL(t)                   Sea level at time t
     SLR(t)                  Sea level rise at time t
 
@@ -56,6 +61,7 @@ parameters
     Protection(t,r)         Fraction of coast protected in region r at time t
 
 * Global scalars
+    tstep   "Time step - 5 years, as per DICE model"     / 5   /
     RHO     "Time preference"                            / 0.5 /
     ETA     "Marginul utility of consumption elasticity" / 1.0 /
 
@@ -77,68 +83,61 @@ $include SLR_regional_pars.dat
 loop(t,
 loop(r,
 
+
 *** Sea level equations ***
-eft = max(SLR_par_gl("SL_eft_Tb0") + 
-            SLR_par_gl("SL_eft_Tb1") * SLR_par_gl("climate_sensitivity") + 
-            SLR_par_gl("SL_eft_Tb2")* SLR_par_gl("climate_sensitivity")**2,
-        1);
+SL(t+1) = (1 - 1/(SLR_par_gl("SL_eft_rho"))) * SL(t) +
+    SLR_par_gl("SL_temp_sensitivity") * temp(t+1);
 
-temp(t) = (1 - 1/eft) * temp(t-1) + (1/eft) * 
-    (SLR_par_gl("climate_sensitivity")/(5.35*log(2))) * RF(t-1);
-
-SL(t) = (1 - 1/(SLR_par_gl("SL_eft_rho"))) * SL(t-1) +
-    SLR_par_gl("SL_temp_sensitivity") * temp(t);
-
-SLR(t) = SL(t) - SL(t-1);
+SLR(t+1) = SL(t+1) - SL(t);
 
 
 *** Dryland ***
-CD_potential(t,r) = min(SLR_par_r(r, "dryland_loss") * SL(t)**(SLR_par_r(r, "DEM")), A("2000", r));
+CD_potential(t+1,r) = min(SLR_par_r(r, "dryland_loss") * SL(t+1)**(SLR_par_r(r, "DEM")), A("2000", r));
 
-D_potential(t,r) = CD_potential(t,r) - CD_actual(t-1,r);
+D_potential(t+1,r) = CD_potential(t+1,r) - CD_actual(t,r);
 
-D_actual(t,r) = (1 - Protection(t,r)) * D_potential(t,r);
+D_actual(t+1,r) = (1 - Protection(t+1,r)) * D_potential(t+1,r);
 
-CD_actual(t,r) = CD_actual(t-1,r) + D_actual(t,r);
+CD_actual(t+1,r) = CD_actual(t,r) + D_actual(t+1,r);
 
-VD(t,r) = SLR_par_gl("land_value") * 
-    (Y(t,r) / A(t,r) / SLR_par_gl("income_density")) ** 
+VD(t+1,r) = SLR_par_gl("land_value") * 
+    (Y(t+1,r) / A(t+1,r) / SLR_par_gl("income_density")) ** 
         SLR_par_gl("land_value_elasticity");
 
 
 *** Wetland ***
-W(t, r) = SLR_par_r(r, "wetland_loss_SLR") * SLR(t) + 
-    SLR_par_r(r, "wetland_loss_coastalsqueeze") * Protection(t, r) * SLR(t);
+W(t+1, r) = SLR_par_r(r, "wetland_loss_SLR") * SLR(t+1) + 
+    SLR_par_r(r, "wetland_loss_coastalsqueeze") * Protection(t+1, r) * SLR(t+1);
 
-CW(t, r) = min(CW(t-1, r) + W(t-1, r), SLR_par_r(r, "exposed_wetland"));
+CW(t+1, r) = min(CW(t, r) + W(t, r), SLR_par_r(r, "exposed_wetland"));
 
-VW(t, r) = 21 * SLR_par_gl("W_service_value") * 
-        (Y_pc(t,r)/SLR_par_gl("W_income_normalization")) ** 
+VW(t+1, r) = 21 * SLR_par_gl("W_service_value") * 
+        (Y_pc(t+1,r)/SLR_par_gl("W_income_normalization")) ** 
             SLR_par_gl("WV_income_elasticity") *
-        (P_dens(t,r)/SLR_par_gl("W_popdens_normalization")) ** 
+        (P_dens(t+1,r)/SLR_par_gl("W_popdens_normalization")) ** 
             SLR_par_gl("WV_popdens_elasticity") *
-        (1 - CW(t,r)/SLR_par_r(r, "W_1990")) **
+        (1 - CW(t+1,r)/SLR_par_r(r, "W_1990")) **
             SLR_par_gl("WV_size_elasticity");
 
 
 *** Protection costs ***
-consump_term(t,r) = RHO + ETA * Y_pc_growth(t,r);
+consump_term(t+1,r) = RHO + ETA * Y_pc_growth(t+1,r);
 
-NPVVP(t,r) = (1 + consump_term(t,r)) / consump_term(t,r) 
-                * SLR_par_r(r, "coast_protection_cost") * SLR(t);
+NPVVP(t+1,r) = (1 + consump_term(t+1,r)) / consump_term(t+1,r) 
+                * SLR_par_r(r, "coast_protection_cost") * SLR(t+1);
 
-NPVVW(t,r) = W(t,r) * VW(t,r) * (1 + consump_term(t,r)) /
-    (consump_term(t,r) -
-        SLR_par_gl("WV_income_elasticity") * Y_pc_growth(t,r) -
-        SLR_par_gl("WV_popdens_elasticity") * Y_dens_growth(t,r) -
-        SLR_par_gl("WV_size_elasticity") * (-W(t,r))
+NPVVW(t+1,r) = W(t+1,r) * VW(t+1,r) * (1 + consump_term(t+1,r)) /
+    (consump_term(t+1,r) -
+        SLR_par_gl("WV_income_elasticity") * Y_pc_growth(t+1,r) -
+        SLR_par_gl("WV_popdens_elasticity") * Y_dens_growth(t+1,r) -
+        SLR_par_gl("WV_size_elasticity") * (-W(t+1,r))
     );
 
-NPVVD(t,r) = D_potential(t,r) * VD(t,r) * 
-    (1 + consump_term(t,r)) /
-        (consump_term(t,r) - SLR_par_gl("DV_income_elasticity") * Y_dens(t,r));
+NPVVD(t+1,r) = D_potential(t+1,r) * VD(t+1,r) * 
+    (1 + consump_term(t+1,r)) /
+        (consump_term(t+1,r) - SLR_par_gl("DV_income_elasticity") * Y_dens(t+1,r));
     
-Protection(t,r) = max(0, 1 - 0.5 * (NPVVP(t,r) + NPVVW(t,r))/NPVVD(t,r));
+Protection(t+1,r) = max(0, 1 - 0.5 * (NPVVP(t+1,r) + NPVVW(t+1,r))/NPVVD(t+1,r));
 
 * End loops
 ));
