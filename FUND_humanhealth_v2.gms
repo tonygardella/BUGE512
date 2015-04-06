@@ -143,28 +143,6 @@ parameters
         TOCEAN(t)  Temperature-climate equation for lower ocean
 
 *Health parameters section
-$ontext
-         temp(t) global mean temperature /
-                  2010        11.6989
-                  2015        11.8373
-                  2020        12.1969
-                  2025        12.3194
-                  2030        12.2645
-                  2035        12.2202
-                  2040        12.5091
-                  2045        12.572
-                  2050        12.5642
-                  2055        12.8808
-                  2060        12.9086
-                  2065        13.1473
-                  2070        13.2911
-                  2075        13.1729
-                  2080        13.1218
-                  2085        13.3003
-                  2090        13.7775
-                  2095        13.4196
-                  2100        13.338     /
-$offtext
 
          preindustrial_temp degrees C based on scenario 42 /10.9985/
          reg_temp(t,c) regional mean temperature
