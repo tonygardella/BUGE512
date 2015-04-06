@@ -4,4 +4,4 @@ tau	0.025
 sigma	0.05
 Bo	14000000
 rho	0.003
-sigma2	0.001
+gamma	0.001
