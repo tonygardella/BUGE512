@@ -5,39 +5,16 @@
 *   eft = e folding time
 *   SL = sea level
 *   DEM = digital elevation model
-*   RF = Radiative forcing
 
 * "r" functions are draws from distributions:
 *   rgamma(shape, scale)
 *   rtriangle(lower limit, upper limit)
 
-sets        
-    t       time                    / 2000, 2005, 2010, 2015,
-                                    2020, 2025, 2030, 2035,
-                                    2040, 2045, 2050, 2055,
-                                    2060, 2065, 2070, 2075,
-                                    2080, 2085, 2090, 2095,
-                                    2100 /
-
-    r       region                  / USA, CAN, WEU, JPK, ANZ, EEU,
-                                      FSU, MDE, CAM, LAM, SAS, SEA,
-                                      CHI, MAF, SSA, SIS /
-;
+$include common.gms
 
 parameters          
-* General States
-    temp(t)                 Global mean temperature at time t
-    RF(t)                   Radiative forcing at time t
-    Y(t,r)                  Income in region r at time t
-    Y_pc(t,r)               Per capita income in region r at time t
-    Y_pc_growth(t,r)        Per capita income growth in region r at time t
-    Y_dens(t,r)             Income density of region t at time r
-    Y_dens_growth(t,r)      Income density growth of region t at time r
-    P_dens(t,r)             Population density of region r at time t
-    P_growth(t,r)           Population growth of region r at time t
-    A(t,r)                  Area of region r at time t
-
 * Sea level rise
+    A(t,r)                  Area of region r at time t
     SL(t)                   Sea level at time t
     SLR(t)                  Sea level rise at time t
 
@@ -60,15 +37,11 @@ parameters
     NPVVD(t,r)              Net present value of land loss without any protection
     Protection(t,r)         Fraction of coast protected in region r at time t
 
-* Global scalars
-    tstep   "Time step - 5 years, as per DICE model"     / 5   /
-    RHO     "Time preference"                            / 0.5 /
-    ETA     "Marginul utility of consumption elasticity" / 1.0 /
-
 * FUND parameters 
     SLR_par_gl(*)   "Global parameters related to sea-level rise" /
 $include SLR_global_pars.dat
 /
+    SLR_par_c(c,*)  "Country parameters related to sea-level rise"
 ;
 
 table SLR_par_r(r,*)    "Regional parameters related to sea-level rise"
@@ -79,10 +52,12 @@ $include SLR_regional_pars.dat
 *        Model       
 *---------------------
 
+* Disaggregate regional parameters into national parameters
+SLR_par_c(c,*) = sum(r$rcmap(r,c), SLR_par_r(r));
+
 * Initialize loops
 loop(t,
 loop(r,
-
 
 *** Sea level equations ***
 SL(t+1) = (1 - 1/(SLR_par_gl("SL_eft_rho"))) * SL(t) +
@@ -92,7 +67,7 @@ SLR(t+1) = SL(t+1) - SL(t);
 
 
 *** Dryland ***
-CD_potential(t+1,r) = min(SLR_par_r(r, "dryland_loss") * SL(t+1)**(SLR_par_r(r, "DEM")), A("2000", r));
+CD_potential(t+1,r) = min(SLR_par_r(r, "dryland_loss") * SL(t+1)**(SLR_par_r(r, "DEM")), SLR_par_r(r, "area_2000"));
 
 D_potential(t+1,r) = CD_potential(t+1,r) - CD_actual(t,r);
 
