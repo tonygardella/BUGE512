@@ -76,7 +76,10 @@ To find the total dollar value lost/gained from health due to climate change, I
 simply sum the deaths and multiple it by the value of a statisical life as given
 in the mortality and morbidyity section: total value = sum(deaths) * value of life
 
-Still figuring out why the cause for the sudden drop in deaths from 2015-2020
+Currently does not account for urbanization in the heat cardio-resp deaths section
+due to a div by 0 error. See $ontext further below.
+
+Outputs do not seem correct as there is a sudden drop from 2015-2020.
 
 $offtext
 
@@ -187,6 +190,9 @@ parameters
          deaths_cardio_res_heat(t,c) deaths due to heat related cardio-respiratory
          deaths_cardio_res_cold(t,c) deaths due to cold related cardio-respiratory
          total_loss_health(t,c) total $ lost due to deaths from climate change
+         P_dens(t,c) population density
+         area(c)
+         urbanization(t,c) percentage of population living in cities
 
          Country_Tol_regional_temp(c)
          Country_Tol_heat_over65_1(c)
@@ -220,6 +226,8 @@ parameters
                  "malaria_param"                            0.0794
                  "dengue_param"                             0.3534
                  "schistosomiasis_param"                   -0.1149
+                 "urbanization_param_1"                     0.031
+                 "urbanization_param_2"                    -0.011
          /;
 
 table rcpem(*,*) "Emissions"
@@ -329,6 +337,23 @@ loop(t,
          y_percapita(t,c) = y_net(t,c) / pop(t,c);
          reg_temp(t,c) = (preindustrial_temp + TATM(t)) * Country_Tol_regional_temp(c);
          reg_temp_dif(t,c) = TATM(t) * Country_Tol_regional_temp(c);
+
+$ontext
+         area(c) = country_rate(c,"area");
+         P_dens(t,c) = pop(t,c) / area(c);
+         urbanization(t,c) = ((global_param_health("urbanization_param_1")*sqrt(y_percapita(t,c)))
+                  + (global_param_health("urbanization_param_2")*sqrt(P_dens(t,c))))/
+                 (1 + global_param_health("urbanization_param_1")*sqrt(y_percapita(t,c))
+                  + (global_param_health("urbanization_param_2")*sqrt(P_dens(t,c))));
+
+P_dens current gives a div by 0 error even though area has values associated with it.
+Once fixed, apply urbanization value to heat related cardio-respiratory deaths.
+
+death rate per n * population * urbanization / n = deaths due to a disease,
+where n is the base 10 that Tol chose to use.
+
+$offtext
+
 
 *DIARRHEA - currently using FUND regional mortality rates from table HD.3
 
