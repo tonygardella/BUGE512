@@ -1,10 +1,6 @@
 $Oneolcom
 *Parameter                   Value               Comment
-SL_eft_Tb0                  -42.7               !! Page 5
-SL_eft_Tb1                  29.1                !! Page 5
-SL_eft_Tb2                  0.001               !! Page 5
-climate_sensitivity         3                   !! Page 5; gamma(6.48 0.55)
-SL_eft_rho                  500                 !! Page 5; triang(250 1000)
+SL_eft                      500                 !! Page 5; triang(250 1000)
 SL_temp_sensitivity         2                   !! Page 5; gamma(6 0.4)
 income_density              0.635               !! Page 11; Average of OECD in 1990; M$/km2
 land_value                  4                   !! Page 11; Darwin et al 1995; M$/km2; (2 <0)
