@@ -121,9 +121,10 @@ Units:
 K=2010 Capital stock at current PPPs (in mil. 2005US$) (ppp=purchasing power parity)
 rgdpl= 2010 PPP Converted GDP Per Capita (Laspeyres), derived from growth rates of c, g, i, at 2005 constant prices
 s = 2010 Investment Share of PPP Converted GDP Per Capita at 2005 constant prices [rgdpl]
-y= 2010 GDP at 2005 constant prices
-e=total GHG Emissions Including Land-Use Change and Forestry (MtCO2)
-population= thousands persons
+y = 2010 GDP at 2005 constant prices
+e =total GHG Emissions Including Land-Use Change and Forestry (MtCO2)
+population = thousands persons
+epsilon = gdp/
 $offtext
 
 
@@ -154,7 +155,7 @@ $offdelim offlisting
 
          e("2010",c)       =    initparam("e",c);
 
-         epsi("2010",c)    =     y_gross("2010",c)/e("2010",c);
+         epsi("2010",c)    =     e("2010",c)/y_gross("2010",c);
 
         ;
 
