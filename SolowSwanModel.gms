@@ -124,7 +124,7 @@ s = 2010 Investment Share of PPP Converted GDP Per Capita at 2005 constant price
 y = 2010 GDP at 2005 constant prices
 e =total GHG Emissions Including Land-Use Change and Forestry (MtCO2)
 population = thousands persons
-epsilon = gdp/
+epsilon = $gdp/MtCarbon
 $offtext
 
 
@@ -176,9 +176,9 @@ loop(t,
 
          k(t+1,c)=i(t,c)+(1-delta)**nyper *k(t,c);
 
-         epsi(t+1,c)= epsi(t,c)*exp(-AEEI(t,c));
+         epsi(t+1,c)= epsi(t,c)*exp(AEEI(t,c));
 
-         e(t+1,c)=(epsi(t,c) * y_net(t,c))/1000;
+         e(t+1,c)=(epsi(t,c) * y_net(t,c));
 
          totemis(t)       =     sum( c, e(t,c))
 );
