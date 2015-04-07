@@ -156,24 +156,33 @@ $offdelim offlisting
 
          epsi("2010",c)    =     y_gross("2010",c)/e("2010",c);
 
-         pro(t,c)          =    a("2010",c) * exp(prodgr*ord(t)-1);
-
-
         ;
 
 
 loop(t,
 *GLOBAL Solow-Swan economic growth model
-         y_gross(t+1,c)=pro(t,c)*l(t,c)**(lshr) * k(t,c)**(1-lshr);
-         y_net(t,c)= (1-omega)*y_gross(t,c);
+         pro(t,c)= a("2010",c) * exp(prodgr*ord(t)-1);
+
+         a(t,c)= y_gross(t,c) / [ l(t,c)**lshr * k(t,c)**(1 - lshr)];
+
+         y_gross(t,c)=pro(t,c)*l(t,c)**(lshr) * k(t,c)**(1-lshr);
+
+* for now there is y_gross=y_net
+
+         y_net(t,c)= y_gross(t,c);
+
          i(t,c)=s(c)*y_net(t,c)*nyper;
+
          k(t+1,c)=i(t,c)+(1-delta)**nyper *k(t,c);
+
          epsi(t+1,c)= epsi(t,c)*exp(-AEEI(t,c));
+
          e(t+1,c)=(epsi(t,c) * y_net(t,c))/1000;
+
          totemis(t)       =     sum( c, e(t,c))
 );
 
-display y_net,e, epsi, totemis
+display y_gross,y_net,e, epsi, totemis, pop
 
 
 $exit
