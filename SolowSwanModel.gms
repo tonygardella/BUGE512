@@ -114,6 +114,7 @@ parameters
          prodgr       productivity growth coefficient               /0.02/
          pro          productivity trend
          epsi         energy intensity
+         totemis
 ;
 $ontext
 Units:
@@ -157,6 +158,7 @@ $offdelim offlisting
 
          pro(t,c)          =    a("2010",c) * exp(prodgr*ord(t)-1);
 
+
         ;
 
 
@@ -166,16 +168,15 @@ loop(t,
          y_net(t,c)= (1-omega)*y_gross(t,c);
          i(t,c)=s(c)*y_net(t,c)*nyper;
          k(t+1,c)=i(t,c)+(1-delta)**nyper *k(t,c);
-         epsi(t+1,c)= epsi(t,c)*exp(- AEEI(t,c));
-         e(t+1,c)=epsi(t,c) * y_net(t,c)
+         epsi(t+1,c)= epsi(t,c)*exp(-AEEI(t,c));
+         e(t+1,c)=(epsi(t,c) * y_net(t,c))/1000;
+         totemis(t)       =     sum( c, e(t,c))
 );
 
-display y_net,e
+display y_net,e, epsi, totemis
+
 
 $exit
-
-$libinclude gnuplotxyz y_net e
-
 
 file outfile /result.txt/;
 put outfile;
@@ -189,7 +190,7 @@ put /;
 loop(c,
          put c.tl;
          loop(t,
-                 put y_net(c,t);
+                 put e(t,c);
          );
          put /;
 );
