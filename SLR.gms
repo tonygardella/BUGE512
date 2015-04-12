@@ -96,7 +96,7 @@ parameters
         P_dens(t,c)             "Population density of nation c at time t"
         P_growth(t,c)           "Population growth of nation c at time t"
 
-* Global scalars 
+* Global scalars
         RHO     "Time preference"                            / 0.5 /
         ETA     "Marginul utility of consumption elasticity" / 1.0 /
 
@@ -186,14 +186,14 @@ parameters
         CW(t,c)                 Cumulative wetland loss in region r at time t
         VW(t,c)                 Value of wetlands in region r at time t
 
-* Protection    
+* Protection
         consump_term(t,c)       Shorthand term for consumption elasticity
         NPVVP(t,c)              Net present value of protecting entire coast
         NPVVW(t,c)              Net present value of wetland loss from coastal squeeze
         NPVVD(t,c)              Net present value of land loss without any protection
         Protection(t,c)         Fraction of coast protected in region r at time t
 
-* FUND parameters 
+* FUND parameters
         SLR_par_gl(*)   "Global parameters related to sea-level rise" /
 $include SLR_global_pars.dat
 /
@@ -213,7 +213,7 @@ $offdelim offlisting
 ;
 
 table SLR_par_c(c,*)    "Country parameters related to sea-level rise"
-$include SLR_national_pars.dat                    
+$include SLR_national_pars.dat
 ;
 
 * DICE carbon cycle
@@ -259,7 +259,7 @@ $include SLR_national_pars.dat
 
 
 *---------------------
-*        Model       
+*        Model
 *---------------------
 
 * Initial conditions
@@ -301,7 +301,7 @@ loop(t,
         D_actual(t+1,c)          =     (1 - Protection(t+1,c)) * D_potential(t+1,c);
         CD_actual(t+1,c)         =     CD_actual(t,c) + D_actual(t+1,c);
         VD(t+1,c)                =     SLR_par_gl("land_value") *
-                                        (Y_gross(t+1,c) / Area(t+1,c) / SLR_par_gl("income_density")) ** 
+                                        (Y_gross(t+1,c) / Area(t+1,c) / SLR_par_gl("income_density")) **
                                             SLR_par_gl("land_value_elasticity");
 
 *** Wetland ***
@@ -309,9 +309,9 @@ loop(t,
                                         SLR_par_c(c, "wetland_loss_coastalsqueeze") * Protection(t+1, c) * SLR(t+1);
         CW(t+1, c)               =     min(CW(t, c) + W(t, c), SLR_par_c(c, "exposed_wetland"));
         VW(t+1, c)               =     21 * SLR_par_gl("W_service_value") *
-                                        (Y_pc(t+1,c)/SLR_par_gl("W_income_normalization")) ** 
+                                        (Y_pc(t+1,c)/SLR_par_gl("W_income_normalization")) **
                                             SLR_par_gl("WV_income_elasticity") *
-                                        (P_dens(t+1,c)/SLR_par_gl("W_popdens_normalization")) ** 
+                                        (P_dens(t+1,c)/SLR_par_gl("W_popdens_normalization")) **
                                             SLR_par_gl("WV_popdens_elasticity") *
                                         (1 - CW(t+1,c)/SLR_par_c(c, "W_1990")) **
                                             SLR_par_gl("WV_size_elasticity");
