@@ -10,85 +10,14 @@
 *   rgamma(shape, scale)
 *   rtriangle(lower limit, upper limit)
 
-set t    time       /2010,2015,
-                     2020,2025,
-                     2030,2035,
-                     2040,2045,
-                     2050,2055,
-                     2060,2065,
-                     2070,2075,
-                     2080,2085,
-                     2090,2095,
-                     2100/
-
-set r    regions    /USA,CAN,WEU,JPK,ANZ,EEU,FSU,MDE,CAM,SAM,
-                     SAS,SEA,CHI,NAF,SSA,SIS/
-set c    countries  /
-                    ARG,ARM,AUS,AUT,AZE,
-                    BDI,BEL,BEN,BFA,BGD,BGR,BHR,BHS,BIH,BLR,
-                        BLZ,BOL,BRA,BRB,BRN,BTN,BWA,
-                    CAN,CHE,CHL,CHN,CIV,CMR,COL,COM,CRI,CYP,
-                        CZE,
-                    DEU,DJI,DNK,DOM,
-                    ECU,EGY,ESP,EST,ETH,
-                    FIN,FJI,FRA,
-                    GAB,GBR,GEO,GHA,GIN,GMB,GNB,GNQ,GRC,GTM,
-                    HND,HRV,HUN,
-                    IDN,IND,IRL,IRN,IRQ,ISL,ISR,ITA,
-                    JAM,JOR,JPN,
-                    KAZ,KEN,KGZ,KHM,KOR,KWT,
-                    LAO,LBN,LBR,LKA,LSO,LTU,LUX,LVA,
-                    MAR,MDA,MDG,MDV,MEX,MKD,MLI,MLT,MNE,MNG,
-                        MOZ,MRT,MUS,MWI,MYS,
-                    NAM,NER,NGA,NLD,NOR,NPL,NZL,
-                    OMN,
-                    PAK,PAN,PER,PHL,POL,PRT,PRY,
-                    QAT,
-                    ROU,RUS,RWA,
-                    SAU,SDN,SEN,SGP,SLE,SLV,SRB,STP,SUR,SVK,
-                        SVN,SWE,SWZ,SYR,
-                    TGO,THA,TJK,TKM,TTO,TUN,TUR,TZA,
-                    UGA,UKR,URY,USA,UZB,
-                    VEN,VNM,
-                    YEM,
-                    ZAF,ZMB,ZWE
-                    /
-
-rcmap(*,*) regional map /
-         USA . (USA)
-         CAN . (CAN)
-         WEU . (AUT,BEL,CHE,CYP,DEU,DNK,ESP,FIN,FRA,GBR,
-                    GRC,IRL,ISL,ITA,LUX,MLT,NLD,NOR,PRT,
-                    SWE)
-         JPK . (JPN,KOR)
-         ANZ . (AUS,NZL)
-         CEE . (BGR,BIH,CZE,HRV,HUN,MKD,MNE,POL,ROU,SRB,
-                    SVK,SVN)
-         FSU . (ARM,AZE,BLR,EST,GEO,KAZ,KGZ,LTU,LVA,MDA,
-                    RUS,TJK,TKM,UKR,UZB)
-         MDE . (BHR,IRN,IRQ,ISR,JOR,KWT,LBN,OMN,QAT,SAU,
-                    SYR,TUR,YEM)
-         CAM . (BLZ,CRI,GTM,HND,MEX,PAN,SLV)
-         SAM . (ARG,BOL,BRA,CHL,COL,ECU,PER,PRY,SUR,URY,VEN)
-         SAS . (BGD,BTN,IND,LKA,NPL,PAK)
-         SEA . (BRN,IDN,KHM,LAO,MYS,PHL,SGP,THA,VNM)
-         CHI . (CHN,MNG)
-         NAF . (EGY,MAR,TUN)
-         SSA . (BDI,BEN,BFA,BWA,CIV,CMR,DJI,ETH,GAB,GHA,
-                    GIN,GMB,GNB,GNQ,KEN,LBR,LSO,MDG,MLI,
-                    MOZ,MRT,MWI,NAM,NER,NGA,RWA,SDN,SEN,
-                    SLE,SWZ,TGO,TZA,UGA,ZAF,ZMB,ZWE)
-         SIS . (BHS,BRB,COM,DOM,FJI,JAM,MDV,MUS,STP,TTO)
-         /;
+$include mosaic_common_dec.gms
+$include mosaic_economy_dec.gms
+$include mosaic_carbon_dec.gms
 
 parameters
 *** General states ***
 
-* Atmosphere
-        temp(t)                 "Temperature (degrees C)"
-
 * Economy
-        Y(t,c)                  "Income in nation c at time t"
         Y_pc(t,c)               "Per capita income in nation c at time t"
         Y_pc_growth(t,c)        "Per capita income growth in nation c at time t"
         Y_dens(t,c)             "Income density of region t at time r"
@@ -101,74 +30,6 @@ parameters
         ETA     "Marginul utility of consumption elasticity" / 1.0 /
 
 
-*** DICE carbon parameters ***
-
-* Initial Conditions
-        mat0   Initial Concentration in atmosphere 2010 (GtC)        /830.4   /
-        mu0    Initial Concentration in upper strata 2010 (GtC)      /1527.   /
-        ml0    Initial Concentration in lower strata 2010 (GtC)      /10010.  /
-        mateq  Equilibrium concentration atmosphere  (GtC)           /588     /
-        mueq   Equilibrium concentration in upper strata (GtC)       /1350    /
-        mleq   Equilibrium concentration in lower strata (GtC)       /10000   /
-
-* Flow paramaters
-        b12      Carbon cycle transition matrix                      /.088   /
-        b23      Carbon cycle transition matrix                      /0.00250 /
-
-* These are for declaration and are defined later
-        b11      Carbon cycle transition matrix
-        b21      Carbon cycle transition matrix
-        b22      Carbon cycle transition matrix
-        b32      Carbon cycle transition matrix
-        b33      Carbon cycle transition matrix
-
-
-** Climate model parameters
-        t2xco2   Equilibrium temp impact (oC per doubling CO2)    / 2.9   /
-        fex0     2010 forcings of non-CO2 GHG (Wm-2)              / 0.25  /
-        fex1     2100 forcings of non-CO2 GHG (Wm-2)              / 0.70  /
-        tocean0  Initial lower stratum temp change (C from 1900)  /.0068  /
-        tatm0    Initial atmospheric temp change (C from 1900)    /0.80   /
-
-        c10      Initial climate equation coefficient for upper level /0.098  /
-        c1beta   Regression slope coefficient(SoA~Equil TSC)          /0.01243 /
-
-        c1       Climate equation coefficient for upper level     /0.098  /
-        c3       Transfer coefficient upper to lower stratum      /0.088  /
-        c4       Transfer coefficient for lower level             /0.025  /
-        fco22x   Forcings of equilibrium CO2 doubling (Wm-2)      /3.8    /
-
-        forcoth(t)    Exogenous forcing for other greenhouse gases
-
-*Climate and carbon cycle
-
-        MU(t)           Shallow ocean concentration
-        ML(t)           Lower ocean concentration
-        FORC(t)         Increase in radiative forcing (watts per m2 from 1900)
-        TATM(t)         Increase temperature of atmosphere (degrees C from 1900)
-        TOCEAN(t)       Increase temperatureof lower oceans (degrees C from 1900)
-        MAT(t)          Carbon concentration increase in atmosphere (GtC from 1750)
-        MU(t)           Carbon concentration increase in shallow oceans (GtC from 1750)
-        ML(t)           Carbon concentration increase in lower oceans (GtC from 1750)
-
-* SolowSwan parameters
-        k(t,c)       capital
-        i(t,c)       investment
-        s(c)         savings
-        y_gross(t,c) output
-        y_net(t,c)
-        a(t,c)       tech
-        l(t,c)       labor
-        e(t,c)       emissions
-        nyper        timestep                                      /5/
-        lshr         labor share                                   /0.66/
-        AEEI         Autonomous energy emission intensity
-        delta        depreciation                                  /0.05/
-        omega        damage                                        /0.05/
-        prodgr       productivity growth coefficient               /0.02/
-        pro          productivity trend
-        epsi         energy intensity
-
 *** Sea level rise parameters
 * Sea level rise
         Area(t,c)               Area of country c at time t
@@ -180,6 +41,14 @@ parameters
         D_actual(t,c)           Actual dryland loss in year t
         CD_actual(t,c)          Actual cumulative dryland loss in year t
         VD(t,c)                 Value of dryland in region r at time t
+
+* Migration
+        migration_r(r,r)        Regional migration matrix
+        migration(c,c)          Country migration matrix
+        pop_out(t,c)            Population emigrating from country c at time t
+        pop_in(t,c)             Population imigrating into country c at time t
+        migration_impact(t,c)   Net impact of migration (in $?) of country c at time t
+        pop_r(r)                Regional population in 2010. Used only for migration aggregation
 
 * Wetland loss
         W(t,c)                  Wetland loss in region r at time t
@@ -197,149 +66,111 @@ parameters
         SLR_par_gl(*)   "Global parameters related to sea-level rise" /
 $include SLR_global_pars.dat
 /
-
-;
-
-table initparam(*,*)  contains params rgdpl-y-e-k-s
-$ondelim onlisting
-$include 'initparams.csv'
-$offdelim offlisting
-;
-
-table pop(*,*)
-$ondelim onlisting
-$include 'population.csv'
-$offdelim offlisting
 ;
 
 table SLR_par_c(c,*)    "Country parameters related to sea-level rise"
-$include SLR_national_pars.dat                    
+$include SLR_national_pars.dat
 ;
 
-* DICE carbon cycle
+table migration_r(r,r)    "Table of migration coefficients"
+$ondelim onlisting
+$include SLR_migration.csv
+$offdelim offlisting
+;
 
-* Parameters for long-run consistency of carbon cycle
-        b11                     = 1 - b12;
-        b21                     = b12*MATEQ/MUEQ;
-        b22                     = 1 - b21 - b23;
-        b32                     = b23*mueq/mleq;
-        b33                     = 1 - b32 ;
+* Disaggregate migration from regions to countries
+alias(c, c2);
+alias(r, r2);
+pop_r(r) = sum(c$rcmap(r,c), pop("2010",c));
+migration(c,c2) = sum((r,r2)$(rcmap(r,c) and rcmap(r2,c2)), migration_r(r,r2) * pop("2010",c)/pop_r(r));
 
-        forcoth(t)              = 0;
-**fex0 + (1/18)*(fex1-fex0)*(t.val-1)$(t.val lt 19)+ (fex1-fex0)$(t.val ge 19);
-
-        MAT("2010")             = mat0;
-        ML("2010")              = ml0;
-        TOCEAN("2010")          = tocean0;
-        TATM("2010")            = tatm0;
-        MU("2010")              = mu0;
-        FORC("2010")            = fco22x + fex0;
-
-        temp("2010")            = 13.78 + TATM("2010");
-
-* SolowSwan initialization
-        k("2010",c)             = initparam("k",c);
-        s(c)                    = 0.01 * initparam("s",c);
-        y_gross("2010",c)       = initparam("y",c);
-        l(t,c)                  = pop(t,c);
-        a("2010",c)             = y_gross("2010",c) / [ l("2010",c)**lshr * k("2010",c)**(1 - lshr)];
-        AEEI(t,c)               = 0.01 * 1;
-        e("2010",c)             = initparam("e",c);
-        epsi("2010",c)          = y_gross("2010",c)/e("2010",c);
-        pro(t,c)                = a("2010",c) * exp(prodgr*ord(t)-1);
-
-
-* Precauclated quantities
+* Initial conditions -- THESE NEED TUNING!
+        SLR("2010")             = 0.12;
         Area("2010",c)          = SLR_par_c(c,"area_2000");
-        P_dens("2010",c)        = pop("2010",c) / Area("2010",c);
-        Y_pc("2010",c)          = y_gross("2010",c) / pop("2010",c);
-        Y_dens("2010",c)        = y_gross("2010",c) / Area("2010",c);
+        Protection("2010",c)    = 0;
         Y_pc_growth("2010",c)   = 0;
         Y_dens_growth("2010",c) = 0;
 
+* Compute land loss for pre-industrial sea-level
+        D_potential("2010",c)   = min(SLR_par_c(c, "dryland_loss") * SLR("2010")**(SLR_par_c(c, "DEM")), 
+                                                SLR_par_c(c, "max_dryland_loss"));
+        D_actual("2010",c)      = (1 - Protection("2010",c)) * D_potential("2010",c);
+        CD_actual("2010",c)     = D_actual("2010",c);
+        W("2010",c)             = SLR_par_c(c, "wetland_loss_SLR") * SLR("2010") +
+                                      SLR_par_c(c, "wetland_loss_coastalsqueeze") * Protection("2010", c) * SLR("2010");
+        CW("2010",c)            = min(W("2010",c), SLR_par_c(c, "exposed_wetland"));
 
 *---------------------
 *        Model       
 *---------------------
 
-* Initial conditions
-        SLR("2010")             = 0;
-
-        CD_actual("2010", c)    = 0;
-        Protection("2010", c)   = 0;
-        CW("2010",c)            = 0;
-
-
-* Initialize loops
 loop(t,
+        
+$batinclude mosaic_economy_exe.gms
+$batinclude mosaic_carbon_exe.gms
 
-*Climate and carbon cycle
-        MAT(t+1)                 =     MAT(t)*b11 + MU(t)*b21 + (sum(c, e(t,c))*(5/3.666/1000));
-        ML(t+1)                  =     ML(t)*b33  + MU(t)*b23;
-        FORC(t+1)                =     fco22x * ((log((MAT(t+1)/588.000))/log(2))) + forcoth(t);
-        MU(t+1)                  =     MAT(t)*b12 + MU(t)*b22 + ML(t)*b32;
-        TATM(t+1)                =     TATM(t) + c1 * ((FORC(t+1)-(fco22x/t2xco2)*TATM(t))-(c3*(TATM(t)-TOCEAN(t))));
-        TOCEAN(t+1)              =     TOCEAN(t) + c4*(TATM(t)-TOCEAN(t));
-        temp(t+1)                =     13.78 + TATM(t+1);
-
-*GLOBAL Solow-Swan economic growth model
-        y_net(t,c)               =     (1-omega)*y_gross(t,c);
-        i(t,c)                   =     s(c)*y_net(t,c)*nyper;
-        y_gross(t+1,c)           =     pro(t,c)*l(t,c)**(lshr) * k(t,c)**(1-lshr);
-        k(t+1,c)                 =     i(t,c)+(1-delta)**nyper *k(t,c);
-        epsi(t+1,c)              =     epsi(t,c)*exp(- AEEI(t,c));
-        e(t+1,c)                 =     epsi(t,c) * y_net(t,c);
+* Derived economic quantities
+        P_dens(t,c)                   =     pop(t,c) / Area(t,c);
+        y_pc(t,c)                     =     y_net(t,c) / pop(t,c);
+        Y_pc_growth(t,c)$(ord(t)>1)   =     y_pc(t,c) / y_pc(t-1,c) - 1;
+        Y_dens(t,c)                   =     y_net(t,c) / Area(t,c);
+        Y_dens_growth(t,c)$(ord(t)>1) =     y_dens(t,c) / y_dens(t-1,c) - 1;
 
 *** Sea level equations ***
-* NOTE: Adjusted for 5 year time step
-        SLR(t+1)                  =     ((1 - 1/(SLR_par_gl("SL_eft")))**nyper) * SLR(t) +
-                                        SLR_par_gl("SL_temp_sensitivity") * temp(t+1);
+* NOTE: Adjusted for 5 year time step (nyper)
+* NOTE: I think original equation was in cm (based on results),
+*   so I divided second term by 100. This gives more reasonable
+*   results (~ 1 m SLR by 2100)
+        SLR(t)$(ord(t)>1)             =     ((1 - 1/(SLR_par_gl("SL_eft")))**nyper) * SLR(t-1) +
+                                                (SLR_par_gl("SL_temp_sensitivity") * TATM(t))/100;
 
 *** Dryland ***
-        CD_potential(t+1,c)      =     min(SLR_par_c(c, "dryland_loss") * SLR(t+1)**(SLR_par_c(c, "DEM")), SLR_par_c(c, "area_2000"));
-        D_potential(t+1,c)       =     CD_potential(t+1,c) - CD_actual(t,c);
-        D_actual(t+1,c)          =     (1 - Protection(t+1,c)) * D_potential(t+1,c);
-        CD_actual(t+1,c)         =     CD_actual(t,c) + D_actual(t+1,c);
-        VD(t+1,c)                =     SLR_par_gl("land_value") *
-                                        (Y_gross(t+1,c) / Area(t+1,c) / SLR_par_gl("income_density")) ** 
-                                            SLR_par_gl("land_value_elasticity");
+        CD_potential(t,c)$(ord(t)>1)  =     min(SLR_par_c(c, "dryland_loss") * SLR(t)**(SLR_par_c(c, "DEM")), 
+                                                SLR_par_c(c, "max_dryland_loss"));
+        D_potential(t,c)$(ord(t)>1)   =     CD_potential(t,c) - CD_actual(t-1,c);
+        D_actual(t,c)$(ord(t)>1)      =     (1 - Protection(t,c)) * D_potential(t,c);
+        CD_actual(t,c)$(ord(t)>1)     =     CD_actual(t-1,c) + D_actual(t,c);
+        VD(t,c)                       =     SLR_par_gl("land_value") *
+                                                (Y_dens(t,c) / SLR_par_gl("income_density")) ** 
+                                                    SLR_par_gl("land_value_elasticity");
+
+*** Migration ***
+        pop_out(t,c) = P_dens(t,c) * D_actual(t,c);
+        pop_in(t,c) = sum(c2, migration(c, c2) * pop_out(t,c2));
+        migration_impact(t,c) = SLR_par_gl("migrant_out") * pop_out(t,c) * Y_pc(t,c) -
+                                    SLR_par_gl("migrant_in") * pop_in(t,c) * Y_pc(t,c);
 
 *** Wetland ***
-        W(t+1, c)                =     SLR_par_c(c, "wetland_loss_SLR") * SLR(t+1) +
-                                        SLR_par_c(c, "wetland_loss_coastalsqueeze") * Protection(t+1, c) * SLR(t+1);
-        CW(t+1, c)               =     min(CW(t, c) + W(t, c), SLR_par_c(c, "exposed_wetland"));
-        VW(t+1, c)               =     21 * SLR_par_gl("W_service_value") *
-                                        (Y_pc(t+1,c)/SLR_par_gl("W_income_normalization")) ** 
-                                            SLR_par_gl("WV_income_elasticity") *
-                                        (P_dens(t+1,c)/SLR_par_gl("W_popdens_normalization")) ** 
-                                            SLR_par_gl("WV_popdens_elasticity") *
-                                        (1 - CW(t+1,c)/SLR_par_c(c, "W_1990")) **
-                                            SLR_par_gl("WV_size_elasticity");
+        W(t,c)$(ord(t)>1)             =     SLR_par_c(c, "wetland_loss_SLR") * SLR(t) +
+                                                SLR_par_c(c, "wetland_loss_coastalsqueeze") * Protection(t, c) * SLR(t);
+        CW(t,c)$(ord(t)>1)            =     min(CW(t-1,c) + W(t,c), SLR_par_c(c, "exposed_wetland"));
+        VW(t,c)                       =     21 * SLR_par_gl("W_service_value") *
+                                                (Y_pc(t,c)/SLR_par_gl("W_income_normalization")) ** 
+                                                    SLR_par_gl("WV_income_elasticity") *
+                                                (P_dens(t,c)/SLR_par_gl("W_popdens_normalization")) ** 
+                                                    SLR_par_gl("WV_popdens_elasticity") *
+                                                (1 - CW(t,c)/SLR_par_c(c, "W_1990")) **
+                                                    SLR_par_gl("WV_size_elasticity");
 
 *** Protection costs ***
-        consump_term(t+1,c)      =     RHO + ETA * Y_pc_growth(t+1,c);
-        NPVVP(t+1,c)             =     (1 + consump_term(t+1,c)) / consump_term(t+1,c)
-                                            * SLR_par_c(c, "coast_protection_cost") * SLR(t+1);
-        NPVVW(t+1,c)             =     W(t+1,c) * VW(t+1,c) * (1 + consump_term(t+1,c)) /
-                                        (consump_term(t+1,c) -
-                                            SLR_par_gl("WV_income_elasticity") * Y_pc_growth(t+1,c) -
-                                            SLR_par_gl("WV_popdens_elasticity") * Y_dens_growth(t+1,c) -
-                                            SLR_par_gl("WV_size_elasticity") * (-W(t+1,c))
+        consump_term(t,c)             =     RHO + ETA * Y_pc_growth(t,c);
+        NPVVP(t,c)                    =     (1 + consump_term(t,c)) / consump_term(t,c)
+                                                * SLR_par_c(c, "coast_protection_cost") * SLR(t);
+        NPVVW(t,c)                    =     W(t,c) * VW(t,c) * (1 + consump_term(t,c)) /
+                                                (consump_term(t,c) -
+                                                    SLR_par_gl("WV_income_elasticity") * Y_pc_growth(t,c) -
+                                                    SLR_par_gl("WV_popdens_elasticity") * Y_dens_growth(t,c) -
+                                                    SLR_par_gl("WV_size_elasticity") * (-W(t,c))
                                         );
-        NPVVD(t+1,c)             =     D_potential(t+1,c) * VD(t+1,c) *
-                                        (1 + consump_term(t+1,c)) /
-                                            (consump_term(t+1,c) - SLR_par_gl("DV_income_elasticity") * Y_dens(t+1,c));
-        Protection(t+1,c)        =     max(0, 1 - 0.5 * (NPVVP(t+1,c) + NPVVW(t+1,c))/NPVVD(t+1,c));
+        NPVVD(t,c)                    =     D_potential(t,c) * VD(t,c) *
+                                                (1 + consump_term(t,c)) /
+                                                (consump_term(t,c) - SLR_par_gl("DV_income_elasticity") * Y_dens(t,c));
+        Protection(t+1,c)             =     max(0, 1 - 0.5 * (NPVVP(t,c) + NPVVW(t,c))/NPVVD(t,c));
 
-* Concluding evaluation
-        Area(t+1,c)              =     max(Area(t,c) - W(t+1,c) - D_actual(t+1,c), 0);
-        y_pc(t+1,c)              =     y_gross(t,c) / pop(t,c);
-        Y_pc_growth(t+1,c)       =     y_net(t+1,c) - y_net(t,c);
-        Y_dens(t+1,c)            =     y_gross(t+1,c) / Area(t+1,c);
-        Y_dens_growth(t+1,c)     =     y_dens(t+1,c) - y_dens(t,c);
-        P_dens(t+1,c)            =     pop(t+1,c) / Area(t+1,c);
+*** Calculate next year's area
+        Area(t+1,c)                   =     max(Area("2010",c) - CW(t,c) - CD_actual(t,c), 0);
 
-* End loops
+* End loop
 );
 
-display SLR, temp, CD_potential;
+display migration;
