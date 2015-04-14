@@ -43,11 +43,11 @@ TABLES
 
 -FORESTRY:       for_par_reg(r,*)
 
-"alpha"                  "Impact of CC of a 1°C warming on econ. welfare"
+"alpha"                  "Impact of CC of a 1Â°C warming on econ. welfare"
 
 -ENERGY          energ_par_reg(r,*)
 
-"aheat"                  "Benchmark impact, dollar per °C, check table EFW, col6"
+"aheat"                  "Benchmark impact, dollar per Â°C, check table EFW, col6"
 "acool"                  "check table EFW, col8"
 $offtext
 
@@ -137,13 +137,6 @@ $offdelim
 Table energ_par_reg(r,*)         "Regional parameters for energy"
 $ondelim onlisting
 $include 'energ_par_reg.csv'
-$offdelim offlisting
-;
-
-*AEEI data by region
-Table aeeidata(t,r)              "Autonomous Energy Efficiency Improvement (FUND)"
-$ondelim onlisting
-$include 'aeei_interp.csv'
 $offdelim offlisting
 ;
 
