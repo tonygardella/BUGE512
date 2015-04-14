@@ -18,4 +18,4 @@
 
          e(t,c)=(ei(t,c) * y_net(t,c))/ 10**9;
 
-         te(t)       =    sum( c, e(t,c))
+         te(t)       =    sum( c, e(t,c));
