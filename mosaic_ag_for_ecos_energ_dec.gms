@@ -149,7 +149,7 @@ Y_pc(t,c)                        "Income per capita"
 *Initialization
 
 temp_change_interannual("2010")                  =       0;
-temp_change_interannual_regional("2010",c)       =       0;
+temp_change_interannual_national("2010",c)       =       0;
 
 *Initialized with arbitrary value
 Ar("2010",c)                                     =       -0.001;

@@ -1,6 +1,6 @@
 *AGRICULTURE
-Ar(t,c)$(ord(t) > 1)     =       ag_par_cntry(c,"alpha") * (temp_change_interannual_regional(t,c)/0.04)**ag_par_glob("B") + (1-(1/ag_par_glob("p"))) * Ar(t-1,c);
-Al(t,c)                  =       ag_par_cntry(c,"deltal") * temp_change_regional_from_2010(t,c) + ag_par_cntry(c,"deltaq") * (temp_change_regional_from_2010(t,c)**2);
+Ar(t,c)$(ord(t) > 1)     =       ag_par_cntry(c,"alpha") * (temp_change_interannual_national(t,c)/0.04)**ag_par_glob("B") + (1-(1/ag_par_glob("p"))) * Ar(t-1,c);
+Al(t,c)                  =       ag_par_cntry(c,"deltal") * temp_change_national_from_2010(t,c) + ag_par_cntry(c,"deltaq") * (temp_change_national_from_2010(t,c)**2);
 Af(t,c)                  =       ag_par_cntry(c,"gamma") * log(CO(t)/275);
 IA(t,c)                  =       Ar(t,c) + Al(t,c) + Af(t,c);
 
