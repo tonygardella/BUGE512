@@ -16,8 +16,8 @@
 
          emiss_int(t,c)= eii("2010",c)*exp(- aeei(t,c)*ord(t)-1);
 
-         emiss_count(t,c)=(ei(t,c) * y_net(t,c))/ 10**9;
+         emiss_count(t,c)=(emiss_int(t,c) * y_net(t,c))/ 10**9;
 
-         world_emissions(t)  =    sum( c, e(t,c));
+         world_emissions(t)  =    sum( c, emiss_count(t,c));
 
          y_pc(t,c)   =   y_net(t,c)/pop(t,c)   ;

@@ -19,7 +19,7 @@ parameters
          pro                 productivity trend
          eii                 intial emissions intensity
          emiss_int           emissions intensity
-         world_emissions(t)total emissions
+         world_emissions(t) total emissions
 
 ;
 $ontext
@@ -63,12 +63,10 @@ $offdelim
 
          a("2010",c)       =     y_gross("2010",c) / [ l("2010",c)**lshr * k("2010",c)**(1 - lshr)];
 
-         e("2010",c)       =     initparam("e",c);
+         emiss_count("2010",c)       =     initparam("e",c);
 
-         eii("2010",c)     =     e("2010",c)/y_gross("2010",c);
+         eii("2010",c)     =     emiss_count("2010",c)/y_gross("2010",c);
 
          aeei(t,c)         =     sum(rcmap(r,c), aeeidata(t,r))
 
         ;
-
-
