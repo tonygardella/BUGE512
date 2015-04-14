@@ -78,6 +78,7 @@ $include SLR_migration.csv
 $offdelim offlisting
 ;
 
+
 * Disaggregate migration from regions to countries
 alias(c, c2);
 alias(r, r2);
@@ -94,14 +95,28 @@ migration(c,c2) = sum((r,r2)$(rcmap(r,c) and rcmap(r2,c2)), migration_r(r,r2) * 
         Y_pc_growth("2010",c)   = 0;
         Y_dens_growth("2010",c) = 0;
 
+* Separate landlocked countries
+sets    
+        cdry(c)           Subset of landlocked countries
+        cwet(c)           Subset of countries with coastlines
+;
+        cdry(c)                = yes$(SLR_par_c(c,"coast_length") = 0);
+        D_potential(t,cdry)    = 0;
+        D_actual(t,cdry)       = 0;
+        CD_actual(t,cdry)      = 0;
+        w(t,cdry)              = 0;
+        CW(t,cdry)             = 0;
+        Protection(t,cdry)     = 0;
+        cwet(c)                = yes$(SLR_par_c(c,"coast_length") > 0);
+
 * Compute land loss for pre-industrial sea-level
-        D_potential("2010",c)   = min(SLR_par_c(c, "dryland_loss") * SLR("2010")**(SLR_par_c(c, "DEM")), 
-                                                SLR_par_c(c, "max_dryland_loss"));
-        D_actual("2010",c)      = (1 - Protection("2010",c)) * D_potential("2010",c);
-        CD_actual("2010",c)     = D_actual("2010",c);
-        W("2010",c)             = SLR_par_c(c, "wetland_loss_SLR") * SLR("2010") +
-                                      SLR_par_c(c, "wetland_loss_coastalsqueeze") * Protection("2010", c) * SLR("2010");
-        CW("2010",c)            = min(W("2010",c), SLR_par_c(c, "exposed_wetland"));
+        D_potential("2010",cwet)   = min(SLR_par_c(cwet, "dryland_loss") * SLR("2010")**(SLR_par_c(cwet, "DEM")), 
+                                                SLR_par_c(cwet, "max_dryland_loss"));
+        D_actual("2010",cwet)      = (1 - Protection("2010",cwet)) * D_potential("2010",cwet);
+        CD_actual("2010",cwet)     = D_actual("2010",cwet);
+        W("2010",cwet)             = SLR_par_c(cwet, "wetland_loss_SLR") * SLR("2010") +
+                                      SLR_par_c(cwet, "wetland_loss_coastalsqueeze") * Protection("2010", cwet) * SLR("2010");
+        CW("2010",cwet)            = min(W("2010",cwet), SLR_par_c(cwet, "exposed_wetland"));
 
 *---------------------
 *        Model       
@@ -129,11 +144,11 @@ $batinclude mosaic_carbon_exe.gms
                                                 (SLR_par_gl("SL_temp_sensitivity") * TATM(t))/100;
 
 *** Dryland ***
-        CD_potential(t,c)$(ord(t)>1)  =     min(SLR_par_c(c, "dryland_loss") * SLR(t)**(SLR_par_c(c, "DEM")), 
-                                                SLR_par_c(c, "max_dryland_loss"));
-        D_potential(t,c)$(ord(t)>1)   =     CD_potential(t,c) - CD_actual(t-1,c);
-        D_actual(t,c)$(ord(t)>1)      =     (1 - Protection(t,c)) * D_potential(t,c);
-        CD_actual(t,c)$(ord(t)>1)     =     CD_actual(t-1,c) + D_actual(t,c);
+        CD_potential(t,cwet)$(ord(t)>1)  =     min(SLR_par_c(cwet, "dryland_loss") * SLR(t)**(SLR_par_c(cwet, "DEM")), 
+                                                SLR_par_c(cwet, "max_dryland_loss"));
+        D_potential(t,cwet)$(ord(t)>1)   =     CD_potential(t,cwet) - CD_actual(t-1,cwet);
+        D_actual(t,cwet)$(ord(t)>1)      =     (1 - Protection(t,cwet)) * D_potential(t,cwet);
+        CD_actual(t,cwet)$(ord(t)>1)     =     CD_actual(t-1,cwet) + D_actual(t,cwet);
         VD(t,c)                       =     SLR_par_gl("land_value") *
                                                 (Y_dens(t,c) / SLR_par_gl("income_density")) ** 
                                                     SLR_par_gl("land_value_elasticity");
@@ -145,9 +160,9 @@ $batinclude mosaic_carbon_exe.gms
                                     SLR_par_gl("migrant_in") * pop_in(t,c) * Y_pc(t,c);
 
 *** Wetland ***
-        W(t,c)$(ord(t)>1)             =     SLR_par_c(c, "wetland_loss_SLR") * SLR(t) +
-                                                SLR_par_c(c, "wetland_loss_coastalsqueeze") * Protection(t, c) * SLR(t);
-        CW(t,c)$(ord(t)>1)            =     min(CW(t-1,c) + W(t,c), SLR_par_c(c, "exposed_wetland"));
+        W(t,cwet)$(ord(t)>1)             =     SLR_par_c(cwet, "wetland_loss_SLR") * SLR(t) +
+                                                SLR_par_c(cwet, "wetland_loss_coastalsqueeze") * Protection(t, cwet) * SLR(t);
+        CW(t,cwet)$(ord(t)>1)            =     min(CW(t-1,cwet) + W(t,cwet), SLR_par_c(cwet, "exposed_wetland"));
         VW(t,c)                       =     21 * SLR_par_gl("W_service_value") *
                                                 (Y_pc(t,c)/SLR_par_gl("W_income_normalization")) ** 
                                                     SLR_par_gl("WV_income_elasticity") *
