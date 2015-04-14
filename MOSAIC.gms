@@ -10,7 +10,7 @@ $include mosaic_carbon_dec.gms
 $include mosaic_ag_for_ecos_energ_dec.gms
 
 loop(t,
-$batinclude mosaic_common_exe.gms
+
 $batinclude mosaic_economy_exe.gms
 $batinclude mosaic_carbon_exe.gms
 $batinclude mosaic_ag_for_ecos_energ_exe.gms
