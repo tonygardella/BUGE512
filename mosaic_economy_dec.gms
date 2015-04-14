@@ -1,24 +1,26 @@
 * Declarations for the SolowSwan economy
 
 parameters
-         k(t,c)       capital
-         i(t,c)       investment
-         s(c)         savings
-         y_gross(t,c) output
-         y_net(t,c)
-         a(t,c)       initial tech
-         l(t,c)       labor
-         e(t,c)       emissions
-         nyper        timestep                                      /5/
-         lshr         labor share                                   /0.66/
-         aeei         Autonomous energy emissionintensity
-         delta        depreciation                                  /0.05/
-         omega        damage                                        /0.05/
-         prodgr       productivity growth coefficient               /0.02/
-         pro          productivity trend
-         eii          intial emissions intensity
-         ei           emissions intensity
-         te           total emissions
+         k(t,c)              capital
+         i(t,c)              investment
+         s(c)                savings
+         y_gross(t,c)        output
+         y_net(t,c)          income net of damages
+         y_pc(t,c)           income per capita
+         a(t,c)              initial tech
+         l(t,c)              labor
+         emiss_count(t,c)    emissions
+         nyper               timestep                                 /5/
+         lshr                labor share                              /0.66/
+         aeei                Autonomous energy emissionintensity
+         delta               depreciation                             /0.05/
+         omega               damage                                   /0/
+         prodgr              productivity growth coefficient          /0.02/
+         pro                 productivity trend
+         eii                 intial emissions intensity
+         emiss_int           emissions intensity
+         world_emissions(t)total emissions
+
 ;
 $ontext
 Units:
@@ -61,7 +63,7 @@ $offdelim
 
          a("2010",c)       =     y_gross("2010",c) / [ l("2010",c)**lshr * k("2010",c)**(1 - lshr)];
 
-         e("2010",c)       =    initparam("e",c);
+         e("2010",c)       =     initparam("e",c);
 
          eii("2010",c)     =     e("2010",c)/y_gross("2010",c);
 
