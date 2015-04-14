@@ -8,14 +8,16 @@
 
 * for now  y_gross=y_net
 
-         y_net(t,c)= y_gross(t,c);
+         y_net(t,c)= (1-omega) * y_gross(t,c);
 
          i(t,c)=s(c)*y_net(t,c)*nyper;
 
          k(t+1,c)=i(t,c)+(1-delta)**nyper *k(t,c);
 
-         ei(t,c)= eii("2010",c)*exp(- aeei(t,c)*ord(t)-1);
+         emiss_int(t,c)= eii("2010",c)*exp(- aeei(t,c)*ord(t)-1);
 
-         e(t,c)=(ei(t,c) * y_net(t,c))/ 10**9;
+         emiss_count(t,c)=(emiss_int(t,c) * y_net(t,c))/ 10**9;
 
-         te(t)       =    sum( c, e(t,c));
+         world_emissions(t)  =    sum( c, emiss_count(t,c));
+
+         y_pc(t,c)   =   y_net(t,c)/pop(t,c)   ;
