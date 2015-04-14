@@ -5,6 +5,8 @@ SL_temp_sensitivity         2                   !! Page 5; gamma(6 0.4)
 income_density              0.635               !! Page 11; Average of OECD in 1990; M$/km2
 land_value                  4                   !! Page 11; Darwin et al 1995; M$/km2; (2 <0)
 land_value_elasticity       1                   !! Page 11; (0.25)
+migrant_out                 3                   !! Page 13; (1.5, >0)
+migrant_in                  0.4                 !! Page 13; (0.2, >0)
 W_service_value             280000              !! Page 12-13; $/km2; (187000); Brander et al. 2006
 W_income_normalization      25000               !! Page 13; $/p/yr; Brander p.c.
 W_popdens_normalization     27.59               !! Page 13
