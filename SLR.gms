@@ -23,7 +23,7 @@ parameters
         Y_dens(t,c)             "Income density of region t at time r"
         Y_dens_growth(t,c)      "Income density growth of region t at time r"
         P_dens(t,c)             "Population density of nation c at time t"
-        P_growth(t,c)           "Population growth of nation c at time t"
+        P_growth(t,c)           "Population growth rate of nation c at time t"
 
 * Global scalars 
         RHO     "Time preference"                            / 0.5 /
@@ -46,7 +46,7 @@ parameters
         migration_r(r,r)        Regional migration matrix
         migration(c,c)          Country migration matrix
         pop_out(t,c)            Population emigrating from country c at time t
-        pop_in(t,c)             Population imigrating into country c at time t
+        pop_in(t,c)             Population immigrating into country c at time t
         migration_impact(t,c)   Net impact of migration (in $?) of country c at time t
         pop_r(r)                Regional population in 2010. Used only for migration aggregation
 
@@ -84,10 +84,13 @@ alias(r, r2);
 pop_r(r) = sum(c$rcmap(r,c), pop("2010",c));
 migration(c,c2) = sum((r,r2)$(rcmap(r,c) and rcmap(r2,c2)), migration_r(r,r2) * pop("2010",c)/pop_r(r));
 
-* Initial conditions -- THESE NEED TUNING!
-        SLR("2010")             = 0.12;
+* Initial conditions 
+*   These are tuned to show a reasonable trend in
+*   D_actual for USA. They NEED PROPER TUNING!
+        SLR("2010")             = 0.1;
         Area("2010",c)          = SLR_par_c(c,"area_2000");
-        Protection("2010",c)    = 0;
+        Protection("2010",c)    = 0.98;
+        P_growth("2010",c)      = 0;
         Y_pc_growth("2010",c)   = 0;
         Y_dens_growth("2010",c) = 0;
 
@@ -111,6 +114,7 @@ $batinclude mosaic_carbon_exe.gms
 
 * Derived economic quantities
         P_dens(t,c)                   =     pop(t,c) / Area(t,c);
+        P_growth(t,c)$(ord(t)>1)      =     pop(t,c) / pop(t-1,c);
         y_pc(t,c)                     =     y_net(t,c) / pop(t,c);
         Y_pc_growth(t,c)$(ord(t)>1)   =     y_pc(t,c) / y_pc(t-1,c) - 1;
         Y_dens(t,c)                   =     y_net(t,c) / Area(t,c);
@@ -159,12 +163,12 @@ $batinclude mosaic_carbon_exe.gms
         NPVVW(t,c)                    =     W(t,c) * VW(t,c) * (1 + consump_term(t,c)) /
                                                 (consump_term(t,c) -
                                                     SLR_par_gl("WV_income_elasticity") * Y_pc_growth(t,c) -
-                                                    SLR_par_gl("WV_popdens_elasticity") * Y_dens_growth(t,c) -
-                                                    SLR_par_gl("WV_size_elasticity") * (-W(t,c))
+                                                    SLR_par_gl("WV_popdens_elasticity") * P_growth(t,c) -
+                                                    SLR_par_gl("WV_size_elasticity") * (W(t,c))
                                         );
         NPVVD(t,c)                    =     D_potential(t,c) * VD(t,c) *
                                                 (1 + consump_term(t,c)) /
-                                                (consump_term(t,c) - SLR_par_gl("DV_income_elasticity") * Y_dens(t,c));
+                                                (consump_term(t,c) - SLR_par_gl("DV_income_elasticity") * Y_dens_growth(t,c));
         Protection(t+1,c)             =     max(0, 1 - 0.5 * (NPVVP(t,c) + NPVVW(t,c))/NPVVD(t,c));
 
 *** Calculate next year's area
@@ -173,4 +177,4 @@ $batinclude mosaic_carbon_exe.gms
 * End loop
 );
 
-display migration;
+display SLR, pop_out;
