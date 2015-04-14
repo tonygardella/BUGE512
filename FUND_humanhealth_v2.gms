@@ -1,85 +1,37 @@
 $ontext
 Authors:Anthony Gardella (Solow-Swan), Kevin Zheng (health and mortality)
 
-Last Edit: 04/05/2015
-
-COUNTRY INDEX
-ARG        Argentina              GHA        Ghana         NGA        Nigeria
-ARM        Armenia                GRC        Greece        NOR        Norway
-AUS        Australia              GTM        Guatemala     OMN        Oman
-AUT        Austria                GIN        Guinea        PAK        Pakistan
-AZE        Azerbaijan             GNB        Guinea-Bissau PAN        Panama
-BHS        Bahamas                HND        Honduras      PRY        Paraguay
-BHR        Bahrain                HUN        Hungary       PER        Peru
-BGD        Bangladesh             ISL        Iceland       PHL        Philippines
-BRB        Barbados               IND        India         POL        Poland
-BLR        Belarus                IDN        Indonesia     PRT        Portugal
-BEL        Belgium                IRN        Iran          QAT        Qatar
-BLZ        Belize                 IRQ        Iraq          ROU        Romania
-BEN        Benin                  IRL        Ireland       RUS        Russia
-BTN        Bhutan                 ISR        Israel        RWA        Rwanda
-BOL        Bolivia                ITA        Italy         STP        Sao Tome and Principe
-BIH        Bosnia and Herzegovina JAM        Jamaica       SAU        Saudi Arabia
-BWA        Botswana               JPN        Japan         SEN        Senegal
-BRA        Brazil                 JOR        Jordan        SRB        Serbia
-BRN        Brunei                 KAZ        Kazakhstan    SLE        Sierra Leone
-BGR        Bulgaria               KEN        Kenya         SGP        Singapore
-BFA        Burkina Faso           KOR        Korea         SVK        Slovak Republic
-BDI        Burundi                KWT        Kuwait        SVN        Slovenia
-KHM        Cambodia               KGZ        Kyrgyzstan    ZAF        South Africa
-CMR        Cameroon               LAO        Laos          ESP        Spain
-CAN        Canada                 LVA        Latvia        LKA        Sri Lanka
-CHL        Chile                  LBN        Lebanon       SDN        Sudan
-CHN        China                  LSO        Lesotho       SUR        Suriname
-COL        Colombia               LBR        Liberia       SWZ        Swaziland
-COM        Comoros                LTU        Lithuania     SWE        Sweden
-CRI        Costa Rica             LUX        Luxembourg    CHE        Switzerland
-CIV        Cote d`Ivoire          MKD        Macedonia     SYR        Syria
-HRV        Croatia                MDG        Madagascar    TJK        Tajikistan
-CYP        Cyprus                 MWI        Malawi        TZA        Tanzania
-CZE        Czech Republic         MYS        Malaysia      THA        Thailand
-DNK        Denmark                MDV        Maldives      TGO        Togo
-DJI        Djibouti               MLI        Mali          TTO        Trinidad & Tobago
-DOM        Dominican Republic     MLT        Malta         TUN        Tunisia
-ECU        Ecuador                MRT        Mauritania    TUR        Turkey
-EGY        Egypt                  MUS        Mauritius     TKM        Turkmenistan
-SLV        El Salvador            MEX        Mexico        UGA        Uganda
-GNQ        Equatorial Guinea      MDA        Moldova       UKR        Ukraine
-EST        Estonia                MNG        Mongolia      GBR        United Kingdom
-ETH        Ethiopia               MNE        Montenegro    USA        United States
-FJI        Fiji                   MAR        Morocco       URY        Uruguay
-FIN        Finland                MOZ        Mozambique    UZB        Uzbekistan
-FRA        France                 NAM        Namibia       VEN        Venezuela
-GAB        Gabon                  NPL        Nepal         VNM        Vietnam
-GMB        Gambia                 NLD        Netherlands   YEM        Yemen
-GEO        Georgia                NZL        New Zealand   ZMB        Zambia
-DEU        Germany                NER        Niger         ZWE        Zimbabwe
+Last Edit: 04/14/2015
 
 $offtext
 
 $title    GE512 Integrated Assesment Model
 
 $ontext
+--------
+COMMENTS
+--------
 
-Comments: Currently using different emissions for Solow-Swan (Tony) and DICE
-temperature models (RCP scenarios).
+Updated with minor changes in converting each of Tol's formulas to a single
+number of additional deaths associated with climate change. Got the population
+denisty and urbanization factor to run. Integrated some of the other mosaic
+pieces. However, ran into an issue with the common.gms file.
 
-Tol has no mention of how to aggregate each of the different change in death
-from an increase in climate change so I do so as follows:
-death rate per n * population / n = deaths due to a disease, where n is the
-whichever base 10 that Tol has decided to use.
-This is applied to diarrheal, vector borne and cold related cardio-respiratory
-deaths. For heat related deaths, Tol applies an urbanization factor so that:
-death rate per n * population * urbanization / n = deaths due to a disease
+Results are still unusual... showing that climate change will decrease GDP
+associated with the change in deaths. Additional diarrheal related deaths drops
+significantly frmo 2015-2020 and is practically non-existant as time passes.
+This will unlikely be the case as it should be tied in with water resources.
+The urbanization factor seems a bit high but is only ties down the increase in
+heat related deaths. Cold-related deaths decrease much more than the heat
+related deaths increase accouting for the increase in GDP. Increase in vector-
+borne diseases is non-existent. Each of the rates is extremely small and
+schiostosomasis is actually negative.
 
-To find the total dollar value lost/gained from health due to climate change, I
-simply sum the deaths and multiple it by the value of a statisical life as given
-in the mortality and morbidyity section: total value = sum(deaths) * value of life
+Areas that need to be looked at:
+         1) vector-borne
+         2) diarrheal
+         3) integrating other mosaics
 
-Currently does not account for urbanization in the heat cardio-resp deaths section
-due to a div by 0 error. See $ontext further below.
-
-Outputs do not seem correct as there is a sudden drop from 2015-2020.
 
 $offtext
 
@@ -117,81 +69,46 @@ PRT,QAT,ROU,RUS,RWA,STP,SAU,SEN,SRB,SLE,SGP,SVK,SVN,ZAF,ESP,LKA,SDN,SUR,SWZ,SWE,
          SIS.(BHS, BRB, COM, DOM, FJI, JAM, MDV, MUS, STP, TTO)
          /;
 
+*MOSAIC FILES
+$ONTEXT
+can't figure out $170 domain vioation with common declaration and table names
+$include mosaic_common_dec.gms
+$include mosaic_economy_exe.gms
+$offtext
+
+$include mosaic_economy_dec.gms
+$include mosaic_carbon_dec.gms
 
 parameters
+         y_percapita(t,c)
 
-*Solow-Swan parameters
-
-         k(t,c)       capital
-         i(t,c)       investment
-         s(c)         savings
-         y_gross(t,c) output
-         y_net(t,c)
-         y_percapita(t,c) per capita income
-         e(t,c)       emissions series
-         a(t,c)       tech
-         l(t,c)       labor
-         nyper        timestep                                      /5/
-         lshr         labor share                                   /0.66/
-         AEEI         Autonomous energy emissionintensity
-         delta        depreciation                                  /0.05/
-         omega        damage                                        /0.05/
-         prodgr       productivity growth coefficient               /0.02/
-         pro          productivity trend
-         epsi         energy intensity
-
-*DICE Carbon model
-
-        b12        Carbon cycle transition matrix                         /.088/
-        b23        Carbon cycle transition matrix                         /0.00250/
-        c1beta     Regression slope coefficient(SoA~Equil TSC)            /0.01243/
-        c10        Initial climate equation coefficient for upper level   /0.098/
-        c3         Transfer coefficient upper to lower stratum            /0.088/
-        c4         Transfer coefficient for lower level                   /0.025/
-        fco22x     Forcings of equilibrium CO2 doubling (Wm-2)            /3.8/
-        mateq      Equilibrium concentration atmosphere  (GtC)            /588/
-        mleq       Equilibrium concentration in lower strata (GtC)        /10000/
-        mueq       Equilibrium concentration in upper strata (GtC)        /1350/
-        t2xco2     Equilibrium temp impact (oC per doubling CO2)          /2.9/
-        tstep      Time Step                                              /5/
-        b11        Carbon cycle transition matrix
-        b21        Carbon cycle transition matrix
-        b22        Carbon cycle transition matrix
-        b32        Carbon cycle transition matrix
-        b33        Carbon cycle transition matrix
-        c1         Climate equation coefficient for upper level
-        FORC(t)    Forcing Equation
-        MAT(t)     Atmospheric concentration equation
-        ML(t)      Lower ocean concentration
-        MU(t)      Shallow ocean concentration
-        TATM(t)    Temperature-climate equation for atmosphere
-        TOCEAN(t)  Temperature-climate equation for lower ocean
-        Emissions(t)
+*DICE Carbon model - mosaic file missing emissions?
+         Emissions(t)
 
 *Health parameters section
 
          preindustrial_temp degrees C based on scenario 42 /10.9985/
          reg_temp(t,c) regional mean temperature
          reg_temp_dif(t,c) regional temperature difference from preindustrial
-         deaths_diarrhea(t,c) deaths due to diarrhea
-         deaths_vector total deaths due to vector borne diseases
-         deaths_vector_malaria_rate (t,c) deaths rate due to malaria
-         deaths_vector_dengue_rate (t,c) deaths rate due to dengue fever
-         deaths_vector_schis_rate (t,c) deaths rate due to schistosomiasis
-         deaths_vector_malaria (t,c) deaths due to malaria
-         deaths_vector_dengue (t,c) deaths due to dengue fever
-         deaths_vector_schis (t,c) deaths due to schistosomiasis
+         deaths_diarrhea(t,c) additional diarrheal deaths due to climate change
+         deaths_vector additional vector borone deaths due to climate change
+         deaths_vector_malaria_rate (t,c) change in malara deaths rate
+         deaths_vector_dengue_rate (t,c) change in dengue fever deaths rate
+         deaths_vector_schis_rate (t,c) change in schistosomisis deaths rate
+         deaths_vector_malaria (t,c) additional malaria deaths
+         deaths_vector_dengue (t,c) additional dengue fever deaths
+         deaths_vector_schis (t,c) additional schistosomiasis deaths
          value_life(t,c) value of a statisical life
          value_year_morb(t,c) value of a year of morbidity
-         change_cardio_res_hot_over65(t,c) climate induced mortality per 100000
-         change_cardio_res_hot_under65(t,c)
-         change_cardio_res_cold_over65(t,c)
-         change_cardio_res_cold_under65(t,c)
-         deaths_cardio_res_heat(t,c) deaths due to heat related cardio-respiratory
-         deaths_cardio_res_cold(t,c) deaths due to cold related cardio-respiratory
-         total_loss_health(t,c) total $ lost due to deaths from climate change
+         change_cardio_res_hot_over65(t,c) Tol parameters climate induced mortality per 100000
+         change_cardio_res_hot_under65(t,c) Tol parameters climate induced mortality per 100000
+         change_cardio_res_cold_over65(t,c) Tol parameters climate induced mortality per 100000
+         change_cardio_res_cold_under65(t,c) Tol parameters climate induced mortality per 100000
+         deaths_cardio_res_heat(t,c) additional heat related cardio-respiratory deaths
+         deaths_cardio_res_cold(t,c) additional cold related cardio-respiratory deaths
+         total_loss_health(t,c) total $ damages due to climate change related deaths
          P_dens(t,c) population density
-         area(c)
+         area(c) country area
          urbanization(t,c) percentage of population living in cities
 
          Country_Tol_regional_temp(c)
@@ -238,18 +155,6 @@ Rcp26           9.878       10.260         7.946         5.024        3.387     
 Rcp85           9.969       12.444        14.554        17.432       20.781      24.097       26.374       27.715       28.531      28.817
 ;
 
-table initparam(*,*)  contains params rgdpl-y-e-k-s
-$ondelim onlisting
-$include 'initparams.csv'
-$offdelim offlisting
-;
-
-table pop(*,*)
-$ondelim onlisting
-$include population.csv
-$offdelim offlisting
-;
-
 *health and mortality related tables
 table regional_health(r,*)
 $ondelim onlisting
@@ -257,38 +162,15 @@ $include 'regional_health.csv'
 $offdelim offlisting
 ;
 
-table country_rate(c,*)
+table country_rate(c,*) death rates per 100000
 $ondelim onlisting
 $include 'country_health.csv'
 $offdelim offlisting
 ;
 
-*Solow - Swan
-
-         k("2010",c)       =    initparam("k",c);
-         s(c)              =    0.01 * initparam("s",c);
-         y_gross("2010",c) =    initparam("y",c);
-         l(t,c)            =    pop(t,c);
-         a("2010",c)       =    y_gross("2010",c) / [ l("2010",c)**lshr * k("2010",c)**(1 - lshr)];
-         AEEI(t,c)         =    0.01 * 1;
-         pro(t,c)          =    a("2010",c) * exp(prodgr*ord(t)-1);
-         e("2010",c)       =    initparam("e",c);
-         epsi("2010",c)    =    y_gross("2010",c)/e("2010",c);
-
 *DICE Carbon
 
         Emissions(t) = rcpem("Rcp85",t);
-        tocean("2010") = .0068;
-        tatm("2010") = 0.80;
-        mat("2010") = 830.4;
-        mu("2010")=1527;
-        ml("2010")=10010;
-        b11 = 1 - b12;
-        b21 = b12*MATEQ/MUEQ;
-        b22 = 1 - b21 - b23;
-        b32 = b23*mueq/mleq;
-        b33 = 1 - b32 ;
-        c1 =  c10 + c1beta*(t2xco2-2.9);
 
 *health
 
@@ -315,13 +197,17 @@ $offdelim offlisting
 
 loop(t,
 *GLOBAL Solow-Swan economic growth model
+         pro(t,c)= a("2010",c) * exp(prodgr*ord(t)-1);
+         a(t,c)= y_gross(t,c) / [ l(t,c)**lshr * k(t,c)**(1 - lshr)];
+         y_gross(t,c)=pro(t,c)*l(t,c)**(lshr) * k(t,c)**(1-lshr);
 
-         y_gross(t+1,c)=pro(t,c)*l(t,c)**(lshr) * k(t,c)**(1-lshr);
-         y_net(t,c) = (1-omega)*y_gross(t,c);
+* for now  y_gross=y_net
+         y_net(t,c)= y_gross(t,c);
          i(t,c)=s(c)*y_net(t,c)*nyper;
-         k(t+1,c)=i(t,c)+(1-delta)**nyper * k (t,c);
-         epsi(t+1,c)= epsi(t,c)*exp(- AEEI(t,c));
-         e(t+1,c)=epsi(t,c) * y_net(t,c);
+         k(t+1,c)=i(t,c)+(1-delta)**nyper *k(t,c);
+         ei(t,c)= eii("2010",c)*exp(- aeei(t,c)*ord(t)-1);
+         e(t,c)=(ei(t,c) * y_net(t,c))/ 10**9;
+         te(t)       =    sum( c, e(t,c));
 
 *DICE Carbon
 
@@ -338,26 +224,17 @@ loop(t,
          reg_temp(t,c) = (preindustrial_temp + TATM(t)) * Country_Tol_regional_temp(c);
          reg_temp_dif(t,c) = TATM(t) * Country_Tol_regional_temp(c);
 
-$ontext
          area(c) = country_rate(c,"area");
-         P_dens(t,c) = pop(t,c) / area(c);
+         P_dens(t,c) = (pop(t,c) * 1000) / area(c);
+
          urbanization(t,c) = ((global_param_health("urbanization_param_1")*sqrt(y_percapita(t,c)))
                   + (global_param_health("urbanization_param_2")*sqrt(P_dens(t,c))))/
                  (1 + global_param_health("urbanization_param_1")*sqrt(y_percapita(t,c))
                   + (global_param_health("urbanization_param_2")*sqrt(P_dens(t,c))));
 
-P_dens current gives a div by 0 error even though area has values associated with it.
-Once fixed, apply urbanization value to heat related cardio-respiratory deaths.
+*DIARRHEA
 
-death rate per n * population * urbanization / n = deaths due to a disease,
-where n is the base 10 that Tol chose to use.
-
-$offtext
-
-
-*DIARRHEA - currently using FUND regional mortality rates from table HD.3
-
-deaths_diarrhea(t,c) = Country_Tol_diarrhea(c) *
+deaths_diarrhea(t,c) = (country_rate(c,"diarrhea")/1000) *
          pop(t,c) * (y_percapita(t,c) / y_percapita("2010",c))**
          global_param_health("income_elas_diarrhea_mort") *
          (reg_temp(t,c) / preindustrial_temp)**
@@ -365,36 +242,53 @@ deaths_diarrhea(t,c) = Country_Tol_diarrhea(c) *
 
 *VECTOR BORNE
 
-*outputs deaths per thousand
-deaths_vector_malaria_rate(t,c) = country_rate(c,"malaria")
+deaths_vector_malaria_rate(t,c) = (country_rate(c,"malaria")*10)
          * global_param_health("malaria_param") *
          (reg_temp(t,c) - reg_temp("2010",c))**
          global_param_health("deg_nonlinearity_mortality_in_warming") *
          (y_percapita(t,c) / y_percapita("2010",c))**
          global_param_health("income_elas_vector_mort");
 
-deaths_vector_dengue_rate(t,c) = country_rate(c,"dengue")
+deaths_vector_dengue_rate(t,c) = (country_rate(c,"dengue")*10)
          * global_param_health("dengue_param") *
          (reg_temp(t,c) - reg_temp("2010",c))**
          global_param_health("deg_nonlinearity_mortality_in_warming") *
          (y_percapita(t,c) / y_percapita("2010",c))**
          global_param_health("income_elas_vector_mort");
 
-deaths_vector_schis_rate(t,c) = country_rate(c,"schistosomiasis")
+deaths_vector_schis_rate(t,c) = (country_rate(c,"schistosomiasis")*10)
          * global_param_health("schistosomiasis_param") *
          (reg_temp(t,c) - reg_temp("2010",c))**
          global_param_health("deg_nonlinearity_mortality_in_warming") *
          (y_percapita(t,c) / y_percapita("2010",c))**
          global_param_health("income_elas_vector_mort");
 
-deaths_vector_malaria(t,c) = deaths_vector_malaria_rate(t,c) * pop(t,c) * 1000;
+deaths_vector_malaria(t,c) = deaths_vector_malaria_rate(t,c) * pop(t,c) / 1000;
 
-deaths_vector_dengue(t,c) = deaths_vector_dengue_rate(t,c) * pop(t,c) * 1000;
+deaths_vector_dengue(t,c) = deaths_vector_dengue_rate(t,c) * pop(t,c) / 1000;
 
-deaths_vector_schis(t,c) = deaths_vector_schis_rate(t,c) * pop(t,c) * 1000;
+deaths_vector_schis(t,c) = deaths_vector_schis_rate(t,c) * pop(t,c) / 1000;
 
 deaths_vector(t,c) = deaths_vector_malaria(t,c) + deaths_vector_dengue(t,c)+
          deaths_vector_schis(t,c);
+
+*CARDIOVASCULAR AND RESPIRATORY
+
+change_cardio_res_hot_over65(t,c) = (Country_Tol_heat_over65_1(c) *
+         reg_temp_dif(t,c) + Country_Tol_heat_over65_2(c) * reg_temp_dif(t,c)** 2)* pop(t,c) / 100 ;
+
+change_cardio_res_hot_under65(t,c) = (Country_Tol_heat_under65_1(c) *
+         reg_temp_dif(t,c) + Country_Tol_heat_under65_2(c) * (reg_temp_dif(t,c))** 2) * pop(t,c) / 100 ;
+
+deaths_cardio_res_heat(t,c) = (change_cardio_res_hot_over65(t,c) + change_cardio_res_hot_under65(t,c)) * urbanization(t,c);
+
+change_cardio_res_cold_over65(t,c) = (Country_Tol_cold_over65_1(c) *
+         reg_temp_dif(t,c) + Country_Tol_cold_over65_2(c) * reg_temp_dif(t,c)**2) * pop(t,c) / 100;
+
+change_cardio_res_cold_under65(t,c) = (Country_Tol_cold_under65_1(c) *
+         reg_temp_dif(t,c) + Country_Tol_cold_under65_2(c) * reg_temp_dif(t,c)**2) * pop(t,c) / 100;
+
+deaths_cardio_res_cold(t,c) = change_cardio_res_cold_over65(t,c) + change_cardio_res_cold_under65(t,c);
 
 *MORBIDITY AND MORTALITY
 
@@ -406,37 +300,26 @@ value_year_morb(t,c) = global_param_health("mort_morb_no_description_2") *
          (y_percapita(t,c) / global_param_health("normalization_constant"))**
          global_param_health("income_elas_value_of_year_morb");
 
-*CARDIOVASCULAR AND RESPIRATORY
-
-change_cardio_res_hot_over65(t,c) = Country_Tol_heat_over65_1(c) *
-         reg_temp_dif(t,c) + Country_Tol_heat_over65_2(c) * reg_temp_dif(t,c)** 2;
-
-change_cardio_res_hot_under65(t,c) = Country_Tol_heat_under65_1(c) *
-         reg_temp_dif(t,c) + Country_Tol_heat_under65_2(c) * (reg_temp_dif(t,c))** 2;
-
-deaths_cardio_res_heat(t,c) = (change_cardio_res_hot_over65(t,c) +
-         change_cardio_res_hot_under65(t,c)) * pop(t,c) / 100000 ;
-
-change_cardio_res_cold_over65(t,c) = Country_Tol_cold_over65_1(c) *
-         reg_temp_dif(t,c) + Country_Tol_cold_over65_2(c) * reg_temp_dif(t,c)**2;
-
-change_cardio_res_cold_under65(t,c) = Country_Tol_cold_under65_1(c) *
-         reg_temp_dif(t,c) + Country_Tol_cold_under65_2(c) * reg_temp_dif(t,c)**2;
-
-deaths_cardio_res_cold(t,c) = (change_cardio_res_cold_over65(t,c) +
-         change_cardio_res_cold_under65(t,c)) * pop(t,c) / 100000 ;
-
-*TOTAL VALUE $ LOST DUE TO CLIMATE CHANGE
+*TOTAL DAMAGES LOST DUE TO CLIMATE CHANGE
 
 total_loss_health(t,c) = (deaths_diarrhea(t,c) + deaths_vector(t,c) +
          deaths_cardio_res_heat(t,c) + deaths_cardio_res_cold(t,c)) *
          value_life(t,c);
-*Missing/unsure how to incorporate urban factor from equation HC.3
+
 );
 
 display total_loss_health;
-display reg_temp;
 display deaths_diarrhea;
 display deaths_vector;
 display deaths_cardio_res_heat;
 display deaths_cardio_res_cold;
+
+display deaths_vector_malaria;
+display deaths_vector_dengue;
+display deaths_vector_schis;
+display deaths_vector_malaria_rate;
+display deaths_vector_dengue_rate;
+display deaths_vector_schis_rate;
+
+display value_life;
+display urbanization;
