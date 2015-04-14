@@ -7,3 +7,14 @@
         TATM(t+1)                =     TATM(t) + c1 * ((FORC(t+1)-(fco22x/t2xco2)*TATM(t))-(c3*(TATM(t)-TOCEAN(t))));
         TOCEAN(t+1)              =     TOCEAN(t) + c4*(TATM(t)-TOCEAN(t));
 
+*TEMPERATURE AND CO2
+
+        temp(t)                  =     13.78 + carbon(t,"TATM");
+        temp_r(t,c)              =     13.78 + carbon(t,"TATM");
+
+        CO(t)                    =     (carbon(t,"MAT")/2.13) + (3.66*280);
+        DT(t)$(ord(t) > 1)       =     temp(t)- temp(t-1);
+        DT_r(t,c)$(ord(t) > 1)   =     temp_r(t,c)- temp_r(t-1,c);
+        CT(t)                    =     temp(t) - temp("2010");
+        CRT(t,c)                 =     temp_r(t,c) - temp_r("2010",c);
+
