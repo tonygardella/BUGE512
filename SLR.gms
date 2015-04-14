@@ -25,7 +25,7 @@ parameters
         P_dens(t,c)             "Population density of nation c at time t"
         P_growth(t,c)           "Population growth rate of nation c at time t"
 
-* Global scalars 
+* Global scalars
         RHO     "Time preference"                            / 0.5 /
         ETA     "Marginul utility of consumption elasticity" / 1.0 /
 
@@ -55,14 +55,14 @@ parameters
         CW(t,c)                 Cumulative wetland loss in region r at time t
         VW(t,c)                 Value of wetlands in region r at time t
 
-* Protection    
+* Protection
         consump_term(t,c)       Shorthand term for consumption elasticity
         NPVVP(t,c)              Net present value of protecting entire coast
         NPVVW(t,c)              Net present value of wetland loss from coastal squeeze
         NPVVD(t,c)              Net present value of land loss without any protection
         Protection(t,c)         Fraction of coast protected in region r at time t
 
-* FUND parameters 
+* FUND parameters
         SLR_par_gl(*)   "Global parameters related to sea-level rise" /
 $include SLR_global_pars.dat
 /
@@ -119,7 +119,7 @@ sets
         CW("2010",cwet)            = min(W("2010",cwet), SLR_par_c(cwet, "exposed_wetland"));
 
 *---------------------
-*        Model       
+*        Model
 *---------------------
 
 loop(t,

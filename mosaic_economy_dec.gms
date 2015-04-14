@@ -6,20 +6,20 @@ parameters
          s(c)         savings
          y_gross(t,c) output
          y_net(t,c)
-         a(t,c)       tech
+         a(t,c)       initial tech
          l(t,c)       labor
          e(t,c)       emissions
          nyper        timestep                                      /5/
          lshr         labor share                                   /0.66/
-         AEEI         Autonomous energy emissionintensity
+         aeei         Autonomous energy emissionintensity
          delta        depreciation                                  /0.05/
          omega        damage                                        /0.05/
          prodgr       productivity growth coefficient               /0.02/
          pro          productivity trend
-         epsi         energy intensity
-         totemis
+         eii          intial emissions intensity
+         ei           emissions intensity
+         te           total emissions
 ;
-
 $ontext
 Units:
 K=2010 Capital stock at current PPPs (in mil. 2005US$) (ppp=purchasing power parity)
@@ -31,16 +31,24 @@ population = thousands persons
 epsilon = $gdp/MtCarbon
 $offtext
 
+
+
 table initparam(*,*)  contains params rgdpl-y-e-k-s
-$ondelim onlisting
+$ondelim
 $include 'initparams.csv'
-$offdelim offlisting
+$offdelim
 ;
 
 table pop(*,*)
-$ondelim onlisting
+$ondelim
 $include population.csv
-$offdelim offlisting
+$offdelim
+;
+
+table aeeidata(*,*)
+$ondelim
+$include aeei_interp.csv
+$offdelim
 ;
 
          k("2010",c)       =     initparam("k",c);
@@ -53,9 +61,12 @@ $offdelim offlisting
 
          a("2010",c)       =     y_gross("2010",c) / [ l("2010",c)**lshr * k("2010",c)**(1 - lshr)];
 
-         AEEI(t,c)         =     0.01 * 1;
-
          e("2010",c)       =    initparam("e",c);
 
-         epsi("2010",c)    =     e("2010",c)/y_gross("2010",c);
+         eii("2010",c)     =     e("2010",c)/y_gross("2010",c);
+
+         aeei(t,c)         =     sum(rcmap(r,c), aeeidata(t,r))
+
+        ;
+
 

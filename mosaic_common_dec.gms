@@ -70,3 +70,16 @@ rcmap(*,*) regional map /
                     SLE,SWZ,TGO,TZA,UGA,ZAF,ZMB,ZWE)
          SIS . (BHS,BRB,COM,DOM,FJI,JAM,MDV,MUS,STP,TTO)
          /;
+
+
+parameter
+*ATMOSPHERE
+temp(t)         "Temperature in C"
+temp_r(t,c)     "Regional temp in C"
+CO(t)           "CO2 concentration"
+
+DT(t)           "Change in temperature"
+DT_r(t,c)       "Change in regional mean temp"
+CT(t)           "Change in global mean temp. rel to 2010"
+CRT(t,c)        "Change in reg. mean temp. rel. to 2010"
+;
