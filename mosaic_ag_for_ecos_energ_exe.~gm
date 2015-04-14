@@ -1,6 +1,6 @@
 *AGRICULTURE
 Ar(t,c)$(ord(t) > 1)     =       ag_par_cntry(c,"alpha") * (temp_change_interannual_regional(t,c)/0.04)**ag_par_glob("B") + (1-(1/ag_par_glob("p"))) * Ar(t-1,c);
-Al(t,c)                  =       ag_par_cntry(c,"deltal") * temp_change_regional_from_2010(t,c) + ag_par_cntry(c,"deltaq") * (temp_change_regional_from_2010(t,c)**2);
+Al(t,c)                  =       ag_par_cntry(c,"deltal") * CRT(t,c) + ag_par_cntry(c,"deltaq") * (CRT(t,c)**2);
 Af(t,c)                  =       ag_par_cntry(c,"gamma") * log(CO(t)/275);
 IA(t,c)                  =       Ar(t,c) + Al(t,c) + Af(t,c);
 
@@ -26,6 +26,6 @@ energ_term(t,c)          =       ((Y_pc(t,c)/Y_pc("2010",c))**energ_par_glob("ep
                                  (pop(t,c)/pop("2010",c))) / aeei_cntry(t,c);
 
 *SH is going up and SC is going down, but equations are correct.
-SH(t,c)                  =        energ_par_cntry(c,"aheat") * Y_gross("2010",c) * (arctan(temp_change_from_2010(t))/arctan(1)) * energ_term(t,c);
-SC(t,c)                  =        energ_par_cntry(c,"acool") * Y_gross("2010",c) * (temp_change_from_2010(t))**energ_par_glob("beta") * energ_term(t,c);
+SH(t,c)                  =        energ_par_cntry(c,"aheat") * Y_gross("2010",c) * (arctan(CT(t))/arctan(1)) * energ_term(t,c);
+SC(t,c)                  =        energ_par_cntry(c,"acool") * Y_gross("2010",c) * (CT(t))**energ_par_glob("beta") * energ_term(t,c);
 
