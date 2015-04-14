@@ -1,8 +1,6 @@
 *health
 
          y_percapita(t,c) = y_net(t,c) / pop(t,c);
-         reg_temp(t,c) = (preindustrial_temp + TATM(t)) * Country_Tol_regional_temp(c);
-         reg_temp_dif(t,c) = TATM(t) * Country_Tol_regional_temp(c);
 
          area(c) = country_rate(c,"area");
          P_dens(t,c) = (pop(t,c) * 1000) / area(c);

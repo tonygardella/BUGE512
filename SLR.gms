@@ -32,11 +32,11 @@ parameters
 
 *** Sea level rise parameters
 * Sea level rise
-        Area(t,c)               Area of country c at time t
-        SLR(t)                  Sea level rise at time t
+        Area(t,c)               Area of country c at time t (km2)
+        SLR(t)                  Sea level rise at time t (m)
 
 * Dryland loss
-        CD_potential(t,c)       Cumulative potential dryland loss in year t
+        CD_potential(t,c)       Cumulative potential dryland loss in year t 
         D_potential(t,c)        Potential dryland loss in year t
         D_actual(t,c)           Actual dryland loss in year t
         CD_actual(t,c)          Actual cumulative dryland loss in year t
@@ -88,9 +88,9 @@ migration(c,c2) = sum((r,r2)$(rcmap(r,c) and rcmap(r2,c2)), migration_r(r,r2) * 
 * Initial conditions 
 *   These are tuned to show a reasonable trend in
 *   D_actual for USA. They NEED PROPER TUNING!
-        SLR("2010")             = 0.1;
+        SLR("2010")             = 0.01;
         Area("2010",c)          = SLR_par_c(c,"area_2000");
-        Protection("2010",c)    = 0.98;
+        Protection("2010",c)    = 0.5;
         P_growth("2010",c)      = 0;
         Y_pc_growth("2010",c)   = 0;
         Y_dens_growth("2010",c) = 0;
@@ -192,4 +192,4 @@ $batinclude mosaic_carbon_exe.gms
 * End loop
 );
 
-display SLR, pop_out;
+display SLR, Area

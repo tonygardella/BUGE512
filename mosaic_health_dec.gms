@@ -1,9 +1,6 @@
 *** FUND Health Parameters ***
 
 parameters
-         preindustrial_temp degrees C based on scenario 42 /10.9985/
-         reg_temp(t,c) regional mean temperature
-         reg_temp_dif(t,c) regional temperature difference from preindustrial
          deaths_diarrhea(t,c) additional diarrheal deaths due to climate change
          deaths_vector additional vector borone deaths due to climate change
          deaths_vector_malaria_rate (t,c) change in malara deaths rate
@@ -25,7 +22,6 @@ parameters
          area(c) country area
          urbanization(t,c) percentage of population living in cities
 
-         Country_Tol_regional_temp(c)
          Country_Tol_heat_over65_1(c)
          Country_Tol_heat_over65_2(c)
          Country_Tol_heat_over65_1mort(c)
@@ -77,7 +73,6 @@ $offdelim offlisting
 $exit
 *health
 
-         Country_Tol_regional_temp(c) = sum(r$rcmap(r,c), regional_health(r,"reg_temp_conversion"));
          Country_Tol_heat_over65_1(c) = sum(r$rcmap(r,c), regional_health(r,"heat_over65_1"));
          Country_Tol_heat_over65_2(c) = sum(r$rcmap(r,c), regional_health(r,"heat_over65_2"));
          Country_Tol_heat_over65_1mort(c) = sum(r$rcmap(r,c), regional_health(r,"heat_over65_1mort"));

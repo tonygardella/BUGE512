@@ -27,6 +27,8 @@ parameters
         fex1     2100 forcings of non-CO2 GHG (Wm-2)              / 0.70  /
         tocean0  Initial lower stratum temp change (C from 1900)  /.0068  /
         tatm0    Initial atmospheric temp change (C from 1900)    /0.80   /
+        tempC_preind    Preindustrial temperature (degrees C)     / 13.78 /
+        CO2_ppm_preind  Preindustrial CO2 concentration (ppm)     / 275  /
 
         c10      Initial climate equation coefficient for upper level /0.098  /
         c1beta   Regression slope coefficient(SoA~Equil TSC)          /0.01243 /
@@ -47,7 +49,23 @@ parameters
         MAT(t)          Carbon concentration increase in atmosphere (GtC from 1750)
         MU(t)           Carbon concentration increase in shallow oceans (GtC from 1750)
         ML(t)           Carbon concentration increase in lower oceans (GtC from 1750)
+
+        temp(t)                               "Temperature in C"
+        temp_r(t,c)                           "Regional temp in C"
+        CO2_ppm(t)                            "CO2 concentration"
+
+        temp_change_from_preind_national(t,c)
+        temp_change_interannual(t)            "Change in temperature"
+        temp_change_interannual_national(t,c) "Change in regional mean temp"
+        temp_change_from_2010(t)              "Change in global mean temp. rel to 2010"
+        temp_change_national_from_2010(t,c)   "Change in reg. mean temp. rel. to 2010"
+
+* Regional temperature scaling
+        reg_temp_conv(r) /
+$include regional_temp_scaling.dat
+/
 ;
+        Country_Tol_regional_temp(c) = sum(r$rcmap(r,c), reg_temp_conv(r));
 
 * Parameters for long-run consistency of carbon cycle
         b11                     = 1 - b12;
@@ -65,3 +83,4 @@ parameters
         TATM("2010")            = tatm0;
         MU("2010")              = mu0;
         FORC("2010")            = fco22x + fex0;
+
