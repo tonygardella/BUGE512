@@ -51,6 +51,7 @@ parameters
         ML(t)           Carbon concentration increase in lower oceans (GtC from 1750)
 
         temp(t)                               "Temperature in C"
+        Country_Tol_regional_temp(c)          "Regional temperature scaling (disaggregated to country)"
         temp_r(t,c)                           "Regional temp in C"
         CO2_ppm(t)                            "CO2 concentration"
 
@@ -59,6 +60,7 @@ parameters
         temp_change_interannual_national(t,c) "Change in regional mean temp"
         temp_change_from_2010(t)              "Change in global mean temp. rel to 2010"
         temp_change_national_from_2010(t,c)   "Change in reg. mean temp. rel. to 2010"
+        
 
 * Regional temperature scaling
         reg_temp_conv(r) /

@@ -1,10 +1,10 @@
-DUMMY  reg_temp_conv
+       reg_temp_conv
 USA    1.1941 
 CAN    1.4712 
 WEU    1.1248 
 JPK    1.0555 
 ANZ    0.9676 
-CEE    1.1676 
+EEU    1.1676 
 FSU    1.2866 
 MDE    1.1546 
 CAM    0.8804 
