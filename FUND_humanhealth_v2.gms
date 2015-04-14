@@ -71,7 +71,6 @@ PRT,QAT,ROU,RUS,RWA,STP,SAU,SEN,SRB,SLE,SGP,SVK,SVN,ZAF,ESP,LKA,SDN,SUR,SWZ,SWE,
 
 *MOSAIC FILES
 $ONTEXT
-can't figure out $170 domain vioation with common declaration and table names
 $include mosaic_common_dec.gms
 $include mosaic_economy_exe.gms
 $offtext
@@ -87,7 +86,7 @@ parameters
 
 *Health parameters section
 
-         preindustrial_temp degrees C based on scenario 42 /10.9985/
+         preindustrial_temp degrees C based on scenario 42 /13.78/
          reg_temp(t,c) regional mean temperature
          reg_temp_dif(t,c) regional temperature difference from preindustrial
          deaths_diarrhea(t,c) additional diarrheal deaths due to climate change
