@@ -17,7 +17,7 @@ parameters
          omega               damage                                   /0/
          prodgr              productivity growth coefficient          /0.02/
          pro                 productivity trend
-         eii                 intial emissions intensity
+         eii                 calibrated intial emissions intensity
          emiss_int           emissions intensity
          world_emissions(t) total emissions
 
