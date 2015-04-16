@@ -1,8 +1,6 @@
 *** FUND Health Parameters ***
 
 parameters
-         P_dens(t,c) population density
-         area(c) country area
          urbanization(t,c) percentage of population living in cities
 
          deaths_diarrhea(t,c) additional diarrheal deaths due to climate change

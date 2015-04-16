@@ -1,7 +1,7 @@
 *health
 
-         area(c) = country_rate(c,"area");
-         P_dens(t,c) = (pop(t,c) * 1000) / area(c);
+*         area(c) = country_rate(c,"area");
+*         P_dens(t,c) = (pop(t,c) * 1000) / area(c);
 
          urbanization(t,c) = ((global_param_health("urbanization_param_1")*sqrt(y_pc(t,c)))
                   + (global_param_health("urbanization_param_2")*sqrt(P_dens(t,c))))/

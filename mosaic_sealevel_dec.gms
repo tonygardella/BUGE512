@@ -8,13 +8,6 @@
 
 parameters 
 *** General states ***
-* Economy
-        Y_pc(t,c)               "Per capita income in nation c at time t"
-        Y_pc_growth(t,c)        "Per capita income growth in nation c at time t"
-        Y_dens(t,c)             "Income density of region t at time r"
-        Y_dens_growth(t,c)      "Income density growth of region t at time r"
-        P_dens(t,c)             "Population density of nation c at time t"
-        P_growth(t,c)           "Population growth rate of nation c at time t"
 
 * Global scalars
         RHO     "Time preference"                            / 0.5 /
