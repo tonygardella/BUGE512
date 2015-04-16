@@ -43,12 +43,14 @@ TABLES
 
 -FORESTRY:       for_par_reg(r,*)
 
-"alpha"                  "Impact of CC of a 1Â°C warming on econ. welfare"
+"alpha"                  "Impact of a 1°C warming on forestry in fraction of GDP"
 
 -ENERGY          energ_par_reg(r,*)
 
-"aheat"                  "Benchmark impact, dollar per Â°C, check table EFW, col6"
-"acool"                  "check table EFW, col8"
+"aheat"                  "Impact of a 1°C warming on heating in fraction of GDP"
+"acool"                  "Impact of a 1°C warming on cooling in fraction of GDP"
+*The sign of acool values was changed to positive.
+
 $offtext
 
 
