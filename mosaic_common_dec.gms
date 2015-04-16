@@ -71,3 +71,15 @@ rcmap(*,*) regional map /
          SIS . (BHS,BRB,COM,DOM,FJI,JAM,MDV,MUS,STP,TTO)
          /;
 
+parameters
+
+        Area(t,c)               Area of country c at time t (km2)
+;
+
+
+* This is here because it containts national Area
+table SLR_par_c(c,*)    "Country parameters related to sea-level rise"
+$include SLR_national_pars.dat
+;
+
+        Area("2010",c)          = SLR_par_c(c,"area_2000");

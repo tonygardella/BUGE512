@@ -16,7 +16,6 @@ parameters
 
 *** Sea level rise parameters
 * Sea level rise
-        Area(t,c)               Area of country c at time t (km2)
         SLR(t)                  Sea level rise at time t (m)
 
 * Dryland loss
@@ -52,10 +51,6 @@ $include SLR_global_pars.dat
 /
 ;
 
-table SLR_par_c(c,*)    "Country parameters related to sea-level rise"
-$include SLR_national_pars.dat
-;
-
 table migration_r(r,r)    "Table of migration coefficients"
 $ondelim onlisting
 $include SLR_migration.csv
@@ -73,7 +68,6 @@ migration(c,c2) = sum((r,r2)$(rcmap(r,c) and rcmap(r2,c2)), migration_r(r,r2) * 
 *   These are tuned to show a reasonable trend in
 *   D_actual for USA. They NEED PROPER TUNING!
         SLR("2010")             = 0.01;
-        Area("2010",c)          = SLR_par_c(c,"area_2000");
         Protection("2010",c)    = 0.5;
         P_growth("2010",c)      = 0;
         Y_pc_growth("2010",c)   = 0;
