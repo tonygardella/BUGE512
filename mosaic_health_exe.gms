@@ -20,21 +20,21 @@ deaths_diarrhea(t,c) = (country_rate(c,"diarrhea")/1000) *
 
 deaths_vector_malaria_rate(t,c) = (country_rate(c,"malaria")*10)
          * global_param_health("malaria_param") *
-         temp_change_national_from_2010(t,c))**
+         temp_change_national_from_2010(t,c)**
          global_param_health("deg_nonlinearity_mortality_in_warming") *
          (y_pc(t,c) / y_pc("2010",c))**
          global_param_health("income_elas_vector_mort");
 
 deaths_vector_dengue_rate(t,c) = (country_rate(c,"dengue")*10)
          * global_param_health("dengue_param") *
-         temp_change_national_from_2010(t,c))**
+         temp_change_national_from_2010(t,c)**
          global_param_health("deg_nonlinearity_mortality_in_warming") *
          (y_pc(t,c) / y_pc("2010",c))**
          global_param_health("income_elas_vector_mort");
 
 deaths_vector_schis_rate(t,c) = (country_rate(c,"schistosomiasis")*10)
          * global_param_health("schistosomiasis_param") *
-         temp_change_national_from_2010(t,c))**
+         temp_change_national_from_2010(t,c)**
          global_param_health("deg_nonlinearity_mortality_in_warming") *
          (y_pc(t,c) / y_pc("2010",c))**
          global_param_health("income_elas_vector_mort");

@@ -71,7 +71,6 @@ $include 'country_health.csv'
 $offdelim offlisting
 ;
 
-$exit
 *health
 
          Country_Tol_heat_over65_1(c) = sum(r$rcmap(r,c), regional_health(r,"heat_over65_1"));
