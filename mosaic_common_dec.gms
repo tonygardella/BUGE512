@@ -52,7 +52,7 @@ rcmap(*,*) regional map /
                     SWE)
          JPK . (JPN,KOR)
          ANZ . (AUS,NZL)
-         CEE . (BGR,BIH,CZE,HRV,HUN,MKD,MNE,POL,ROU,SRB,
+         EEU . (BGR,BIH,CZE,HRV,HUN,MKD,MNE,POL,ROU,SRB,
                     SVK,SVN)
          FSU . (ARM,AZE,BLR,EST,GEO,KAZ,KGZ,LTU,LVA,MDA,
                     RUS,TJK,TKM,UKR,UZB)
