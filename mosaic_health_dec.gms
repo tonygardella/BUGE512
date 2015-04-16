@@ -2,7 +2,6 @@
 
 parameters
          urbanization(t,c) percentage of population living in cities
-
          deaths_diarrhea(t,c) additional diarrheal deaths due to climate change
          deaths_vector additional vector borone deaths due to climate change
          deaths_vector_malaria_rate (t,c) change in malara deaths rate
