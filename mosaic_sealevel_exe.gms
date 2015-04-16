@@ -19,7 +19,7 @@
 
 *** Dryland ***
         CD_potential(t,cwet)$(ord(t)>1)  =     min(SLR_par_c(cwet, "dryland_loss") * SLR(t)**(SLR_par_c(cwet, "DEM")), 
-                                                SLR_par_c(cwet, "max_dryland_loss"));
+                                                SLR_par_c(cwet, "max_dryland_loss")*Area("2010",cwet)/sum(r$rcmap(r,cwet), Area("2010",cwet)));
         D_potential(t,cwet)$(ord(t)>1)   =     CD_potential(t,cwet) - CD_actual(t-1,cwet);
         D_actual(t,cwet)$(ord(t)>1)      =     (1 - Protection(t,cwet)) * D_potential(t,cwet);
         CD_actual(t,cwet)$(ord(t)>1)     =     CD_actual(t-1,cwet) + D_actual(t,cwet);

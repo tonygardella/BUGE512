@@ -21,3 +21,5 @@ $batinclude mosaic_health_exe.gms
 
 
 );
+
+display SLR, MAT, TATM, Area;

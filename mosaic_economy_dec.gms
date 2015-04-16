@@ -20,7 +20,13 @@ parameters
          world_emissions(t)  total emissions
          mt2gt               megaton to gigaton                       /1e10/
 
-foo
+* Economy derivative variables
+        Y_pc(t,c)           "Per capita income in nation c at time t"
+        Y_pc_growth(t,c)    "Per captia income growth in nation c at time t"
+        Y_dens(t,c)         "Income density of region t at time r"
+        Y_dens_growth(t,c)  "Income density growth of region t at time r"
+        P_dens(t,c)         "Population density of nation c at time t"
+        P_growth(t,c)       "Population growth rate of nation c at time t"
 ;
 $ontext
 Units:
