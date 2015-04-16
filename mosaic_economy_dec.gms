@@ -20,6 +20,7 @@ parameters
          world_emissions(t)  total emissions
          mt2gt               megaton to gigaton                       /1e10/
 
+foo
 ;
 $ontext
 Units:
@@ -57,7 +58,7 @@ $include gdp_grate.csv
 $offdelim
 ;
 
-         k("2010",c)       =     initparam("k",c);
+         k("2010",c)       =     1000 * initparam("k",c);
 
          s(c)              =     0.01 * initparam("s",c);
 
@@ -71,12 +72,8 @@ $offdelim
 
          aeei(t,c)         =     0.01 * sum(rcmap(r,c), aeeidata(t,r));
 
-         pro(t,c)= pro("2010",c) * (1+prodgr1)**(nyper*ord(t)-1);
+         pro(t,c)= pro("2010",c) * (1+prodgr(t,c))**(nyper*(ord(t)-1));
 
          emiss_int("2010",c)     =     emiss_count("2010",c)/y_gross("2010",c);
 
-         emiss_int(t,c)= emiss_int("2010",c)* (1 + aeei(t,c))**(nyper*ord(t)-1)
-
-        ;
-
-
+         emiss_int(t,c)= emiss_int("2010",c)* (1 + aeei(t,c))**(nyper*(ord(t)-1));
