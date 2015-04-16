@@ -13,20 +13,14 @@ parameters
          aeei                Autonomous energy emissionintensity
          delta               depreciation                             /0.05/
          omega               damage                                   /0/
-         prodgr              productivity growth coefficient          /0.0001/
+         prodgr1             dummy productivity growth rate           /0.01/
          pro                 productivity trend
          eii                 intial emissions intensity
          emiss_int           emissions intensity
          world_emissions(t)  total emissions
          mt2gt               megaton to gigaton                       /1e10/
 
-* Economy derivative variables
-        Y_pc(t,c)               "Per capita income in nation c at time t"
-        Y_pc_growth(t,c)        "Per capita income growth in nation c at time t"
-        Y_dens(t,c)             "Income density of region t at time r"
-        Y_dens_growth(t,c)      "Income density growth of region t at time r"
-        P_dens(t,c)             "Population density of nation c at time t"
-        P_growth(t,c)           "Population growth rate of nation c at time t"
+foo
 ;
 $ontext
 Units:
@@ -58,8 +52,13 @@ $ondelim
 $include aeei_interp.csv
 $offdelim
 ;
+table prodgr(*,*)
+$ondelim
+$include gdp_grate.csv
+$offdelim
+;
 
-         k("2010",c)       =     initparam("k",c);
+         k("2010",c)       =     1000 * initparam("k",c);
 
          s(c)              =     0.01 * initparam("s",c);
 
@@ -73,11 +72,8 @@ $offdelim
 
          aeei(t,c)         =     0.01 * sum(rcmap(r,c), aeeidata(t,r));
 
-         pro(t,c)= pro("2010",c) * (1+prodgr)**(nyper*ord(t)-1);
+         pro(t,c)= pro("2010",c) * (1+prodgr(t,c))**(nyper*(ord(t)-1));
 
          emiss_int("2010",c)     =     emiss_count("2010",c)/y_gross("2010",c);
 
-         emiss_int(t,c)= emiss_int("2010",c)* (1 + aeei(t,c))**(nyper*ord(t)-1)
-
-        ;
-
+         emiss_int(t,c)= emiss_int("2010",c)* (1 + aeei(t,c))**(nyper*(ord(t)-1));
