@@ -1,5 +1,3 @@
-* Declarations for the SolowSwan economy
-
 parameters
          k(t,c)              capital
          i(t,c)              investment
@@ -15,11 +13,12 @@ parameters
          aeei                Autonomous energy emissionintensity
          delta               depreciation                             /0.05/
          omega               damage                                   /0/
-         prodgr              productivity growth coefficient          /0.02/
+         prodgr              productivity growth coefficient          /0.0001/
          pro                 productivity trend
-         eii                 calibrated intial emissions intensity
+         eii                 intial emissions intensity
          emiss_int           emissions intensity
-         world_emissions(t) total emissions
+         world_emissions(t)  total emissions
+         mt2gt               megaton to gigaton                       /1e10/
 
 ;
 $ontext
@@ -61,12 +60,17 @@ $offdelim
 
          l(t,c)            =     pop(t,c);
 
-         a("2010",c)       =     y_gross("2010",c) / [ l("2010",c)**lshr * k("2010",c)**(1 - lshr)];
+         pro("2010",c)       =     y_gross("2010",c) / [ l("2010",c)**lshr * k("2010",c)**(1 - lshr)];
 
          emiss_count("2010",c)       =     initparam("e",c);
 
-         eii("2010",c)     =     emiss_count("2010",c)/y_gross("2010",c);
+         aeei(t,c)         =     0.01 * sum(rcmap(r,c), aeeidata(t,r));
 
-         aeei(t,c)         =     sum(rcmap(r,c), aeeidata(t,r))
+         pro(t,c)= pro("2010",c) * (1+prodgr)**(nyper*ord(t)-1);
+
+         emiss_int("2010",c)     =     emiss_count("2010",c)/y_gross("2010",c);
+
+         emiss_int(t,c)= emiss_int("2010",c)* (1 + aeei(t,c))**(nyper*ord(t)-1)
 
         ;
+
