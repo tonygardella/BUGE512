@@ -15,6 +15,6 @@
 
         CO2_ppm(t)                                         = (MAT(t)/2.13) + CO2_ppm_preind;
         temp_change_interannual(t)$(ord(t) > 1)            = temp(t)- temp(t-1);
-        temp_change_interannual_national(t,c)$(ord(t) > 1) = temp_r(t,c)- temp_r(t-1,c);
+        temp_change_interannual_national(t,c)$(ord(t) > 1) = temp_r(t,c) - temp_r(t-1,c);
         temp_change_from_2010(t)                           = temp(t) - temp("2010");
         temp_change_national_from_2010(t,c)                = temp_r(t,c) - temp_r("2010",c);

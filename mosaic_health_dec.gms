@@ -1,6 +1,10 @@
 *** FUND Health Parameters ***
 
 parameters
+         P_dens(t,c) population density
+         area(c) country area
+         urbanization(t,c) percentage of population living in cities
+
          deaths_diarrhea(t,c) additional diarrheal deaths due to climate change
          deaths_vector additional vector borone deaths due to climate change
          deaths_vector_malaria_rate (t,c) change in malara deaths rate
@@ -18,9 +22,6 @@ parameters
          deaths_cardio_res_heat(t,c) additional heat related cardio-respiratory deaths
          deaths_cardio_res_cold(t,c) additional cold related cardio-respiratory deaths
          total_loss_health(t,c) total $ damages due to climate change related deaths
-         P_dens(t,c) population density
-         area(c) country area
-         urbanization(t,c) percentage of population living in cities
 
          Country_Tol_heat_over65_1(c)
          Country_Tol_heat_over65_2(c)
