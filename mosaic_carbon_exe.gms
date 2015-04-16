@@ -1,6 +1,6 @@
 * DICE carbon cycle model
 * Climate and carbon cycle
-        MAT(t+1)    = MAT(t)*b11 + MU(t)*b21 + world_emissions(t)*(nyper/3.6660));
+        MAT(t+1)    = MAT(t)*b11 + MU(t)*b21 + world_emissions(t)*(nyper/3.6660);
         ML(t+1)     = ML(t)*b33  + MU(t)*b23;
         FORC(t+1)   = fco22x * ((log((MAT(t+1)/588.000))/log(2))) + forcoth(t);
         MU(t+1)     = MAT(t)*b12 + MU(t)*b22 + ML(t)*b32;
