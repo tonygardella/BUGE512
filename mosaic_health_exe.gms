@@ -7,8 +7,8 @@
 
 *DIARRHEA
 
-deaths_diarrhea(t,c) = (country_rate(c,"diarrhea")/1000) *
-         pop(t,c) * (y_pc(t,c) / y_pc("2010",c))**
+deaths_diarrhea(t,c) = (country_rate(c,"diarrhea")/100) *
+         pop(t,c)/1000 * (y_pc(t,c) / y_pc("2010",c))**
          global_param_health("income_elas_diarrhea_mort") *
          (temp_r(t,c) / tempC_preind)**
          global_param_health("diarrhea_mort_response_warming");
@@ -36,11 +36,11 @@ deaths_vector_schis_rate(t,c) = (country_rate(c,"schistosomiasis")*10)
          (y_pc(t,c) / y_pc("2010",c))**
          global_param_health("income_elas_vector_mort");
 
-deaths_vector_malaria(t,c) = deaths_vector_malaria_rate(t,c) * pop(t,c) / 1000;
+deaths_vector_malaria(t,c) = deaths_vector_malaria_rate(t,c) * pop(t,c) / 1000000;
 
-deaths_vector_dengue(t,c) = deaths_vector_dengue_rate(t,c) * pop(t,c) / 1000;
+deaths_vector_dengue(t,c) = deaths_vector_dengue_rate(t,c) * pop(t,c) / 1000000;
 
-deaths_vector_schis(t,c) = deaths_vector_schis_rate(t,c) * pop(t,c) / 1000;
+deaths_vector_schis(t,c) = deaths_vector_schis_rate(t,c) * pop(t,c) / 1000000;
 
 deaths_vector(t,c) = deaths_vector_malaria(t,c) + deaths_vector_dengue(t,c)+
          deaths_vector_schis(t,c);
