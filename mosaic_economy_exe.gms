@@ -13,5 +13,3 @@
          emiss_count(t,c)=(emiss_int(t,c) * y_net(t,c))/ mt2gt;
 
          world_emissions(t)  =    sum( c, emiss_count(t,c));
-
-         y_pc(t,c)   =   y_net(t,c)/pop(t,c)   ;
