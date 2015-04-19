@@ -1,24 +1,25 @@
 parameters
+         nyper               timestep                                 /5/
+         lshr                labor share                              /0.66/
+         omega               damage                                   /0/
+         prodgr1             dummy productivity growth rate           /0.01/
+         t2mt                tons to gigtons                          /1e6/
+         mt2gt               megatons                                 /1e3/
+         lpart(c)            labor participation rate
+         delta(c)            depreciation
          k(t,c)              capital
          i(t,c)              investment
          s(c)                savings
          y_gross(t,c)        output
          y_net(t,c)          income net of damages
-         y_pc(t,c)           income per capita
          a(t,c)              initial tech
          l(t,c)              labor
          emiss_count(t,c)    emissions
-         nyper               timestep                                 /5/
-         lshr                labor share                              /0.66/
-         aeei                Autonomous energy emissionintensity
-         delta               depreciation                             /0.05/
-         omega               damage                                   /0/
-         prodgr1             dummy productivity growth rate           /0.01/
-         pro                 productivity trend
-         eii                 intial emissions intensity
-         emiss_int           emissions intensity
+         aeei(t,c)           Autonomous energy emissionintensity
+         pro(t,c)            productivity trend
+         emiss_int(t,c)      emissions intensity
          world_emissions(t)  total emissions
-         mt2gt               megaton to gigaton                       /1e10/
+         e_intensity(c)      emisions intensity
 
 * Economy derivative variables
         Y_pc(t,c)           "Per capita income in nation c at time t"
@@ -27,6 +28,8 @@ parameters
         Y_dens_growth(t,c)  "Income density growth of region t at time r"
         P_dens(t,c)         "Population density of nation c at time t"
         P_growth(t,c)       "Population growth rate of nation c at time t"
+
+
 ;
 $ontext
 Units:
@@ -41,9 +44,9 @@ $offtext
 
 
 
-table initparam(*,*)  contains params rgdpl-y-e-k-s
+table initparam(*,*)
 $ondelim
-$include 'initparams.csv'
+$include initparams.csv
 $offdelim
 ;
 
@@ -64,13 +67,20 @@ $include gdp_grate.csv
 $offdelim
 ;
 
-         k("2010",c)       =     1000 * initparam("k",c);
 
-         s(c)              =     0.01 * initparam("s",c);
+         lpart(c)          =     initparam("lpart",c);
+
+         k("2010",c)       =     initparam("k",c);
+
+         s(c)              =     initparam("s",c);
 
          y_gross("2010",c) =     initparam("y",c);
 
-         l(t,c)            =     pop(t,c);
+         e_intensity(c)    =     initparam("e_intensity",c);
+
+         delta(c)          =     initparam("delta",c);
+
+         l(t,c)            =     (0.01*lpart(c))*(pop(t,c));
 
          pro("2010",c)       =     y_gross("2010",c) / [ l("2010",c)**lshr * k("2010",c)**(1 - lshr)];
 
@@ -80,6 +90,7 @@ $offdelim
 
          pro(t,c)= pro("2010",c) * (1+prodgr(t,c))**(nyper*(ord(t)-1));
 
-         emiss_int("2010",c)     =     emiss_count("2010",c)/y_gross("2010",c);
+         emiss_int("2010",c)     =     e_intensity(c);
 
          emiss_int(t,c)= emiss_int("2010",c)* (1 + aeei(t,c))**(nyper*(ord(t)-1));
+

@@ -64,14 +64,22 @@ $offtext
 $title    GE512 Integrated Assesment Model
 
 sets
-         t               time                    /2010,2015,2020,2025,2030,2035,2040,2045,2050,2055,2060,2065,2070,2075,2080,2085,2090,2095,2100/
+         t               time                    /2010,2015,2020,2025,2030,2035,
+         2040,2045,2050,2055,2060,2065,2070,2075,2080,2085,2090,2095,2100/
 
-         c               countries               /ARG,ARM,AUS,AUT,AZE,BHS,BHR,BGD,BRB,BLR,BEL,BLZ,BEN,BTN,BOL,BIH,BWA,BRA,BRN,BGR,BFA,BDI,KHM,CMR,CAN,CHL,CHN,COL,
-COM,CRI,CIV,HRV,CYP,CZE,DNK,DJI,DOM,ECU,EGY,SLV,GNQ,EST,ETH,FJI,FIN,FRA,GAB,GMB,GEO,DEU,GHA,GRC,GTM,GIN,GNB,HND,HUN,ISL,IND,IDN,IRN,IRQ,IRL,ISR,ITA,JAM,JPN,JOR,
-KAZ,KEN,KOR,KWT,KGZ,LAO,LVA,LBN,LSO,LBR,LTU,LUX,MKD,MDG,MWI,MYS,MDV,MLI,MLT,MRT,MUS,MEX,MDA,MNG,MNE,MAR,MOZ,NAM,NPL,NLD,NZL,NER,NGA,NOR,OMN,PAK,PAN,PRY,PER,PHL,POL,
-PRT,QAT,ROU,RUS,RWA,STP,SAU,SEN,SRB,SLE,SGP,SVK,SVN,ZAF,ESP,LKA,SDN,SUR,SWZ,SWE,CHE,SYR,TJK,TZA,THA,TGO,TTO,TUN,TUR,TKM,UGA,UKR,GBR,USA,URY,UZB,VEN,VNM,YEM,ZMB,ZWE
-/
-         r regions / USA, CAN, WEU, JPK, ANZ, CEE, FSU, MDE, CAM, SAM, SAS, SEA, CHI,NAF, SSA, SIS/
+         c               countries               /ARG,ARM,AUS,AUT,AZE,BHS,BHR,
+         BGD,BRB,BLR,BEL,BLZ,BEN,BTN,BOL,BIH,BWA,BRA,BRN,BGR,BFA,BDI,KHM,CMR,
+         CAN,CHL,CHN,COL,COM,CRI,CIV,HRV,CYP,CZE,DNK,DJI,DOM,ECU,EGY,SLV,GNQ,
+         EST,ETH,FJI,FIN,FRA,GAB,GMB,GEO,DEU,GHA,GRC,GTM,GIN,GNB,HND,HUN,ISL,
+         IND,IDN,IRN,IRQ,IRL,ISR,ITA,JAM,JPN,JOR,KAZ,KEN,KOR,KWT,KGZ,LAO,LVA,
+         LBN,LSO,LBR,LTU,LUX,MKD,MDG,MWI,MYS,MDV,MLI,MLT,MRT,MUS,MEX,MDA,MNG,
+         MNE,MAR,MOZ,NAM,NPL,NLD,NZL,NER,NGA,NOR,OMN,PAK,PAN,PRY,PER,PHL,POL,
+         PRT,QAT,ROU,RUS,RWA,STP,SAU,SEN,SRB,SLE,SGP,SVK,SVN,ZAF,ESP,LKA,SDN,
+         SUR,SWZ,SWE,CHE,SYR,TJK,TZA,THA,TGO,TTO,TUN,TUR,TKM,UGA,UKR,GBR,USA,
+         URY,UZB,VEN,VNM,YEM,ZMB,ZWE
+         /
+         r regions / USA, CAN, WEU, JPK, ANZ, CEE, FSU, MDE, CAM, SAM, SAS, SEA,
+         CHI,NAF, SSA, SIS/
 
          rcmap(*,*) regional map /
          USA.(USA)
@@ -80,7 +88,7 @@ PRT,QAT,ROU,RUS,RWA,STP,SAU,SEN,SRB,SLE,SGP,SVK,SVN,ZAF,ESP,LKA,SDN,SUR,SWZ,SWE,
               MLT,NLD, NOR, PRT,ESP, SWE, CHE, GBR)
          JPK.(JPN,KOR)
          ANZ.(AUS, NZL)
-         CEE.(BIH,BGR,HRV,CZE,HUN,MKD, POL,ROU,SVK,SVN)
+         EEU.(BIH,BGR,HRV,CZE,HUN,MKD, POL,ROU,SVK,SVN)
          FSU.(ARM, AZE, BLR, EST, GEO, KAZ,KGZ, LVA, LTU, MDA,RUS, TJK,
               TKM, UKR, UZB)
          MDE.(BHR, IRN, IRQ, ISR, JOR, KUW, LBN, OMN,QAT,SAU, SYR, TUR,YEM)
@@ -94,28 +102,46 @@ PRT,QAT,ROU,RUS,RWA,STP,SAU,SEN,SRB,SLE,SGP,SVK,SVN,ZAF,ESP,LKA,SDN,SUR,SWZ,SWE,
               GNB, KEN, LSO, LBR, MDG, MWI,MLI, MRT, MOZ, NAM, NER, NGA,
               RWA, SEN, SLE, ZAF, SDN,SWZ, TZA, TGO, ZMB, ZWE)
          SIS.(BHS, BRB,COM,DOM,FJI,JAM,MDV,MUS, STP, TTO)
-         /;
+         /
+
+
+;
+
+
 
 
 parameters
-         k(t,c)       capital
-         i(t,c)       investment
-         s(c)         savings
-         y_gross(t,c) output
-         y_net(t,c)
-         a(t,c)       initial tech
-         l(t,c)       labor
-         e(t,c)       emissions
-         nyper        timestep                                      /5/
-         lshr         labor share                                   /0.66/
-         aeei         Autonomous energy emissionintensity
-         delta        depreciation                                  /0.05/
-         omega        damage                                        /0.05/
-         prodgr       productivity growth coefficient               /0.02/
-         pro          productivity trend
-         eii          intial emissions intensity
-         ei           emissions intensity
-         te           total emissions
+         nyper               timestep                                 /5/
+         lshr                labor share                              /0.66/
+         omega               damage                                   /0/
+         prodgr1             dummy productivity growth rate           /0.01/
+         t2mt                tons to gigtons                          /1e6/
+         mt2gt               megatons                                 /1e3/
+         lpart(c)            labor participation rate
+         delta(c)            depreciation
+         k(t,c)              capital
+         i(t,c)              investment
+         s(c)                savings
+         y_gross(t,c)        output
+         y_net(t,c)          income net of damages
+         a(t,c)              initial tech
+         l(t,c)              labor
+         emiss_count(t,c)    emissions
+         aeei(t,c)           Autonomous energy emissionintensity
+         pro(t,c)            productivity trend
+         emiss_int(t,c)      emissions intensity
+         world_emissions(t)  total emissions
+         e_intensity(c)      emisions intensity
+
+* Economy derivative variables
+        Y_pc(t,c)           "Per capita income in nation c at time t"
+        Y_pc_growth(t,c)    "Per captia income growth in nation c at time t"
+        Y_dens(t,c)         "Income density of region t at time r"
+        Y_dens_growth(t,c)  "Income density growth of region t at time r"
+        P_dens(t,c)         "Population density of nation c at time t"
+        P_growth(t,c)       "Population growth rate of nation c at time t"
+
+
 ;
 $ontext
 Units:
@@ -130,9 +156,9 @@ $offtext
 
 
 
-table initparam(*,*)  contains params rgdpl-y-e-k-s
+table initparam(*,*)
 $ondelim
-$include 'initparams.csv'
+$include initparams.csv
 $offdelim
 ;
 
@@ -147,53 +173,63 @@ $ondelim
 $include aeei_interp.csv
 $offdelim
 ;
+table prodgr(*,*)
+$ondelim
+$include gdp_grate.csv
+$offdelim
+;
+
+
+         lpart(c)          =     initparam("lpart",c);
 
          k("2010",c)       =     initparam("k",c);
 
-         s(c)              =     0.01 * initparam("s",c);
+         s(c)              =     initparam("s",c);
 
          y_gross("2010",c) =     initparam("y",c);
 
-         l(t,c)            =     pop(t,c);
+         e_intensity(c)    =     initparam("e_intensity",c);
 
-         a("2010",c)       =     y_gross("2010",c) / [ l("2010",c)**lshr * k("2010",c)**(1 - lshr)];
+         delta(c)          =     initparam("delta",c);
 
-         e("2010",c)       =    initparam("e",c);
+         l(t,c)            =     (0.01*lpart(c))*(pop(t,c));
 
-         eii("2010",c)     =     e("2010",c)/y_gross("2010",c);
+         pro("2010",c)       =     y_gross("2010",c) / [ l("2010",c)**lshr * k("2010",c)**(1 - lshr)];
 
-         aeei(t,c)         =     sum(rcmap(r,c), aeeidata(t,r))
+         emiss_count("2010",c)       =     initparam("e",c);
 
-        ;
+         aeei(t,c)         =     0.01 * sum(rcmap(r,c), aeeidata(t,r));
+
+         pro(t,c)= pro("2010",c) * (1+prodgr(t,c))**(nyper*(ord(t)-1));
+
+         emiss_int("2010",c)     =     e_intensity(c);
+
+         emiss_int(t,c)= emiss_int("2010",c)* (1 - aeei(t,c))**(nyper*(ord(t)-1));
+
+
 
 
 loop(t,
 *GLOBAL Solow-Swan economic growth model
-         pro(t,c)= a("2010",c) * exp(prodgr*ord(t)-1);
-
-         a(t,c)= y_gross(t,c) / [ l(t,c)**lshr * k(t,c)**(1 - lshr)];
-
          y_gross(t,c)=pro(t,c)*l(t,c)**(lshr) * k(t,c)**(1-lshr);
 
-* for now there is y_gross=y_net
-
-         y_net(t,c)= y_gross(t,c);
+         y_net(t,c)= (1-omega) * y_gross(t,c);
 
          i(t,c)=s(c)*y_net(t,c)*nyper;
 
-         k(t+1,c)=i(t,c)+(1-delta)**nyper *k(t,c);
+         k(t+1,c)=i(t,c)+(1-delta(c))**nyper *k(t,c);
 
-         ei(t,c)= eii("2010",c)*exp(- aeei(t,c)*ord(t)-1);
+         emiss_count(t,c)=(emiss_int(t,c) * y_net(t,c))/t2mt;
 
-         e(t,c)=(ei(t,c) * y_net(t,c))/ 10**9;
+         world_emissions(t)  =    sum( c, emiss_count(t,c))/mt2gt;
 
-         te(t)       =    sum( c, e(t,c))
+         y_pc(t,c)   =   y_gross(t,c)/pop(t,c)  ;
+
+
+
 );
 
-display e, ei, te, pro
-
-
-$exit
+display     aeei
 
 file outfile /result.txt/;
 put outfile;
@@ -207,7 +243,7 @@ put /;
 loop(c,
          put c.tl;
          loop(t,
-                 put e(t,c);
+                 put y_gross(t,c);
          );
          put /;
 );
