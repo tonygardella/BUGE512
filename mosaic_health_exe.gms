@@ -1,6 +1,6 @@
 *health
 
-         urbanization(t,c) = ((global_param_health("urbanization_param_1")*sqrt(y_pc(t,c)))
+urbanization(t,c) = ((global_param_health("urbanization_param_1")*sqrt(y_pc(t,c)))
                   + (global_param_health("urbanization_param_2")*sqrt(P_dens(t,c))))/
                  (1 + global_param_health("urbanization_param_1")*sqrt(y_pc(t,c))
                   + (global_param_health("urbanization_param_2")*sqrt(P_dens(t,c))));
