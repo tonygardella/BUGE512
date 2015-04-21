@@ -10,6 +10,7 @@ $include mosaic_carbon_dec.gms
 $include mosaic_sealevel_dec.gms
 $include mosaic_ag_for_ecos_energ_dec.gms
 $include mosaic_health_dec.gms
+$include mosaic_WaterResources_dec.gms
 
 loop(t,
 
@@ -18,6 +19,7 @@ $batinclude mosaic_carbon_exe.gms
 $batinclude mosaic_sealevel_exe.gms
 $batinclude mosaic_ag_for_ecos_energ_exe.gms
 $batinclude mosaic_health_exe.gms
+$batinclude mosaic_WaterResources_exe.gms
 
 
 );
