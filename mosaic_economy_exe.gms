@@ -5,10 +5,17 @@
 
          i(t,c)=s(c)*y_net(t,c)*nyper;
 
+
          k(t+1,c)=i(t,c)+(1-delta(c))**nyper *k(t,c);
+
 
          emiss_count(t,c)=(emiss_int(t,c) * y_net(t,c))/t2mt;
 
+
          world_emissions(t)  =    sum( c, emiss_count(t,c))/mt2gt;
+
+
+         y_region(t,r)= sum(rcmap(r,c),y_net(t,c));
+
 
          y_pc(t,c)   =   y_gross(t,c)/pop(t,c)  ;

@@ -1,8 +1,10 @@
 parameters
-         nyper               timestep                                 /5/
+                nyper               timestep                                 /5/
          lshr                labor share                              /0.66/
          omega               damage                                   /0/
-         prodgr1             dummy productivity growth rate           /0.01/
+         prodgr1             dummy productivity growth rate           /0.1/
+         delta1              dummy depreciation rate                  /0.02/
+         s1                  dummy savings rate                       /0.2/
          t2mt                tons to gigtons                          /1e6/
          mt2gt               megatons                                 /1e3/
          lpart(c)            labor participation rate
@@ -19,7 +21,8 @@ parameters
          pro(t,c)            productivity trend
          emiss_int(t,c)      emissions intensity
          world_emissions(t)  total emissions
-         e_intensity(c)      emisions intensity
+         e_intensity(c)      emissions intensity
+         y_region(t,r)       output by regions
 
 * Economy derivative variables
         Y_pc(t,c)           "Per capita income in nation c at time t"
@@ -92,5 +95,4 @@ $offdelim
 
          emiss_int("2010",c)     =     e_intensity(c);
 
-         emiss_int(t,c)= emiss_int("2010",c)* (1 + aeei(t,c))**(nyper*(ord(t)-1));
-
+         emiss_int(t,c)= emiss_int("2010",c)* (1 - aeei(t,c))**(nyper*(ord(t)-1));

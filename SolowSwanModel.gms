@@ -78,7 +78,7 @@ sets
          SUR,SWZ,SWE,CHE,SYR,TJK,TZA,THA,TGO,TTO,TUN,TUR,TKM,UGA,UKR,GBR,USA,
          URY,UZB,VEN,VNM,YEM,ZMB,ZWE
          /
-         r regions / USA, CAN, WEU, JPK, ANZ, CEE, FSU, MDE, CAM, SAM, SAS, SEA,
+         r regions / USA, CAN, WEU, JPK, ANZ, EEU, FSU, MDE, CAM, SAM, SAS, SEA,
          CHI,NAF, SSA, SIS/
 
          rcmap(*,*) regional map /
@@ -91,11 +91,11 @@ sets
          EEU.(BIH,BGR,HRV,CZE,HUN,MKD, POL,ROU,SVK,SVN)
          FSU.(ARM, AZE, BLR, EST, GEO, KAZ,KGZ, LVA, LTU, MDA,RUS, TJK,
               TKM, UKR, UZB)
-         MDE.(BHR, IRN, IRQ, ISR, JOR, KUW, LBN, OMN,QAT,SAU, SYR, TUR,YEM)
+         MDE.(BHR, IRN, IRQ, ISR, JOR, KWT, LBN, OMN,QAT,SAU, SYR, TUR,YEM)
          CAM.(BLZ, CRI, SLV, GTM, HND, MEX, PAN)
          SAM.(ARG, BOL, BRA, CHL, COL, ECU,PRY,PER,SUR,URY,VEN)
          SAS.(BGD, BTN, IND, NPL, PAK,LKA)
-         SEA.(BRN, KHM, IND, LAO, MYS, PHL, SGP, THA, VNM)
+         SEA.(BRN, KHM, IDN, LAO, MYS, PHL, SGP, THA, VNM)
          CHI.(CHN, MNG)
          NAF.( EGY, MAR, TUN)
          SSA.(BEN, BWA, BFA, BDI,CMR, CIV,DJI,GNQ, ETH, GAB, GMB, GHA, GIN,
@@ -114,7 +114,9 @@ parameters
          nyper               timestep                                 /5/
          lshr                labor share                              /0.66/
          omega               damage                                   /0/
-         prodgr1             dummy productivity growth rate           /0.01/
+         prodgr1             dummy productivity growth rate           /0.1/
+         delta1              dummy depreciation rate                  /0.02/
+         s1                  dummy savings rate                       /0.2/
          t2mt                tons to gigtons                          /1e6/
          mt2gt               megatons                                 /1e3/
          lpart(c)            labor participation rate
@@ -131,7 +133,8 @@ parameters
          pro(t,c)            productivity trend
          emiss_int(t,c)      emissions intensity
          world_emissions(t)  total emissions
-         e_intensity(c)      emisions intensity
+         e_intensity(c)      emissions intensity
+         y_region(t,r)       output by regions
 
 * Economy derivative variables
         Y_pc(t,c)           "Per capita income in nation c at time t"
@@ -217,11 +220,18 @@ loop(t,
 
          i(t,c)=s(c)*y_net(t,c)*nyper;
 
+
          k(t+1,c)=i(t,c)+(1-delta(c))**nyper *k(t,c);
+
 
          emiss_count(t,c)=(emiss_int(t,c) * y_net(t,c))/t2mt;
 
+
          world_emissions(t)  =    sum( c, emiss_count(t,c))/mt2gt;
+
+
+         y_region(t,r)= sum(rcmap(r,c),y_net(t,c));
+
 
          y_pc(t,c)   =   y_gross(t,c)/pop(t,c)  ;
 
@@ -229,7 +239,9 @@ loop(t,
 
 );
 
-display     aeei
+display     y_region, world_emissions,y_net,y_pc
+
+
 
 file outfile /result.txt/;
 put outfile;
@@ -240,10 +252,10 @@ loop(t,
          put t.tl;
 );
 put /;
-loop(c,
-         put c.tl;
+loop(r,
+         put r.tl;
          loop(t,
-                 put y_gross(t,c);
+                 put y_region(t,r);
          );
          put /;
 );
