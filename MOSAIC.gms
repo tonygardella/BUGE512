@@ -1,9 +1,3 @@
-$ontext
-MOSAIC MODEL
--Duplicate AEEI calls must be harmonized (economy-agriculture models)
-
-$offtext
-
 $include mosaic_common_dec.gms
 $include mosaic_economy_dec.gms
 $include mosaic_carbon_dec.gms
@@ -21,7 +15,6 @@ $batinclude mosaic_ag_for_ecos_energ_exe.gms
 $batinclude mosaic_health_exe.gms
 $batinclude mosaic_WaterResources_exe.gms
 
-
 );
 
-display SLR, MAT, TATM, Area, total_loss_health;
+display IA, sa, IAI, y_net;

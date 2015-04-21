@@ -4,8 +4,8 @@ Al(t,c)                  =       ag_par_cntry(c,"deltal") * temp_change_national
 Af(t,c)                  =       ag_par_cntry(c,"gamma") * log(CO2_ppm(t)/275);
 IA(t,c)                  =       Ar(t,c) + Al(t,c) + Af(t,c);
 
-sa(t,c)                  =       shr_ag(c,"share") * (y_pc("2010",c)/y_pc(t,c))**ag_par_glob("epsilon");
-IAI(t,c)                 =       (IA(t,c) * sa(t,c))/100;
+sa(t,c)                  =       shr_ag(c,"share")*0.01 * (y_pc("2010",c)/y_pc(t,c))**ag_par_glob("epsilon");
+IAI(t,c)                 =       IA(t,c)*0.01 * sa(t,c) * y_net(t,c);
 
 *ECOSYSTEMS
 B(t)$(ord(t) > 1)        =       max(ecos_par_glob("Bo")/100,

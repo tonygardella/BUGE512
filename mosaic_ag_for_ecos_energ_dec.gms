@@ -61,7 +61,7 @@ Ar(t,c)                          "Damage in ag. prod. as a fraction due to rate 
 Al(t,c)                          "Damage in ag. prod. as a fraction due to level of CC"
 Af(t,c)                          "Damage in ag. prod. as a fraction due to carbon dioxide fertilization"
 sa(t,c)                          "Share of ag. prod. in income, over time"
-IAI(t,c)                         "Impacts on agriculture as percentage of income"
+IAI(t,c)                         "Impacts on agriculture in USD"
 
 ag_par_cntry(c,*)                "Ag. parameters by country"
 
