@@ -18,7 +18,7 @@ parameters
          change_cardio_res_cold_under65(t,c) Tol parameters climate induced mortality per 100000
          deaths_cardio_res_heat(t,c) additional heat related cardio-respiratory deaths
          deaths_cardio_res_cold(t,c) additional cold related cardio-respiratory deaths
-         total_loss_health(t,c) total $ damages due to climate change related deaths
+         total_loss_health(t,c) total $ gain-loss due to climate change related deaths
 
          Country_Tol_heat_over65_1(c)
          Country_Tol_heat_over65_2(c)
@@ -48,9 +48,9 @@ parameters
                  "normalization_constant"                   24963
                  "income_elas_value_of_life"                1.00
                  "income_elas_value_of_year_morb"           1.00
-                 "malaria_param"                            0.0794
-                 "dengue_param"                             0.3534
-                 "schistosomiasis_param"                   -0.1149
+                 "malaria_param"                            0.0575
+                 "dengue_param"                             0.0614
+                 "schistosomiasis_param"                    0.0614
                  "urbanization_param_1"                     0.031
                  "urbanization_param_2"                    -0.011
          /;

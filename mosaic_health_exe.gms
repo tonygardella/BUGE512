@@ -36,11 +36,11 @@ deaths_vector_schis_rate(t,c) = (country_rate(c,"schistosomiasis")*10)
          (y_pc(t,c) / y_pc("2010",c))**
          global_param_health("income_elas_vector_mort");
 
-deaths_vector_malaria(t,c) = deaths_vector_malaria_rate(t,c) * pop(t,c) / 1000000;
+deaths_vector_malaria(t,c) = deaths_vector_malaria_rate(t,c) * pop(t,c) / 1000;
 
-deaths_vector_dengue(t,c) = deaths_vector_dengue_rate(t,c) * pop(t,c) / 1000000;
+deaths_vector_dengue(t,c) = deaths_vector_dengue_rate(t,c) * pop(t,c) / 1000;
 
-deaths_vector_schis(t,c) = deaths_vector_schis_rate(t,c) * pop(t,c) / 1000000;
+deaths_vector_schis(t,c) = deaths_vector_schis_rate(t,c) * pop(t,c) / 1000;
 
 deaths_vector(t,c) = deaths_vector_malaria(t,c) + deaths_vector_dengue(t,c)+
          deaths_vector_schis(t,c);
@@ -49,22 +49,22 @@ deaths_vector(t,c) = deaths_vector_malaria(t,c) + deaths_vector_dengue(t,c)+
 
 change_cardio_res_hot_over65(t,c) = (Country_Tol_heat_over65_1(c) *
          temp_change_from_preind_national(t,c) + Country_Tol_heat_over65_2(c) *
-         temp_change_from_preind_national(t,c)** 2)* pop(t,c) / 100 ;
+         temp_change_from_preind_national(t,c)** 2)* pop(t,c) / 100000 ;
 
 change_cardio_res_hot_under65(t,c) = (Country_Tol_heat_under65_1(c) *
          temp_change_from_preind_national(t,c) + Country_Tol_heat_under65_2(c) *
-         (temp_change_from_preind_national(t,c))** 2) * pop(t,c) / 100 ;
+         (temp_change_from_preind_national(t,c))** 2) * pop(t,c) / 100000 ;
 
 deaths_cardio_res_heat(t,c) = (change_cardio_res_hot_over65(t,c) +
          change_cardio_res_hot_under65(t,c)) * urbanization(t,c);
 
 change_cardio_res_cold_over65(t,c) = (Country_Tol_cold_over65_1(c) *
          temp_change_from_preind_national(t,c) + Country_Tol_cold_over65_2(c) *
-         temp_change_from_preind_national(t,c)**2) * pop(t,c) / 100;
+         temp_change_from_preind_national(t,c)**2) * pop(t,c) / 100000;
 
 change_cardio_res_cold_under65(t,c) = (Country_Tol_cold_under65_1(c) *
          temp_change_from_preind_national(t,c) + Country_Tol_cold_under65_2(c) *
-         temp_change_from_preind_national(t,c)**2) * pop(t,c) / 100;
+         temp_change_from_preind_national(t,c)**2) * pop(t,c) / 100000;
 
 deaths_cardio_res_cold(t,c) = change_cardio_res_cold_over65(t,c) +
          change_cardio_res_cold_under65(t,c);
@@ -81,6 +81,6 @@ value_year_morb(t,c) = global_param_health("mort_morb_no_description_2") *
 
 *TOTAL DAMAGES LOST DUE TO CLIMATE CHANGE
 
-total_loss_health(t,c) = (deaths_diarrhea(t,c) + deaths_vector(t,c) +
+total_loss_health(t,c) = -(deaths_diarrhea(t,c) + deaths_vector(t,c) +
          deaths_cardio_res_heat(t,c) + deaths_cardio_res_cold(t,c)) *
          value_life(t,c);
