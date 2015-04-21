@@ -24,4 +24,4 @@ $batinclude mosaic_WaterResources_exe.gms
 
 );
 
-display SLR, MAT, TATM, Area, total_loss_health;
+display SLR, MAT, TATM, Area, total_loss_health, W, TD, TM, ETD, ETM;
