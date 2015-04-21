@@ -22,4 +22,4 @@ $batinclude mosaic_health_exe.gms
 
 );
 
-display SLR, MAT, TATM, Area;
+display SLR, MAT, TATM, Area, total_loss_health;
