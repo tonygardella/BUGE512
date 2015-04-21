@@ -142,11 +142,6 @@ $include 'energ_par_reg.csv'
 $offdelim offlisting
 ;
 
-*ADDITIONAL, TO BE INCLUDED IN COMMON OR ECONOMIC SECTION
-parameter
-Y_pc(t,c)                        "Income per capita"
-;
-
 *************************************************************
 *Initialization
 
@@ -169,6 +164,3 @@ for_par_cntry(c,"alpha")                         =       sum(rcmap(r,c), for_par
 energ_par_cntry(c,"aheat")                       =       sum(rcmap(r,c), energ_par_reg(r,"aheat"));
 energ_par_cntry(c,"acool")                       =       sum(rcmap(r,c), energ_par_reg(r,"acool"));
 aeei_cntry(t,c)                                  =       sum(rcmap(r,c), aeeidata(t,r));
-
-*OTHER, TO BE INCLUDED IN ECONOMIC MODEL?
-Y_pc(t,c)                        =       y_gross(t,c)/pop(t,c);
