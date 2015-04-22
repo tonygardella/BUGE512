@@ -23,7 +23,7 @@ F(t,c)                   =       for_par_cntry(c,"alpha") * (y_pc(t,c)/y_pc("201
 *ENERGY
 *This equation has a divide by zero error in exec. time, caused by missing countries in the pop table.
 energ_term(t,c)          =       ((y_pc(t,c)/y_pc("2010",c))**energ_par_glob("epsilon") *
-                                 (pop(t,c)/pop("2010",c))) / aeei_cntry(t,c);
+                                 (pop(t,c)/pop("2010",c))) / aeei(t,c);
 
 *SH is going up and SC is going down, but equations are correct.
 SH(t,c)                  =        energ_par_cntry(c,"aheat") * Y_gross("2010",c) * (arctan(temp_change_from_2010(t))/arctan(1)) * energ_term(t,c);

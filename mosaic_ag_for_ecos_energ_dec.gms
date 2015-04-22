@@ -163,4 +163,4 @@ for_par_cntry(c,"alpha")                         =       sum(rcmap(r,c), for_par
 
 energ_par_cntry(c,"aheat")                       =       sum(rcmap(r,c), energ_par_reg(r,"aheat"));
 energ_par_cntry(c,"acool")                       =       sum(rcmap(r,c), energ_par_reg(r,"acool"));
-aeei_cntry(t,c)                                  =       sum(rcmap(r,c), aeeidata(t,r));
+
