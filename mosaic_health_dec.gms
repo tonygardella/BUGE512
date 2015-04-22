@@ -2,6 +2,7 @@
 
 parameters
          urbanization(t,c) percentage of population living in cities
+         pop_under65(t,c) percentage of population under 65 years of age
          deaths_diarrhea(t,c) additional diarrheal deaths due to climate change
          deaths_vector additional vector borone deaths due to climate change
          deaths_vector_malaria_rate (t,c) change in malara deaths rate
@@ -12,13 +13,16 @@ parameters
          deaths_vector_schis (t,c) additional schistosomiasis deaths
          value_life(t,c) value of a statisical life
          value_year_morb(t,c) value of a year of morbidity
-         change_cardio_res_hot_over65(t,c) Tol parameters climate induced mortality per 100000
-         change_cardio_res_hot_under65(t,c) Tol parameters climate induced mortality per 100000
-         change_cardio_res_cold_over65(t,c) Tol parameters climate induced mortality per 100000
-         change_cardio_res_cold_under65(t,c) Tol parameters climate induced mortality per 100000
-         deaths_cardio_res_heat(t,c) additional heat related cardio-respiratory deaths
-         deaths_cardio_res_cold(t,c) additional cold related cardio-respiratory deaths
+         change_cardio_hot_over65(t,c) Tol parameters climate induced mortality per 100000
+         change_cardio_hot_under65(t,c) Tol parameters climate induced mortality per 100000
+         change_cardio_cold_over65(t,c) Tol parameters climate induced mortality per 100000
+         change_cardio_cold_under65(t,c) Tol parameters climate induced mortality per 100000
+         deaths_cardio_heat(t,c) additional heat related cardiovascular deaths
+         deaths_cardio_cold(t,c) additional cold related cardiovascular deaths  4
+         deaths_respiratory(t,c) additional respiratory deaths due to climate change
+         total_deaths(t,c) total number of deaths associated with climate change
          total_loss_health(t,c) total $ gain-loss due to climate change related deaths
+         total_loss_health_percentage(t,c) total loss as a percentage of GDP
 
          Country_Tol_heat_over65_1(c)
          Country_Tol_heat_over65_2(c)
@@ -36,6 +40,8 @@ parameters
          Country_Tol_cold_under65_2(c)
          Country_Tol_cold_under65_1mort(c)
          Country_Tol_cold_under65_2mort(c)
+         Country_Tol_respiratory_1(c)
+         Country_Tol_respiratory_2(c)
          Country_Tol_diarrhea(c)
 
          global_param_health(*)  Tol parameters /
@@ -48,9 +54,9 @@ parameters
                  "normalization_constant"                   24963
                  "income_elas_value_of_life"                1.00
                  "income_elas_value_of_year_morb"           1.00
-                 "malaria_param"                            0.0575
-                 "dengue_param"                             0.0614
-                 "schistosomiasis_param"                    0.0614
+                 "malaria_param"                            0.0794
+                 "dengue_param"                             0.3534
+                 "schistosomiasis_param"                   -0.1149
                  "urbanization_param_1"                     0.031
                  "urbanization_param_2"                    -0.011
          /;
@@ -65,6 +71,12 @@ $offdelim offlisting
 table country_rate(c,*) death rates per 100000
 $ondelim onlisting
 $include 'country_health.csv'
+$offdelim offlisting
+;
+
+table pop_under65(t,c) population under 65 years of age
+$ondelim onlisting
+$include 'population_under65.csv'
 $offdelim offlisting
 ;
 
@@ -86,6 +98,8 @@ $offdelim offlisting
          Country_Tol_cold_under65_2(c) = sum(r$rcmap(r,c), regional_health(r,"cold_under65_2"));
          Country_Tol_cold_under65_1mort(c) = sum(r$rcmap(r,c), regional_health(r,"cold_under65_1mort"));
          Country_Tol_cold_under65_2mort(c) = sum(r$rcmap(r,c), regional_health(r,"cold_under65_2mort"));
+         Country_Tol_respiratory_1(c) = sum(r$rcmap(r,c), regional_health(r,"respiratory_1"));
+         Country_Tol_respiratory_2(c) = sum(r$rcmap(r,c), regional_health(r,"respiratory_2"));
          Country_Tol_diarrhea(c) = sum(r$rcmap(r,c), regional_health(r,"diarrhea"));
 
 ;
