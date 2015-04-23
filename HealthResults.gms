@@ -145,6 +145,7 @@ loop(c,
          put /;
 );
 put /;
+
 put "Dengue Fever Deaths due to Climate Change (by country)"
 put /;
 put "";
@@ -160,6 +161,7 @@ loop(c,
          put /;
 );
 put /;
+
 put "Schistosomisis Deaths due to Climate Change (by country)"
 put /;
 put "";
