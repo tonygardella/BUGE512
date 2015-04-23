@@ -134,7 +134,11 @@ parameters
          emiss_int(t,c)      emissions intensity
          world_emissions(t)  total emissions
          e_intensity(c)      emissions intensity
-         y_region(t,r)       output by regions
+         y_region(t,r)
+         y_percapita_region(t,r)
+         emiss_region(t,r)
+         y_world(t)
+         y_percapita_world(t)
 
 * Economy derivative variables
         Y_pc(t,c)           "Per capita income in nation c at time t"
@@ -144,8 +148,9 @@ parameters
         P_dens(t,c)         "Population density of nation c at time t"
         P_growth(t,c)       "Population growth rate of nation c at time t"
 
+$include mosaic_carbon_dec.gms
 
-;
+
 $ontext
 Units:
 K=2010 Capital stock at current PPPs (in mil. 2005US$) (ppp=purchasing power parity)
@@ -201,18 +206,19 @@ $offdelim
 
          emiss_count("2010",c)       =     initparam("e",c);
 
-         aeei(t,c)         =     0.01 * sum(rcmap(r,c), aeeidata(t,r));
+         aeei(t,c)         =    0.01 *sum(rcmap(r,c), aeeidata(t,r));
 
          pro(t,c)= pro("2010",c) * (1+prodgr(t,c))**(nyper*(ord(t)-1));
 
          emiss_int("2010",c)     =     e_intensity(c);
 
-         emiss_int(t,c)= emiss_int("2010",c)* (1 - aeei(t,c))**(nyper*(ord(t)-1));
+         emiss_int(t,c)= emiss_int("2010",c)* (1 + aeei(t,c))**(nyper*(ord(t)-1));
 
 
 
 
 loop(t,
+
 *GLOBAL Solow-Swan economic growth model
          y_gross(t,c)=pro(t,c)*l(t,c)**(lshr) * k(t,c)**(1-lshr);
 
@@ -220,45 +226,32 @@ loop(t,
 
          i(t,c)=s(c)*y_net(t,c)*nyper;
 
-
          k(t+1,c)=i(t,c)+(1-delta(c))**nyper *k(t,c);
-
 
          emiss_count(t,c)=(emiss_int(t,c) * y_net(t,c))/t2mt;
 
+         y_pc(t,c)   =   y_gross(t,c)/pop(t,c)  ;
 
-         world_emissions(t)  =    sum( c, emiss_count(t,c))/mt2gt;
-
+*Output and emissions by region
 
          y_region(t,r)= sum(rcmap(r,c),y_net(t,c));
 
+         y_percapita_region(t,r) = sum(rcmap(r,c),y_pc(t,c));
 
-         y_pc(t,c)   =   y_gross(t,c)/pop(t,c)  ;
+         emiss_region(t,r) = sum(rcmap(r,c),emiss_count(t,c));
+*Output and emission of the world
 
+         y_world(t)= sum(r,y_region(t,r));
 
+         y_percapita_world(t) = sum(r,y_percapita_region(t,r));
+
+         world_emissions(t)  = sum( c, emiss_count(t,c))/mt2gt;
+
+$batinclude mosaic_carbon_exe.gms
 
 );
 
-display     y_region, world_emissions,y_net,y_pc
+display     y_region, world_emissions,y_net,y_pc, TATM
 
-
-
-file outfile /result.txt/;
-put outfile;
-outfile.pc       =       6;
-
-put "";
-loop(t,
-         put t.tl;
-);
-put /;
-loop(r,
-         put r.tl;
-         loop(t,
-                 put y_region(t,r);
-         );
-         put /;
-);
-
-putclose outfile;
+$include SolowSwanResults.gms
 
