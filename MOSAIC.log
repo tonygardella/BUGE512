@@ -1,0 +1,54 @@
+
+--- Job MOSAIC.gms Start 04/22/15 22:52:45 24.4.1 r50296 WEX-WEI x86 64bit/MS Windows
+GAMS 24.4.1   Copyright (C) 1987-2014 GAMS Development. All rights reserved
+Licensee: Department of Geography & Environment          G150120:1703AO-GEN
+          Boston University                                         DC11530
+          License for teaching and research at degree granting institutions
+--- Starting compilation
+--- MOSAIC.gms(1) 2 Mb
+--- .mosaic_common_dec.gms(138) 3 Mb
+--- ..SLR_national_pars.dat(151) 3 Mb
+--- .mosaic_common_dec.gms(141) 3 Mb
+--- MOSAIC.gms(2) 3 Mb
+--- .mosaic_economy_dec.gms(52) 3 Mb
+--- ..initparams.csv(9) 3 Mb
+--- .mosaic_economy_dec.gms(58) 3 Mb
+--- ..population.csv(20) 3 Mb
+--- .mosaic_economy_dec.gms(64) 3 Mb
+--- ..aeei_interp.csv(20) 3 Mb
+--- .mosaic_economy_dec.gms(69) 3 Mb
+--- ..gdp_grate.csv(20) 3 Mb
+--- .mosaic_economy_dec.gms(98) 3 Mb
+--- MOSAIC.gms(3) 3 Mb
+--- .mosaic_carbon_dec.gms(67) 3 Mb
+--- ..regional_temp_scaling.dat(17) 3 Mb
+--- .mosaic_carbon_dec.gms(88) 3 Mb
+--- MOSAIC.gms(5) 3 Mb
+--- .mosaic_ag_for_ecos_energ_dec.gms(71) 3 Mb
+--- ..ag_par_glob.txt(3) 3 Mb
+--- .mosaic_ag_for_ecos_energ_dec.gms(78) 3 Mb
+--- ..ag_par_reg.csv(17) 3 Mb
+--- .mosaic_ag_for_ecos_energ_dec.gms(85) 3 Mb
+--- ..ag_gdpshare_cc.csv(137) 3 Mb
+--- .mosaic_ag_for_ecos_energ_dec.gms(102) 3 Mb
+--- ..ecos_par_glob.txt(7) 3 Mb
+--- .mosaic_ag_for_ecos_energ_dec.gms(110) 3 Mb
+--- ..for_par_glob.txt(3) 3 Mb
+--- .mosaic_ag_for_ecos_energ_dec.gms(117) 3 Mb
+--- ..for_par_reg.csv(17) 3 Mb
+--- .mosaic_ag_for_ecos_energ_dec.gms(134) 3 Mb
+--- ..energ_par_glob.txt(2) 3 Mb
+--- .mosaic_ag_for_ecos_energ_dec.gms(141) 3 Mb
+--- ..energ_par_reg.csv(17) 3 Mb
+--- .mosaic_ag_for_ecos_energ_dec.gms(173) 3 Mb
+--- MOSAIC.gms(12) 3 Mb
+--- .mosaic_economy_exe.gms(21) 3 Mb
+--- MOSAIC.gms(13) 3 Mb
+--- .mosaic_carbon_exe.gms(20) 3 Mb
+--- MOSAIC.gms(15) 3 Mb
+--- .mosaic_ag_for_ecos_energ_exe.gms(37) 3 Mb
+--- MOSAIC.gms(39) 3 Mb
+--- Starting execution: elapsed 0:00:00.016
+--- MOSAIC.gms(1038) 7 Mb
+*** Status: Normal completion
+--- Job MOSAIC.gms Stop 04/22/15 22:52:45 elapsed 0:00:00.098

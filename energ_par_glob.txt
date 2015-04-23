@@ -1,2 +1,2 @@
-epsilon	0.8
-beta	1.5
+epsilon	0.5
+beta	1

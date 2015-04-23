@@ -142,6 +142,13 @@ $include 'energ_par_reg.csv'
 $offdelim offlisting
 ;
 
+parameter
+         IAI_y(t,c)              "Impacts on ag. as fraction of GDP"
+         F_y(t,c)                "Impacts on forestry IN USD"
+         LE_y(t,c)               "Impacts on ecosystems as fraction of GDP"
+         SH_y(t,c)               "Spending on space heating as fraction of GDP"
+         SC_y(t,c)               "Spending on space cooling as fraction of GDP";
+
 *************************************************************
 *Initialization
 

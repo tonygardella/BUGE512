@@ -21,11 +21,17 @@ F(t,c)                   =       for_par_cntry(c,"alpha") * (y_pc(t,c)/y_pc("201
                                  (0.5 * temp(t)**for_par_glob("beta") + 0.5 * for_par_glob("gamma") * log(CO2_ppm(t)/275));
 
 *ENERGY
-*This equation has a divide by zero error in exec. time, caused by missing countries in the pop table.
 energ_term(t,c)          =       ((y_pc(t,c)/y_pc("2010",c))**energ_par_glob("epsilon") *
                                  (pop(t,c)/pop("2010",c))) / aeei(t,c);
 
-*SH is going up and SC is going down, but equations are correct.
+*SH and SH are bigger than y_net for some countries after towards the end of the century
 SH(t,c)                  =        energ_par_cntry(c,"aheat") * Y_gross("2010",c) * (arctan(temp_change_from_2010(t))/arctan(1)) * energ_term(t,c);
 SC(t,c)                  =        energ_par_cntry(c,"acool") * Y_gross("2010",c) * (temp_change_from_2010(t))**energ_par_glob("beta") * energ_term(t,c);
+
+*Impacts as fraction of GDP except for Forestry(F_y), for which is the value in USD
+IAI_y(t,c)               =       IAI(t,c)/y_net(t,c);
+F_y(t,c)                 =       F(t,c)*y_net(t,c);
+LE_y(t,c)                =       LE(t,c)/y_net(t,c);
+SH_y(t,c)                =       SH(t,c)/y_net(t,c);
+SC_y(t,c)                =       SC(t,c)/y_net(t,c);
 
