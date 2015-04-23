@@ -34,7 +34,7 @@ loop(c,
 );
 put /
 
-put "Total Mortality from Tropical Storms in 2005 US dollars by Country "
+put "Total Mortality from Tropical Storms in number of lives lost by Country "
 put /;
 put "";
 loop(t,
@@ -67,7 +67,7 @@ loop(c,
 put /;
 
 
-put "Total Mortality from ExtraTropical Storms in 2005 US dollars by Country"
+put "Total Mortality from ExtraTropical Storms in number of lives lost by Country"
 put /;
 put "";
 loop(t,
