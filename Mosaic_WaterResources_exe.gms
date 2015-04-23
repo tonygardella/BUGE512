@@ -1,6 +1,6 @@
 *Water resources
 
-W(t,c) = min(WR_par_cntry(c,"Alpha_water")*Y_pc("2010",c)* (1- Tau_water)**(t.val-2000)*(Y_pc(t,c)/Y_pc("2010",c))**Beta_water*(Pop(t,c)/Pop("2010", c)**N_water*(MAT(t)/1.0)**gamma_water)
+WR(t,c) = min(WR_par_cntry(c,"Alpha_water")*Y_pc("2010",c)* (1- Tau_water)**(t.val-2000)*(Y_pc(t,c)/Y_pc("2010",c))**Beta_water*(Pop(t,c)/Pop("2010", c)**N_water*(MAT(t)/1.0)**gamma_water)
                  , Y_pc(t,c)/10 );
 
 *Tropical Storms

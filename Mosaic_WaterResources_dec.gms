@@ -3,7 +3,7 @@ Parameters
 ***Water Resources Declarations
          CO2_pre  / 270/
 *water resources
-         W(t,c) " change in water resources in 1995 US dollar"
+         WR(t,c) " change in water resources in 1995 US dollar"
 *         Alpha(r) "percent of 1990 GDP per degree celsius"
 *         Y_pc(t,r) "per capitia income"
 *         *****Pop(t,r) "population size"
