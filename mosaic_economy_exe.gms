@@ -1,3 +1,4 @@
+
 *GLOBAL Solow-Swan economic growth model
          y_gross(t,c)=pro(t,c)*l(t,c)**(lshr) * k(t,c)**(1-lshr);
 
@@ -5,17 +6,23 @@
 
          i(t,c)=s(c)*y_net(t,c)*nyper;
 
-
          k(t+1,c)=i(t,c)+(1-delta(c))**nyper *k(t,c);
-
 
          emiss_count(t,c)=(emiss_int(t,c) * y_net(t,c))/t2mt;
 
+         y_pc(t,c)   =   y_gross(t,c)/pop(t,c)  ;
 
-         world_emissions(t)  =    sum( c, emiss_count(t,c))/mt2gt;
-
+*Output and emissions by region
 
          y_region(t,r)= sum(rcmap(r,c),y_net(t,c));
 
+         y_percapita_region(t,r) = sum(rcmap(r,c),y_pc(t,c));
 
-         y_pc(t,c)   =   y_gross(t,c)/pop(t,c)  ;
+         emiss_region(t,r) = sum(rcmap(r,c),emiss_count(t,c));
+*Output and emission of the world
+
+         y_world(t)= sum(r,y_region(t,r));
+
+         y_percapita_world(t) = sum(r,y_percapita_region(t,r));
+
+         world_emissions(t)  = sum( c, emiss_count(t,c))/mt2gt;
