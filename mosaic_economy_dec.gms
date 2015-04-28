@@ -36,8 +36,6 @@ parameters
         P_dens(t,c)         "Population density of nation c at time t"
         P_growth(t,c)       "Population growth rate of nation c at time t"
 
-$include mosaic_carbon_dec.gms
-
 
 $ontext
 Units:
