@@ -28,7 +28,7 @@ put /;
 loop(c,
          put c.tl;
          loop(t,
-                 put total_deaths(t,c);
+                 put total_deaths_pop_fraction(t,c);
          );
          put /;
 );
@@ -243,4 +243,4 @@ loop(c,
 put /;
 
 
-execute_unload; 
+execute_unload;
