@@ -16,9 +16,9 @@ LE(t, c)                 =       ecos_par_glob("alpha") * pop(t,c) *
                                  ((temp_change_interannual(t)/ecos_par_glob("tau")) / 1+(temp_change_interannual(t)/ecos_par_glob("tau"))) *
                                  (1-ecos_par_glob("sigma") + ecos_par_glob("sigma") * (ecos_par_glob("Bo")/B(t)));
 
-*FORESTRY
-F(t,c)                   =       for_par_cntry(c,"alpha") * (y_pc(t,c)/y_pc("2010",c))**for_par_glob("epsilon") *
-                                 (0.5 * temp(t)**for_par_glob("beta") + 0.5 * for_par_glob("gamma") * log(CO2_ppm(t)/275));
+*FORESTRY (Forced to be in USD for consistency with the other sectors)
+F(t,c)                   =       (for_par_cntry(c,"alpha") * (y_pc(t,c)/y_pc("2010",c))**for_par_glob("epsilon") *
+                                 (0.5 * temp(t)**for_par_glob("beta") + 0.5 * for_par_glob("gamma") * log(CO2_ppm(t)/275)))*y_net(t,c);
 
 *ENERGY
 energ_term(t,c)          =       ((y_pc(t,c)/y_pc("2010",c))**energ_par_glob("epsilon") *
@@ -28,10 +28,11 @@ energ_term(t,c)          =       ((y_pc(t,c)/y_pc("2010",c))**energ_par_glob("ep
 SH(t,c)                  =        energ_par_cntry(c,"aheat") * Y_gross("2010",c) * (arctan(temp_change_from_2010(t))/arctan(1)) * energ_term(t,c);
 SC(t,c)                  =        energ_par_cntry(c,"acool") * Y_gross("2010",c) * (temp_change_from_2010(t))**energ_par_glob("beta") * energ_term(t,c);
 
-*Impacts as fraction of GDP except for Forestry(F_y), for which is the value in USD
+*Impacts as fraction of GDP
 IAI_y(t,c)               =       IAI(t,c)/y_net(t,c);
-F_y(t,c)                 =       F(t,c)*y_net(t,c);
+F_y(t,c)                 =       F(t,c)/y_net(t,c);
 LE_y(t,c)                =       LE(t,c)/y_net(t,c);
 SH_y(t,c)                =       SH(t,c)/y_net(t,c);
 SC_y(t,c)                =       SC(t,c)/y_net(t,c);
+
 

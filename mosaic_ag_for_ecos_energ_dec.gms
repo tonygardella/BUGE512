@@ -61,7 +61,8 @@ Ar(t,c)                          "Damage in ag. prod. as a fraction due to rate 
 Al(t,c)                          "Damage in ag. prod. as a fraction due to level of CC"
 Af(t,c)                          "Damage in ag. prod. as a fraction due to carbon dioxide fertilization"
 sa(t,c)                          "Share of ag. prod. in income, over time"
-IAI(t,c)                         "Impacts on agriculture in USD"
+IAI(t,c)                         "Impacts on agriculture in USD by country"
+IAI_region(t,r)                  "Impacts on agriculture in USD by region"
 
 ag_par_cntry(c,*)                "Ag. parameters by country"
 
@@ -89,11 +90,13 @@ $offdelim offlisting
 *ECOSYSTEMS AND FORESTRY PARAMETERS
 parameter
 *Ecosystems
-         LE(t,c)                 "Value of loss of ecosystems in USD"
+         LE(t,c)                 "Value of loss of ecosystems in USD by country"
+         LE_region(t,r)          "Value of loss of ecosystems in USD by region"
          B(t)                    "Number of species"
 
-*Forestry
-         F(t,c)                  "Change in forestry consumer and produc.surplus as a share of total inc."
+*Forestry (changed to give values in USD for consistency with the other sectors)
+         F(t,c)                  "Change in forestry consumer and produc.surplus in USD by country"
+         F_region(t,r)           "Change in forestry consumer and produc.surplus in USD by region"
          for_par_cntry(c,*)      "Forestry parameters by country"
 
 *Global ecosystem parameters
@@ -121,8 +124,11 @@ $offdelim offlisting
 *ENERGY
 parameter
 
-         SH(t,c)                 "Decrease in spenditure on space heating, in USD"
-         SC(t,c)                 "Increase in spenditure in space cooling, in USD"
+         SH(t,c)                 "Decrease in spenditure on space heating in USD by country"
+         SH_region(t,r)          "Decrease in spenditure on space heating in USD by region"
+
+         SC(t,c)                 "Increase in spenditure in space cooling in USD by country"
+         SC_region(t,r)          "Increase in spenditure in space cooling in USD by region"
          energ_term(t,c)         "Common term for SH and SH equations"
 
          energ_par_cntry(c,*)    "Energy parameters by country"
@@ -143,11 +149,18 @@ $offdelim offlisting
 ;
 
 parameter
+*By country
          IAI_y(t,c)              "Impacts on ag. as fraction of GDP"
-         F_y(t,c)                "Impacts on forestry IN USD"
+         F_y(t,c)                "Impacts on forestry as a fraction of GDP"
          LE_y(t,c)               "Impacts on ecosystems as fraction of GDP"
          SH_y(t,c)               "Spending on space heating as fraction of GDP"
-         SC_y(t,c)               "Spending on space cooling as fraction of GDP";
+         SC_y(t,c)               "Spending on space cooling as fraction of GDP"
+*By region
+         IAI_y_region(t,r)       "Impacts on ag. as fraction of GDP"
+         F_y_region(t,r)         "Impacts on forestry as a fraction of GDP"
+         LE_y_region(t,r)        "Impacts on ecosystems as fraction of GDP"
+         SH_y_region(t,r)        "Spending on space heating as fraction of GDP"
+         SC_y_region(t,r)        "Spending on space cooling as fraction of GDP";
 
 *************************************************************
 *Initialization
