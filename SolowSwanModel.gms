@@ -88,7 +88,7 @@ sets
               MLT,NLD, NOR, PRT,ESP, SWE, CHE, GBR)
          JPK.(JPN,KOR)
          ANZ.(AUS, NZL)
-         EEU.(BIH,BGR,HRV,CZE,HUN,MKD,MNE POL,ROU,SRB,SVK,SVN)
+         EEU.(BIH,BGR,HRV,CZE,HUN,MKD,MNE,POL,ROU,SRB,SVK,SVN)
          FSU.(ARM, AZE, BLR, EST, GEO, KAZ,KGZ, LVA, LTU, MDA,RUS, TJK,
               TKM, UKR, UZB)
          MDE.(BHR, IRN, IRQ, ISR, JOR, KWT, LBN, OMN,QAT,SAU, SYR, TUR,YEM)
