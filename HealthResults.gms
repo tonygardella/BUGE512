@@ -1,5 +1,5 @@
-file outfile /HealthResults.txt/;
-put outfile;
+file resultfile /HealthResults.txt/;
+put resultfile;
 outfile.pc       =       6;
 
 put "Total Deaths due to Climate Change (by country)"
