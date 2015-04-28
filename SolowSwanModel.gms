@@ -88,7 +88,7 @@ sets
               MLT,NLD, NOR, PRT,ESP, SWE, CHE, GBR)
          JPK.(JPN,KOR)
          ANZ.(AUS, NZL)
-         EEU.(BIH,BGR,HRV,CZE,HUN,MKD, POL,ROU,SVK,SVN)
+         EEU.(BIH,BGR,HRV,CZE,HUN,MKD,MNE POL,ROU,SRB,SVK,SVN)
          FSU.(ARM, AZE, BLR, EST, GEO, KAZ,KGZ, LVA, LTU, MDA,RUS, TJK,
               TKM, UKR, UZB)
          MDE.(BHR, IRN, IRQ, ISR, JOR, KWT, LBN, OMN,QAT,SAU, SYR, TUR,YEM)
@@ -100,7 +100,7 @@ sets
          NAF.( EGY, MAR, TUN)
          SSA.(BEN, BWA, BFA, BDI,CMR, CIV,DJI,GNQ, ETH, GAB, GMB, GHA, GIN,
               GNB, KEN, LSO, LBR, MDG, MWI,MLI, MRT, MOZ, NAM, NER, NGA,
-              RWA, SEN, SLE, ZAF, SDN,SWZ, TZA, TGO, ZMB, ZWE)
+              RWA, SEN, SLE, ZAF, SDN,SWZ, TZA, TGO,UGA, ZMB, ZWE)
          SIS.(BHS, BRB,COM,DOM,FJI,JAM,MDV,MUS, STP, TTO)
          /
 
