@@ -68,7 +68,7 @@ migration(c,c2) = sum((r,r2)$(rcmap(r,c) and rcmap(r2,c2)), migration_r(r,r2) * 
 *   These are tuned to show a reasonable trend in
 *   D_actual for USA. They NEED PROPER TUNING!
         SLR("2010")             = 0.01;
-        Protection("2010",c)    = 0.5;
+        Protection("2010",c)    = 0.2;
         P_growth("2010",c)      = 0;
         Y_pc_growth("2010",c)   = 0;
         Y_dens_growth("2010",c) = 0;

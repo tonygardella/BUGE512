@@ -61,5 +61,5 @@
         Protection(t+1,c)             =     max(0, 1 - 0.5 * (NPVVP(t,c) + NPVVW(t,c))/NPVVD(t,c));
 
 *** Calculate next year's area
-        Area(t+1,c)                   =     max(Area("2010",c) - CW(t,c) - CD_actual(t,c), 0);
+        Area(t+1,c)                   =     max(Area("2010",c) - CW(t,c) - CD_actual(t,c), 10);
 
