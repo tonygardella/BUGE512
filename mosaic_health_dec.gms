@@ -5,7 +5,7 @@ parameters
          urbanization(t,c) percentage of population living in cities
          pop_under65(t,c) proportion of population under 65 years of age
          value_life(t,c) value of a statisical life (mortality)
-         value_lift_baseline_USA_2010 value of life in baseline year 2010 for USA        /2000000/
+         value_life_baseline_USA_2010 value of life in baseline year 2010 for USA        /2000000/
          value_year_morbidity(t,c) value of a year of morbidity
          total_deaths(t,c) total number of additional deaths associated with climate change
          total_deaths_pop_fraction(t,c) total additional deaths as a percentage of population
@@ -15,36 +15,49 @@ parameters
 *DIARRHEA
          deaths_diarrhea(t,c) additional diarrheal deaths due to climate change
          change_diarrhea_rate(t,c) change in diarrhea mortality rate due to climate change (deaths per 1000)
+         damages_diarrhea(t,c) monetary damages from diarrhea deaths ($)
 
 *VECTOR BORNE
          deaths_vector_borne additional vector borone deaths due to climate change
+         damages_vector_borne(t,c) monetary damages from vector borne deaths ($)
 
          deaths_malaria(t,c) additional malaria deaths due to climate change
          change_malaria_rate(t,c) change in malaria mortality rate due to climate change (deaths per 1000000)
+         damages_malaria(t,c) monetary damages from malaria deaths ($)
 
          deaths_dengue(t,c) additional dengue fever deaths due to climate change
          change_dengue_rate (t,c) change in dengue fever mortality rate due to climate change (deaths per 1000000)
+         damages_dengue(t,c) monetary damages from dengue fever deaths ($)
 
          deaths_schistosomisis(t,c) additional schistosomiasis deaths due to climate change
          change_schistosomisis_rate(t,c) change in schistosomisis mortality rate due to climate change (deaths per 1000000)
+         damages_schistosomisis(t,c) monetary damages from schistosomisis deaths ($)
 
 *CARDIOVASCULAR
          deaths_cardiovascular(t,c) total additional cardiovascular deaths due to climate change
+         damages_cardiovascular(t,c) monetary damages from cardiovascular deaths ($)
 
          deaths_cardiovascular_heat(t,c) additional heat related cardiovascular deaths due to climate change
+         damages_cardiovascular_heat(t,c) monetary damages from heat related cardiovascular deaths ($)
          deaths_cardiovascular_heat_over65(t,c) additional heat related cardiovascular deaths over 65 due to climate change
-         change_cardiovascular_hot_over65_rate(t,c) change in cardiovascular heat related over 65 mortality rate due to climate change (deaths per 100000)
+         change_cardiovascular_heat_over65_rate(t,c) change in cardiovascular heat related over 65 mortality rate due to climate change (deaths per 100000)
+         damages_cardiovascular_heat_over65_rate(t,c) monetary damages from heat related over 65 cardiovascular deaths ($)
          deaths_cardiovascular_heat_under65(t,c) additional heat related cardiovascular deaths under 65 due to climate change
-         change_cardiovascular_hot_under65_rate(t,c) change in cardiovascular heat related under 65 mortality rate due to climate change (deaths per 100000)
+         change_cardiovascular_heat_under65_rate(t,c) change in cardiovascular heat related under 65 mortality rate due to climate change (deaths per 100000)
+         damages_cardiovascular_heat_under65(t,c) monetary damages from heat related under 65 cardiovascular deaths ($)
 
          deaths_cardiovascular_cold(t,c) additional cold related cardiovascular deaths due to climate change
+         damages_cardiovascular_cold(t,c) monetary damages from cold related cardiovascular deaths ($)
          deaths_cardiovascular_cold_over65(t,c) additional cold related cardiovascular deaths over 65 due to climate change
+         damages_cardiovascular_cold_over65(t,c) monetary damages from cold related over 65 cardiovascular deaths ($)
          change_cardiovascular_cold_over65_rate(t,c) change in cardiovascular cold related over 65 mortality rate due to climate change (deaths per 100000)
          deaths_cardiovascular_cold_under65(t,c) additional cold related cardiovascular deaths under 65 due to climate change
+         damages_cardiovascular_cold_under65(t,c) monetary damages from cold related under 65 cardiovascular deaths ($)
          change_cardiovascular_cold_under65_rate(t,c) change in cardiovascular cold related under 65 mortality rate due to climate change (deaths per 100000)
 
 *RESPIRATORY
          deaths_respiratory(t,c) additional respiratory deaths due to climate change
+         damages_respiratory(t,c) monetary damages from respiratory deaths ($)
          change_respiratory_rate(t,c) change in respiratatory mortality rate due to climate change (deaths per 100000)
 
 *REGIONAL SUMMATION
