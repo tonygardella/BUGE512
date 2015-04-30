@@ -242,5 +242,3 @@ loop(c,
 );
 put /;
 
-
-execute_unload;
