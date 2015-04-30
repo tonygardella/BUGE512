@@ -17,33 +17,26 @@ parameters
 
 *VECTOR BORNE
          deaths_vector_borne additional vector borone deaths due to climate change
-         years_loss_vector_borne(t,c) years loss due to additional vector borne deaths due to climate change
 
          deaths_malaria(t,c) additional malaria deaths due to climate change
-         years_loss_malaria(t,c) years loss due to additional malaria deaths due to climate change
          change_malaria_rate(t,c) change in malaria mortality rate due to climate change (deaths per 1000000)
 
          deaths_dengue(t,c) additional dengue fever deaths due to climate change
-         years_loss_dengue(t,c) years loss due to additional dengue fever deaths due to climate change
          change_dengue_rate (t,c) change in dengue fever mortality rate due to climate change (deaths per 1000000)
 
          deaths_schistosomisis(t,c) additional schistosomiasis deaths due to climate change
-         years_loss_schistosomisis(t,c) years loss due to additional schistosomiasis deaths due to climate change
          change_schistosomisis_rate(t,c) change in schistosomisis mortality rate due to climate change (deaths per 1000000)
 
 *CARDIOVASCULAR
          deaths_cardiovascular(t,c) total additional cardiovascular deaths due to climate change
-         years_loss_cardiovascular(t,c) years loss due to additional cardiovascular deaths due to climate change
 
          deaths_cardiovascular_heat(t,c) additional heat related cardiovascular deaths due to climate change
-         years_loss_cardiovascular_heat(t,c) years loss due to additional heat related cardiovascular deaths due to climate change
          deaths_cardiovascular_heat_over65(t,c) additional heat related cardiovascular deaths over 65 due to climate change
          change_cardiovascular_hot_over65_rate(t,c) change in cardiovascular heat related over 65 mortality rate due to climate change (deaths per 100000)
          deaths_cardiovascular_heat_under65(t,c) additional heat related cardiovascular deaths under 65 due to climate change
          change_cardiovascular_hot_under65_rate(t,c) change in cardiovascular heat related under 65 mortality rate due to climate change (deaths per 100000)
 
          deaths_cardiovascular_cold(t,c) additional cold related cardiovascular deaths due to climate change
-         years_loss_cardiovascular_cold(t,c) years loss due to additional cold related cardiovascular deaths due to climate change
          deaths_cardiovascular_cold_over65(t,c) additional cold related cardiovascular deaths over 65 due to climate change
          change_cardiovascular_cold_over65_rate(t,c) change in cardiovascular cold related over 65 mortality rate due to climate change (deaths per 100000)
          deaths_cardiovascular_cold_under65(t,c) additional cold related cardiovascular deaths under 65 due to climate change
@@ -51,7 +44,6 @@ parameters
 
 *RESPIRATORY
          deaths_respiratory(t,c) additional respiratory deaths due to climate change
-         years_loss_respiratory(t,c) years loss due to additional respiratory deaths due to climate change
          change_respiratory_rate(t,c) change in respiratatory mortality rate due to climate change (deaths per 100000)
 
 *TOL PARAMETERS - REGIONL MAPPING
@@ -65,11 +57,6 @@ parameters
          Tol_cold_under65_2(c)
          Tol_respiratory_1(c)
          Tol_respiratory_2(c)
-         Tol_morb_mort_ratio_malaria(c)
-         Tol_morb_mort_ratio_schistosomisis(c)
-         Tol_morb_mort_ratio_dengue(c)
-         Tol_morb_mort_ratio_cardiovascular(c)
-         Tol_morb_mort_ratio_respiratory(c)
 
          global_param_health(*)  Tol parameters /
                  "income_elas_diarrhea_mort"               -1.58
@@ -128,9 +115,5 @@ $offdelim offlisting
          Tol_cold_under65_2(c) = sum(r$rcmap(r,c), regional_health(r,"cold_under65_2"));
          Tol_respiratory_1(c) = sum(r$rcmap(r,c), regional_health(r,"respiratory_1"));
          Tol_respiratory_2(c) = sum(r$rcmap(r,c), regional_health(r,"respiratory_2"));
-         Tol_morb_mort_ratio_malaria(c) = sum(r$rcmap(r,c), regional_health(r,"morb_mort_ratio_malaria"));
-         Tol_morb_mort_ratio_schistosomisis(c) = sum(r$rcmap(r,c), regional_health(r,"morb_mort_ratio_schis"));
-         Tol_morb_mort_ratio_dengue(c) = sum(r$rcmap(r,c), regional_health(r,"morb_mort_ratio_dengue"));
-         Tol_morb_mort_ratio_cardiovascular(c) = sum(r$rcmap(r,c), regional_health(r,"morb_mort_ratio_cardio"));
-         Tol_morb_mort_ratio_respiratory(c) = sum(r$rcmap(r,c), regional_health(r,"morb_mort_ratio_resp"));
+
 ;
