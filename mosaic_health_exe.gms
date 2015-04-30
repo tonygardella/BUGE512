@@ -92,7 +92,7 @@ deaths_respiratory(t,c) = change_respiratory_rate(t,c) * pop(t,c) / 100000;
 
 *MORBIDITY AND MORTALITY
 
-value_life(t,c) = (2000000 / Y_gross("2010","USA")) * Y_net(t,c);
+value_life(t,c) = (value_lift_baseline_USA_2010 / Y_gross("2010","USA")) * Y_net(t,c);
 
 value_year_morbidity(t,c) = global_param_health("mort_morb_no_description_2") *
          (y_pc(t,c) / global_param_health("normalization_constant"))**

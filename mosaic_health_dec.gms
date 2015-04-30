@@ -5,6 +5,7 @@ parameters
          urbanization(t,c) percentage of population living in cities
          pop_under65(t,c) proportion of population under 65 years of age
          value_life(t,c) value of a statisical life (mortality)
+         value_lift_baseline_USA_2010 value of life in baseline year 2010 for USA        /2000000/
          value_year_morbidity(t,c) value of a year of morbidity
          total_deaths(t,c) total number of additional deaths associated with climate change
          total_deaths_pop_fraction(t,c) total additional deaths as a percentage of population
