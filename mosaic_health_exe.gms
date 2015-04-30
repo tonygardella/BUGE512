@@ -109,6 +109,17 @@ total_health_damages(t,c) = total_deaths(t,c) * value_life(t,c);
 
 total_health_damages_percentage(t,c) = total_health_damages(t,c) / Y_gross(t,c) * 100;
 
+*REGIONL SUMMATION
+
+pop_region(t,r) = sum(rcmap(r,c), pop(t,c));
+
+total_deaths_region(t,r)= sum(rcmap(r,c),total_deaths(t,c));
+
+total_deaths_pop_fraction_region(t,r) = total_deaths_region(t,r) / pop_region(t,r) * 100;
+
+total_health_damages_region(t,r) = sum(rcmap(r,c),total_health_damages(t,c));
+
+total_health_damages_percentage_region(t,r) = total_health_damages_region(t,r) / y_region(t,r);
 
 *DISPLAYS GROUPED BY SECTION
 $ontext

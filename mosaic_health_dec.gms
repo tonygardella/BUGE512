@@ -47,6 +47,13 @@ parameters
          deaths_respiratory(t,c) additional respiratory deaths due to climate change
          change_respiratory_rate(t,c) change in respiratatory mortality rate due to climate change (deaths per 100000)
 
+*REGIONAL SUMMATION
+         pop_region(t,r)
+         total_deaths_region(t,r)
+         total_deaths_pop_fraction_region(t,r)
+         total_health_damages_region(t,r)
+         total_health_damages_percentage_region(t,r)
+
 *TOL PARAMETERS - REGIONL MAPPING
          Tol_heat_over65_1(c)
          Tol_heat_over65_2(c)
@@ -85,6 +92,9 @@ parameters
                  "Tol_respiratory_1"               -17.9222
                  "Tol_respiratory_2"                0.8683
          /;
+
+
+
 
 *HEALTH AND MORBIDITY/MORTALITY RELATED TABLES
 table regional_health(r,*) various Tol regional parameters
