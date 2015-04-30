@@ -102,6 +102,14 @@ parameter
 
 *** General states ***
 
+* Aggregated parameters
+X(t,c,i)                "Endpoints"
+D(t,c,i)                "Damages of endpoints"
+d_y_x(t,c,i)             
+x_t(t,c,i)
+smallphi(t,c,i)
+bigphi(t,c,i)
+
 * Atmosphere
 temp(t)                 "Temperature (degrees C)"
 temp_r(t,c)             "Regional (country) temp (degrees C)"
