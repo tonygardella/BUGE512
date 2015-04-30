@@ -30,7 +30,7 @@ parameters
         migration(c,c)          Country migration matrix
         pop_out(t,c)            Population emigrating from country c at time t
         pop_in(t,c)             Population immigrating into country c at time t
-        migration_impact(t,c)   Net impact of migration (in $?) of country c at time t
+        migration_impact(t,c)   Net impact of migration (in $) of country c at time t
         pop_r(r)                Regional population in 2010. Used only for migration aggregation
 
 * Wetland loss

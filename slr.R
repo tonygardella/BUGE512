@@ -4,7 +4,8 @@ library(data.table)
 library(gdxrrw)
 
 ### Available parameters
-paramlist <- c("P_dens", "P_growth", "y_pc", "y_pc_growth",
+paramlist <- c("Y", "emiss_count",
+               "P_dens", "P_growth", "y_pc", "y_pc_growth",
                "y_dens", "y_dens_growth", "Area",
                "CD_potential", "D_potential", "D_actual", "CD_actual", "VD",
                "pop_out", "pop_in", "migration_impact",
