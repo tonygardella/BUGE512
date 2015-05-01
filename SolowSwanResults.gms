@@ -1,7 +1,6 @@
-file outfile /SolowSwanResults.txt/;
-put outfile;
-outfile.pc       =       6;
-
+file outputecon /SolowSwanResult.txt/;
+put outputecon;
+outputecon.pc       =       6;
 put "GDP by Region (2005 US dollars)"
 put /;
 put "";
@@ -32,7 +31,23 @@ loop(r,
          );
          put /;
 );
-put /
+put /;
+
+put "GDP per capita by Region (2005 US dollars)"
+put /;
+put "";
+loop(t,
+         put t.tl;
+);
+put /;
+loop(r,
+         put r.tl;
+         loop(t,
+                 put y_percapita_region(t,r);
+         );
+         put /;
+);
+put /;
 
 put "GDP by Country (2005 US dollars)"
 put /;
@@ -66,6 +81,21 @@ loop(c,
 );
 put /;
 
+put "GDP per capita by country (2005 US dollars)"
+put /;
+put "";
+loop(t,
+         put t.tl;
+);
+put /;
+loop(c,
+         put c.tl;
+         loop(t,
+                 put y_pc(t,c);
+         );
+         put /;
+);
+put /;
 
 put "GDP of World (2005 US dollars)"
 put /;
@@ -99,4 +129,17 @@ loop(t,
 );
 put /;
 
-putclose outfile;
+put "GDP per capita of the world (2005 US dollars)"
+put /;
+put "";
+loop(t,
+         put t.tl;
+);
+put /;
+put "World";
+loop(t,
+         put y_percapita_world(t);
+
+);
+put /;
+putclose outputecon;

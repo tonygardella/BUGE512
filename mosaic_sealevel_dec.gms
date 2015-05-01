@@ -30,7 +30,7 @@ parameters
         migration(c,c)          Country migration matrix
         pop_out(t,c)            Population emigrating from country c at time t
         pop_in(t,c)             Population immigrating into country c at time t
-        migration_impact(t,c)   Net impact of migration (in $?) of country c at time t
+        migration_impact(t,c)   Net impact of migration (in $) of country c at time t
         pop_r(r)                Regional population in 2010. Used only for migration aggregation
 
 * Wetland loss
@@ -68,7 +68,7 @@ migration(c,c2) = sum((r,r2)$(rcmap(r,c) and rcmap(r2,c2)), migration_r(r,r2) * 
 *   These are tuned to show a reasonable trend in
 *   D_actual for USA. They NEED PROPER TUNING!
         SLR("2010")             = 0.01;
-        Protection("2010",c)    = 0.5;
+        Protection("2010",c)    = 0.2;
         P_growth("2010",c)      = 0;
         Y_pc_growth("2010",c)   = 0;
         Y_dens_growth("2010",c) = 0;

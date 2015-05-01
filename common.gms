@@ -11,6 +11,33 @@ set t    time       /2010,2015,
                      2090,2095,
                      2100/
 
+set i       /
+            dryland_loss,
+            wetland_loss,
+            popout_mig,
+            popin_mig,
+            death_malaria,
+            death_dengue,
+            death_schisto,
+            death_diarr,
+            death_heat_u65,
+            death_heat_o65,
+            death_cold_u65,
+            death_cold_o65,
+            death_respir,
+            death_exttropstorm,
+            death_tropstorm,
+            dam_exttropstorm,
+            dam_tropstorm,
+            water,
+            agric,
+            ecosys_species,
+            energy_heat,
+            energy_cool,
+            forestry
+            /
+
+
 set r    regions    /USA,CAN,WEU,JPK,ANZ,EEU,FSU,MDE,CAM,SAM,
                      SAS,SEA,CHI,NAF,SSA,SIS/
 set c    countries  /
@@ -74,6 +101,14 @@ rcmap(*,*) regional map /
 parameter
 
 *** General states ***
+
+* Aggregated parameters
+X(t,c,i)                "Endpoints"
+D(t,c,i)                "Damages of endpoints"
+d_y_x(t,c,i)             
+x_t(t,c,i)
+smallphi(t,c,i)
+bigphi(t,c,i)
 
 * Atmosphere
 temp(t)                 "Temperature (degrees C)"

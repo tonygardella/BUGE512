@@ -236,11 +236,9 @@ put /;
 loop(c,
          put c.tl;
          loop(t,
-                 put value_year_morbidity(t,c);
+                 put deaths_respiratory(t,c);
          );
          put /;
 );
 put /;
 
-
-execute_unload;

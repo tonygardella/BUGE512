@@ -98,4 +98,4 @@ $offdelim
 
          emiss_int("2010",c)     =     e_intensity(c);
 
-         emiss_int(t,c)= emiss_int("2010",c)* (1 + aeei(t,c))**(nyper*(ord(t)-1));
+         emiss_int(t,c)= emiss_int("2010",c)* (1 - aeei(t,c))**(nyper*(ord(t)-1));

@@ -13,4 +13,10 @@ $batinclude mosaic_carbon_exe.gms
 $batinclude mosaic_sealevel_exe.gms
 );
 
-display SLR, Area
+execute_unload "SLR.gdx" P_dens, P_growth, y_pc, y_pc_growth,
+            y_dens, y_dens_growth,
+            SLR, Area,
+            CD_potential, D_potential, D_actual, CD_actual, VD,
+            pop_out, pop_in, migration_impact,
+            W, CW, VW, consump_term, NPVVP, NPVVW, NPVVD, Protection;
+
