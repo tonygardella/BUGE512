@@ -87,11 +87,25 @@ sets
         Protection(t,cdry)     = 0;
         cwet(c)                = yes$(SLR_par_c(c,"coast_length") > 0);
 
+* Compute maximum land loss
+parameters      CWmax(c)
+                CDmax(c)
+                Area_frac(c)
+                Area_r(r)
+                Area_rc(c)
+;
+        Area_r(r) = sum(c$rcmap(r,c), Area("2010",c));
+        Area_rc(c) = sum(r$rcmap(r,c), Area_r(r));
+        Area_frac(c) = Area("2010", c) / Area_rc(c);
+        CWmax(c) = SLR_par_c(c, "exposed_wetland") * Area_frac(c);
+        CDmax(c) = Area("2010", c) - CWmax(c) - 10;
+
 * Compute land loss for pre-industrial sea-level
         D_potential("2010",cwet)   = min(SLR_par_c(cwet, "dryland_loss") * SLR("2010")**(SLR_par_c(cwet, "DEM")), 
-                                                SLR_par_c(cwet, "max_dryland_loss"));
+                                                CDmax(cwet));
         D_actual("2010",cwet)      = (1 - Protection("2010",cwet)) * D_potential("2010",cwet);
         CD_actual("2010",cwet)     = D_actual("2010",cwet);
         W("2010",cwet)             = SLR_par_c(cwet, "wetland_loss_SLR") * SLR("2010") +
                                       SLR_par_c(cwet, "wetland_loss_coastalsqueeze") * Protection("2010", cwet) * SLR("2010");
-        CW("2010",cwet)            = min(W("2010",cwet), SLR_par_c(cwet, "exposed_wetland"));
+        CW("2010",cwet)            = min(W("2010",cwet), CWmax(cwet));
+
