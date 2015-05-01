@@ -12,6 +12,7 @@ LE_region(t,r)           =       sum(rcmap(c,r), LE(t,c));
 SH_region(t,r)           =       sum(rcmap(c,r), SH(t,c));
 SC_region(t,r)           =       sum(rcmap(c,r), SC(t,c));
 
+
 $ontext
 *Put files by COUNTRY in USD
 file out1 / ag_for_ecos_energ_COUNTRY_USD.csv /;
