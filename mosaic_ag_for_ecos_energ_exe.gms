@@ -20,8 +20,8 @@ LE(t, c)                 =       ecos_par_glob("alpha") * pop(t,c) *
 F(t,c)                   =       (for_par_cntry(c,"alpha") * (y_pc(t,c)/y_pc("2010",c))**for_par_glob("epsilon") *
                                  (0.5 * temp(t)**for_par_glob("beta") + 0.5 * for_par_glob("gamma") * log(CO2_ppm(t)/275)))*y_net(t,c);
 
-*ENERGY, removed (pop(t,c)/pop("2010",c)))
-energ_term(t,c)          =       ((y_pc(t,c)/y_pc("2010",c))**energ_par_glob("epsilon")/ aeei(t,c);
+*ENERGY, removed (pop(t,c)/pop("2010",c))
+energ_term(t,c)          =       ((y_pc(t,c)/y_pc("2010",c))**energ_par_glob("epsilon"))/ aeei(t,c);
 
 *SH and SH are bigger than y_net for some countries after towards the end of the century
 SH(t,c)                  =        energ_par_cntry(c,"aheat") * Y_gross("2010",c) * (arctan(temp_change_from_2010(t))/arctan(1)) * energ_term(t,c);
