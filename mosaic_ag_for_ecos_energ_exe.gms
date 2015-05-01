@@ -12,17 +12,16 @@ B(t)$(ord(t) > 1)        =       max(ecos_par_glob("Bo")/100,
                                  B(t-1)*(1-ecos_par_glob("rho")-ecos_par_glob("gamma") * (temp_change_interannual(t)**2/ecos_par_glob("tau")**2)));
 
 LE(t, c)                 =       ecos_par_glob("alpha") * pop(t,c) *
-                                 ((y_pc(t,c)/ecos_par_glob("yb")) / 1+(y_pc(t,c)/ecos_par_glob("yb"))) *
-                                 ((temp_change_interannual(t)/ecos_par_glob("tau")) / 1+(temp_change_interannual(t)/ecos_par_glob("tau"))) *
-                                 (1-ecos_par_glob("sigma") + ecos_par_glob("sigma") * (ecos_par_glob("Bo")/B(t)));
+                                 ((y_pc(t,c)/ecos_par_glob("yb")) / (1+(y_pc(t,c)/ecos_par_glob("yb")))) *
+                                 ((temp_change_interannual(t)/ecos_par_glob("tau")) / (1+(temp_change_interannual(t)/ecos_par_glob("tau")))) *
+                                 (1-ecos_par_glob("sigma") + (ecos_par_glob("sigma") * (ecos_par_glob("Bo")/B(t))));
 
 *FORESTRY (Forced to be in USD for consistency with the other sectors)
 F(t,c)                   =       (for_par_cntry(c,"alpha") * (y_pc(t,c)/y_pc("2010",c))**for_par_glob("epsilon") *
                                  (0.5 * temp(t)**for_par_glob("beta") + 0.5 * for_par_glob("gamma") * log(CO2_ppm(t)/275)))*y_net(t,c);
 
-*ENERGY
-energ_term(t,c)          =       ((y_pc(t,c)/y_pc("2010",c))**energ_par_glob("epsilon") *
-                                 (pop(t,c)/pop("2010",c))) / aeei(t,c);
+*ENERGY, removed (pop(t,c)/pop("2010",c)))
+energ_term(t,c)          =       ((y_pc(t,c)/y_pc("2010",c))**energ_par_glob("epsilon")/ aeei(t,c);
 
 *SH and SH are bigger than y_net for some countries after towards the end of the century
 SH(t,c)                  =        energ_par_cntry(c,"aheat") * Y_gross("2010",c) * (arctan(temp_change_from_2010(t))/arctan(1)) * energ_term(t,c);
