@@ -36,6 +36,8 @@ parameters
 * Wetland loss
         W(t,c)                  Wetland loss in region r at time t
         CW(t,c)                 Cumulative wetland loss in region r at time t
+        W_growth(t,c)           Wetland growth
+        W_size(t,c)             Wetland size
         VW(t,c)                 Value of wetlands in region r at time t
 
 * Protection
@@ -84,28 +86,21 @@ sets
         CD_actual(t,cdry)      = 0;
         w(t,cdry)              = 0;
         CW(t,cdry)             = 0;
+        W_size(t,cdry)         = SLR_par_c(cdry, "W_1990");
+        W_growth(t,cdry)       = 0;
         Protection(t,cdry)     = 0;
+        Area(t,cdry)           = SLR_par_c(cdry, "Area_2000");
         cwet(c)                = yes$(SLR_par_c(c,"coast_length") > 0);
 
-* Compute maximum land loss
-parameters      CWmax(c)
-                CDmax(c)
-                Area_frac(c)
-                Area_r(r)
-                Area_rc(c)
-;
-        Area_r(r) = sum(c$rcmap(r,c), Area("2010",c));
-        Area_rc(c) = sum(r$rcmap(r,c), Area_r(r));
-        Area_frac(c) = Area("2010", c) / Area_rc(c);
-        CWmax(c) = SLR_par_c(c, "exposed_wetland") * Area_frac(c);
-        CDmax(c) = Area("2010", c) - CWmax(c) - 10;
 
 * Compute land loss for pre-industrial sea-level
         D_potential("2010",cwet)   = min(SLR_par_c(cwet, "dryland_loss") * SLR("2010")**(SLR_par_c(cwet, "DEM")), 
-                                                CDmax(cwet));
+                                                SLR_par_c(cwet, "max_dryland_loss"));
         D_actual("2010",cwet)      = (1 - Protection("2010",cwet)) * D_potential("2010",cwet);
         CD_actual("2010",cwet)     = D_actual("2010",cwet);
         W("2010",cwet)             = SLR_par_c(cwet, "wetland_loss_SLR") * SLR("2010") +
                                       SLR_par_c(cwet, "wetland_loss_coastalsqueeze") * Protection("2010", cwet) * SLR("2010");
-        CW("2010",cwet)            = min(W("2010",cwet), CWmax(cwet));
+        CW("2010",cwet)            = min(W("2010",cwet), SLR_par_c(cwet, "exposed_wetland"));
+        W_size("2010", cwet)    = SLR_par_c(cwet, "W_1990") - CW("2010", cwet);
+        W_growth("2010",cwet)     =   W_size("2010", cwet)/SLR_par_c(cwet, "W_1990") - 1;
 
