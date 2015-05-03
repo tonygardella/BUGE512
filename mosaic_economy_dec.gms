@@ -64,7 +64,7 @@ $offdelim
 
 table aeeidata(*,*)
 $ondelim
-$include aeei_interp.csv
+$include aeei_B1interp.csv
 $offdelim
 ;
 table prodgr(*,*)

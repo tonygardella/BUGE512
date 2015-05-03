@@ -1,5 +1,5 @@
 *AGRICULTURE
-Ar(t,c)$(ord(t) > 1)     =       ag_par_cntry(c,"alpha") * (temp_change_interannual_national(t,c)/0.04)**ag_par_glob("B") + (1-(1/ag_par_glob("p"))) * Ar(t-1,c);
+Ar(t,c)$(ord(t) > 1)     =       ag_par_cntry(c,"alpha") * ((temp_change_interannual_national(t,c)/0.04)**ag_par_glob("B")) + (1-(1/ag_par_glob("p"))) * Ar(t-1,c);
 Al(t,c)                  =       ag_par_cntry(c,"deltal") * temp_change_national_from_2010(t,c) + ag_par_cntry(c,"deltaq") * (temp_change_national_from_2010(t,c)**2);
 Af(t,c)                  =       ag_par_cntry(c,"gamma") * log(CO2_ppm(t)/275);
 IA(t,c)                  =       Ar(t,c) + Al(t,c) + Af(t,c);
@@ -9,7 +9,7 @@ IAI(t,c)                 =       IA(t,c)*0.01 * sa(t,c) * y_net(t,c);
 
 *ECOSYSTEMS
 B(t)$(ord(t) > 1)        =       max(ecos_par_glob("Bo")/100,
-                                 B(t-1)*(1-ecos_par_glob("rho")-ecos_par_glob("gamma") * (temp_change_interannual(t)**2/ecos_par_glob("tau")**2)));
+                                 B(t-1)*(1-ecos_par_glob("rho")-(ecos_par_glob("gamma") * ((temp_change_interannual(t)**2)/(ecos_par_glob("tau")**2)))));
 
 LE(t, c)                 =       ecos_par_glob("alpha") * pop(t,c) *
                                  ((y_pc(t,c)/ecos_par_glob("yb")) / (1+(y_pc(t,c)/ecos_par_glob("yb")))) *
