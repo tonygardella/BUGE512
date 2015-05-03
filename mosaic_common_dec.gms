@@ -11,6 +11,28 @@ set t    time       /2010,2015,
                      2090,2095,
                      2100/
 
+    impact  endpoint impacts   /
+            death_diarrhea,
+            death_malaria,
+            death_dengue,
+            death_schistosomiasis,
+            death_heat_o65,
+            death_heat_u65,
+            death_cold_o65,
+            death_cold_u65,
+            death_respiratory,
+            death_exttropstorm,
+            death_tropstorm,
+            dam_exttropstorm,
+            dam_tropstorm,
+            water,
+            agric,
+            ecosys_species,
+            energy_heat,
+            energy_cool,
+            forestry
+            /
+
     r    regions    /USA,CAN,WEU,JPK,ANZ,EEU,FSU,MDE,CAM,SAM,
                      SAS,SEA,CHI,NAF,SSA,SIS/
     c    countries  /
@@ -72,6 +94,14 @@ rcmap(*,*) regional map /
          /;
 
 parameters
+
+* Decomposition parameters
+X(t,c,impact)                "Endpoints"
+d(t,c,impact)                "Damages of endpoints"
+d_y_x(t,c,impact)
+x_t(t,c,impact)
+smallphi(t,c,impact)
+bigphi(t,c,impact)
 
         Area(t,c)               Area of country c at time t (km2)
 ;

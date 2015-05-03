@@ -49,20 +49,20 @@ deaths_dengue(t,c) = change_dengue_rate(t,c) * pop(t,c) / 1000000;
 
 damages_dengue(t,c) = deaths_dengue(t,c) * value_life(t,c);
 
-change_schistosomisis_rate(t,c) = (country_rate(c,"schistosomiasis") * 10)
+change_schistosomiasis_rate(t,c) = (country_rate(c,"schistosomiasis") * 10)
          * global_param_health("schistosomiasis_param") *
          temp_change_national_from_2010(t,c)**
          global_param_health("deg_nonlinearity_mortality_in_warming") *
          (y_pc(t,c) / y_pc("2010",c))**
          global_param_health("income_elas_vector_mort");
 
-deaths_schistosomisis(t,c) = change_schistosomisis_rate(t,c) * pop(t,c) / 1000000;
+deaths_schistosomiasis(t,c) = change_schistosomiasis_rate(t,c) * pop(t,c) / 1000000;
 
-damages_schistosomisis(t,c) = deaths_schistosomisis(t,c) * value_life(t,c);
+damages_schistosomiasis(t,c) = deaths_schistosomiasis(t,c) * value_life(t,c);
 
-deaths_vector_borne(t,c) = deaths_malaria(t,c) + deaths_dengue(t,c) + deaths_schistosomisis(t,c);
+deaths_vector_borne(t,c) = deaths_malaria(t,c) + deaths_dengue(t,c) + deaths_schistosomiasis(t,c);
 
-damages_vector_borne(t,c) = damages_malaria(t,c) + damages_dengue(t,c) + damages_schistosomisis(t,c);
+damages_vector_borne(t,c) = damages_malaria(t,c) + damages_dengue(t,c) + damages_schistosomiasis(t,c);
 
 *CARDIOVASCULAR
 
@@ -73,7 +73,7 @@ change_cardiovascular_heat_over65_rate(t,c) = Tol_heat_over65_1(c) *
 deaths_cardiovascular_heat_over65(t,c) = (change_cardiovascular_heat_over65_rate(t,c) *
          (pop(t,c) * (1-pop_under65(t,c))) / 100000) * urbanization(t,c) ;
 
-damages_cardiovascular_heat_over65_rate(t,c) = deaths_cardiovascular_heat_over65(t,c) * value_life(t,c);
+damages_cardiovascular_heat_over65(t,c) = deaths_cardiovascular_heat_over65(t,c) * value_life(t,c);
 
 change_cardiovascular_heat_under65_rate(t,c) = Tol_heat_under65_1(c) *
          temp_change_national_from_2010(t,c) + Tol_heat_under65_2(c) *
@@ -170,7 +170,7 @@ display deaths_vector_borne;
 
 display deaths_malaria, change_malaria_rate;
 display deaths_dengue, change_dengue_rate;
-display deaths_schistosomisis, change_schistosomisis_rate;
+display deaths_schistosomiasis, change_schistosomiasis_rate;
 
 *CARDIOVASCULAR
 display deaths_cardiovascular;
