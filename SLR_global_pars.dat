@@ -13,5 +13,6 @@ W_popdens_normalization     27.59               !! Page 13
 WV_income_elasticity        1.16                !! Page 13; (0.46 >0); Brander et al. 2006
 WV_popdens_elasticity       0.47                !! Page 13; (0.12 >0 <1); Brander et al. 2006
 WV_size_elasticity          -0.11               !! Page 13; (0.05 >-1 <0); Brander et al. 2006
+W_scaling_factor            21                  !! Page 13;
 DV_income_elasticity        1                   !! Page 15; (0.2)
 $Offeolcom

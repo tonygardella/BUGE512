@@ -13,10 +13,10 @@ parameters
         RHO     "Time preference"                            / 0.5 /
         ETA     "Marginul utility of consumption elasticity" / 1.0 /
 
-
 *** Sea level rise parameters
 * Sea level rise
-        SLR(t)                  Sea level rise at time t (m)
+        SLR(t)                  Total sea level rise at time t (m) compared to preindustrial
+        d_SLR(t)                Sea level rise at time t (m) compared to previous time step (t-1)
 
 * Dryland loss
         CD_potential(t,c)       Cumulative potential dryland loss in year t 
@@ -69,8 +69,8 @@ migration(c,c2) = sum((r,r2)$(rcmap(r,c) and rcmap(r2,c2)), migration_r(r,r2) * 
 * Initial conditions 
 *   These are tuned to show a reasonable trend in
 *   D_actual for USA. They NEED PROPER TUNING!
-        SLR("2010")             = 0.01;
-        Protection("2010",c)    = 0.2;
+        SLR("2010")             = 0.3;
+        Protection("2010",c)    = 0.8;
         P_growth("2010",c)      = 0;
         Y_pc_growth("2010",c)   = 0;
         Y_dens_growth("2010",c) = 0;
@@ -98,9 +98,10 @@ sets
                                                 SLR_par_c(cwet, "max_dryland_loss"));
         D_actual("2010",cwet)      = (1 - Protection("2010",cwet)) * D_potential("2010",cwet);
         CD_actual("2010",cwet)     = D_actual("2010",cwet);
+
         W("2010",cwet)             = SLR_par_c(cwet, "wetland_loss_SLR") * SLR("2010") +
                                       SLR_par_c(cwet, "wetland_loss_coastalsqueeze") * Protection("2010", cwet) * SLR("2010");
         CW("2010",cwet)            = min(W("2010",cwet), SLR_par_c(cwet, "exposed_wetland"));
-        W_size("2010", cwet)    = SLR_par_c(cwet, "W_1990") - CW("2010", cwet);
+        W_size("2010", cwet)    = max(SLR_par_c(cwet, "W_1990") - CW("2010", cwet), 0.01);
         W_growth("2010",cwet)     =   W_size("2010", cwet)/SLR_par_c(cwet, "W_1990") - 1;
 

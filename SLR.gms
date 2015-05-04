@@ -13,7 +13,7 @@ $batinclude mosaic_carbon_exe.gms
 $batinclude mosaic_sealevel_exe.gms
 );
 
-display W, CW, W_growth, W_size, NPVVP, NPVVW, NPVVD, Protection;
+display SLR, d_SLR;
 
 execute_unload "SLR.gdx" 
             k, i, s, y_gross, y_net, l, emiss_count, pop,
