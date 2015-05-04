@@ -29,9 +29,9 @@ parameters
          change_dengue_rate (t,c) change in dengue fever mortality rate due to climate change (deaths per 1000000)
          damages_dengue(t,c) monetary damages from dengue fever deaths ($)
 
-         deaths_schistosomisis(t,c) additional schistosomiasis deaths due to climate change
-         change_schistosomisis_rate(t,c) change in schistosomisis mortality rate due to climate change (deaths per 1000000)
-         damages_schistosomisis(t,c) monetary damages from schistosomisis deaths ($)
+         deaths_schistosomiasis(t,c) additional schistosomiasis deaths due to climate change
+         change_schistosomiasis_rate(t,c) change in schistosomiasis mortality rate due to climate change (deaths per 1000000)
+         damages_schistosomiasis(t,c) monetary damages from schistosomiasis deaths ($)
 
 *CARDIOVASCULAR
          deaths_cardiovascular(t,c) total additional cardiovascular deaths due to climate change
@@ -41,7 +41,7 @@ parameters
          damages_cardiovascular_heat(t,c) monetary damages from heat related cardiovascular deaths ($)
          deaths_cardiovascular_heat_over65(t,c) additional heat related cardiovascular deaths over 65 due to climate change
          change_cardiovascular_heat_over65_rate(t,c) change in cardiovascular heat related over 65 mortality rate due to climate change (deaths per 100000)
-         damages_cardiovascular_heat_over65_rate(t,c) monetary damages from heat related over 65 cardiovascular deaths ($)
+         damages_cardiovascular_heat_over65(t,c) monetary damages from heat related over 65 cardiovascular deaths ($)
          deaths_cardiovascular_heat_under65(t,c) additional heat related cardiovascular deaths under 65 due to climate change
          change_cardiovascular_heat_under65_rate(t,c) change in cardiovascular heat related under 65 mortality rate due to climate change (deaths per 100000)
          damages_cardiovascular_heat_under65(t,c) monetary damages from heat related under 65 cardiovascular deaths ($)

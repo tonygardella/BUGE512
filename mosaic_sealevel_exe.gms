@@ -15,11 +15,11 @@
 *   so I divided second term by 100. This gives more reasonable
 *   results (~ 1 m SLR by 2100)
         SLR(t)$(ord(t)>1)             =     ((1 - 1/(SLR_par_gl("SL_eft")))**nyper) * SLR(t-1) +
-                                                (SLR_par_gl("SL_temp_sensitivity") * TATM(t))/100;
+                                                (SLR_par_gl("SL_temp_sensitivity") * TATM(t));
 
 *** Dryland ***
         CD_potential(t,cwet)$(ord(t)>1)  =     min(SLR_par_c(cwet, "dryland_loss") * SLR(t)**(SLR_par_c(cwet, "DEM")), 
-                                                SLR_par_c(cwet, "max_dryland_loss")*Area("2010",cwet)/sum(r$rcmap(r,cwet), Area("2010",cwet)));
+                                                SLR_par_c(cwet, "max_dryland_loss"));
         D_potential(t,cwet)$(ord(t)>1)   =     CD_potential(t,cwet) - CD_actual(t-1,cwet);
         D_actual(t,cwet)$(ord(t)>1)      =     (1 - Protection(t,cwet)) * D_potential(t,cwet);
         CD_actual(t,cwet)$(ord(t)>1)     =     CD_actual(t-1,cwet) + D_actual(t,cwet);
@@ -37,6 +37,8 @@
         W(t,cwet)$(ord(t)>1)             =     SLR_par_c(cwet, "wetland_loss_SLR") * SLR(t) +
                                                 SLR_par_c(cwet, "wetland_loss_coastalsqueeze") * Protection(t, cwet) * SLR(t);
         CW(t,cwet)$(ord(t)>1)            =     min(CW(t-1,cwet) + W(t,cwet), SLR_par_c(cwet, "exposed_wetland"));
+        W_size(t,cwet)                  =  SLR_par_c(cwet, "W_1990") - CW(t,cwet);
+        W_growth(t,cwet)$(ord(t)>1)     =   W_size(t,cwet)/W_size(t-1,cwet) - 1;
         VW(t,c)                       =     21 * SLR_par_gl("W_service_value") *
                                                 (Y_pc(t,c)/SLR_par_gl("W_income_normalization")) ** 
                                                     SLR_par_gl("WV_income_elasticity") *
@@ -53,13 +55,13 @@
                                                 (consump_term(t,c) -
                                                     SLR_par_gl("WV_income_elasticity") * Y_pc_growth(t,c) -
                                                     SLR_par_gl("WV_popdens_elasticity") * P_growth(t,c) -
-                                                    SLR_par_gl("WV_size_elasticity") * (W(t,c))
+                                                    SLR_par_gl("WV_size_elasticity") * W_growth(t,c)
                                         );
         NPVVD(t,c)                    =     D_potential(t,c) * VD(t,c) *
                                                 (1 + consump_term(t,c)) /
                                                 (consump_term(t,c) - SLR_par_gl("DV_income_elasticity") * Y_dens_growth(t,c));
-        Protection(t+1,c)             =     max(0, 1 - 0.5 * (NPVVP(t,c) + NPVVW(t,c))/NPVVD(t,c));
+        Protection(t+1,cwet)             =     min(max(0, 1 - 0.5 * (NPVVP(t,cwet) + NPVVW(t,cwet))/NPVVD(t,cwet)), 1);
 
 *** Calculate next year's area
-        Area(t+1,c)                   =     max(Area("2010",c) - CW(t,c) - CD_actual(t,c), 10);
+        Area(t+1,cwet)                   =     max(Area("2010",cwet) - CW(t,cwet) - CD_actual(t,cwet), 1);
 

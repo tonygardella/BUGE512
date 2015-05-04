@@ -13,10 +13,18 @@ $batinclude mosaic_carbon_exe.gms
 $batinclude mosaic_sealevel_exe.gms
 );
 
-execute_unload "SLR.gdx" P_dens, P_growth, y_pc, y_pc_growth,
+display W, CW, W_growth, W_size, NPVVP, NPVVW, NPVVD, Protection;
+
+execute_unload "SLR.gdx" 
+            k, i, s, y_gross, y_net, l, emiss_count, pop,
+            P_dens, P_growth, y_pc, y_pc_growth,
             y_dens, y_dens_growth,
             SLR, Area,
             CD_potential, D_potential, D_actual, CD_actual, VD,
             pop_out, pop_in, migration_impact,
-            W, CW, VW, consump_term, NPVVP, NPVVW, NPVVD, Protection;
+            W, CW, VW, W_growth, W_size,
+            consump_term, NPVVP, NPVVW, NPVVD, Protection,
+            TATM, SLR, world_emissions,
+            SLR_par_c;
 
+$include mosaic_sealevel_results.gms
