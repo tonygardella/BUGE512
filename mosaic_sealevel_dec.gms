@@ -29,6 +29,7 @@ parameters
         pop_in(t,c)             Population immigrating into country c at time t
         migration_impact(t,c)   Net impact of migration (in $) of country c at time t
         pop_r(r)                Regional population in 2010. Used only for migration aggregation
+        P_dens_growth(t,c)      Population density growth rate
 
 * Wetland loss
         W(t,c)                  Wetland loss in region r at time t

@@ -2,12 +2,17 @@
 * AUTHOR: Alexey Shiklomanov
 
 * Derived economic quantities
-        P_dens(t,c)                   =     pop(t,c) / Area(t,c);
-        P_growth(t,c)$(ord(t)>1)      =     pop(t,c) / pop(t-1,c);
+* Units: $ / person
         y_pc(t,c)                     =     y_net(t,c) / pop(t,c);
         Y_pc_growth(t,c)$(ord(t)>1)   =     y_pc(t,c) / y_pc(t-1,c) - 1;
-        Y_dens(t,c)                   =     y_net(t,c) / Area(t,c);
-        Y_dens_growth(t,c)$(ord(t)>1) =     y_dens(t,c) / y_dens(t-1,c) - 1;
+
+* Income density units -- $billion / km2
+        y_dens(t,c)                   =     y_net(t,c) / Area(t,c);
+        y_dens_growth(t,c)$(ord(t)>1) =     y_dens(t,c) / y_dens(t-1,c) - 1;
+
+        P_dens(t,c)                   =     pop(t,c) / Area(t,c);
+        P_growth(t,c)$(ord(t)>1)      =     pop(t,c) / pop(t-1,c) - 1;
+        P_dens_growth(t,c)$(ord(t)>1) =     P_dens(t,c) / P_dens(t-1,c) - 1;
 
 *** Sea level equations ***
 * NOTE: Adjusted for 5 year time step (nyper)
@@ -55,7 +60,7 @@
         NPVVW(t,c)                    =     W(t,c) * VW(t,c) * (1 + consump_term(t,c)) /
                                                 (consump_term(t,c) -
                                                     SLR_par_gl("WV_income_elasticity") * Y_pc_growth(t,c) -
-                                                    SLR_par_gl("WV_popdens_elasticity") * P_growth(t,c) -
+                                                    SLR_par_gl("WV_popdens_elasticity") * P_dens_growth(t,c) -
                                                     SLR_par_gl("WV_size_elasticity") * W_growth(t,c) );
         NPVVD(t,c)                    =     D_potential(t,c) * VD(t,c) *
                                                 (1 + consump_term(t,c)) /

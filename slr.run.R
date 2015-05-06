@@ -22,15 +22,17 @@ cp <- c("USA", "CHN", "NZL", "IDN", "BRA", "NLD", "BRB", "NGA")
 slr.cp <- slr.dat[cp]
 setkey(slr.cp, country)
 
-# Debug plot
-p1 <- ggplot(slr.us) + aes(x=year, y=Protection) + geom_line()
-p2 <- ggplot(slr.us) + aes(x=year, y=D_potential) + geom_line()
-p3 <- ggplot(slr.us) + aes(x=year, y=D_actual) + geom_line()
-p4 <- ggplot(slr.us) + aes(x=year, y=CD_actual) + geom_line()
-p5 <- ggplot(slr.us) + aes(x=year, y=NPVVD) + geom_line()
-p6 <- ggplot(slr.us) + aes(x=year, y=NPVVW) + geom_line()
-grid.arrange(p1, p2, p3, p4, p5, p6, ncol=1)
+### Debug plot
+# p1 <- ggplot(slr.us) + aes(x=year, y=Protection) + geom_line()
+# p2 <- ggplot(slr.us) + aes(x=year, y=D_potential) + geom_line()
+# p3 <- ggplot(slr.us) + aes(x=year, y=D_actual) + geom_line()
+# p4 <- ggplot(slr.us) + aes(x=year, y=y_pc_growth) + geom_line()
+# p5 <- ggplot(slr.us) + aes(x=year, y=NPVVW) + geom_line()
+# p6 <- ggplot(slr.us) + aes(x=year, y=NPVVD) + geom_line() + 
+#     geom_abline(slope=0, intercept=0)
+# grid.arrange(p1, p2, p3, p4, p5, p6, ncol=1)
 
-p <- ggplot(slr.us) + aes(x=y_dens_growth, y=NPVVD/y_net) + geom_line() +
-    geom_abline(slope=0, intercept=0)
-plot(p)
+# p <- ggplot(slr.us) + aes(x=year, y=y_pc_growth - y_dens_growth + 0.03) + geom_line() +
+#     geom_abline(slope=0, intercept=0)
+# plot(p)
+

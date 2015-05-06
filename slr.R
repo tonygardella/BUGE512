@@ -50,7 +50,9 @@ grid.arrange(p1, p2, p3, nrow=3, ncol=1)
 dev.off()
 
 # Dryland (dryland)
-#ppng("slr-figures/dryland.png", 8)
-p1 <- ggplot(slr.cp) + aes(x=year, y=Protection) + geom_line() +
-    facet_grid(country ~ ., scales="free_y")
+# ppng("slr-figures/dryland.png", 8)
+p1 <- ggplot(slr.cp) + aes(x=year, y=100*D_actual*VD/y_net) + 
+    geom_line() + 
+        facet_grid(country ~ ., scales="free_y") +
+            labs(x="Year", y="Damages from dryland loss (%GDP)")
 plot(p1)
