@@ -15,4 +15,6 @@ WV_popdens_elasticity       0.47                !! Page 13; (0.12 >0 <1); Brande
 WV_size_elasticity          -0.11               !! Page 13; (0.05 >-1 <0); Brander et al. 2006
 W_scaling_factor            21                  !! Page 13;
 DV_income_elasticity        1                   !! Page 15; (0.2)
+time_preference             0.03                !! Page 14;
+du_consump_elast            1                   !! Page 14;
 $Offeolcom

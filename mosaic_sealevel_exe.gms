@@ -27,13 +27,6 @@
         VD(t,c)                       =     SLR_par_gl("land_value") *
                                                 (Y_dens(t,c) / SLR_par_gl("income_density")) ** 
                                                     SLR_par_gl("land_value_elasticity");
-
-*** Migration ***
-        pop_out(t,c) = P_dens(t,c) * D_actual(t,c);
-        pop_in(t,c) = sum(c2, migration(c, c2) * pop_out(t,c2));
-        migration_impact(t,c) = SLR_par_gl("migrant_out") * pop_out(t,c) * Y_pc(t,c) +
-                                    SLR_par_gl("migrant_in") * pop_in(t,c) * Y_pc(t,c);
-
 *** Wetland ***
         W(t,cwet)$(ord(t)>1)             =     SLR_par_c(cwet, "wetland_loss_SLR") * d_SLR(t) +
                                                 SLR_par_c(cwet, "wetland_loss_coastalsqueeze") * Protection(t, cwet) * d_SLR(t);
@@ -48,16 +41,22 @@
                                                 (1 - CW(t,c)/SLR_par_c(c, "W_1990")) **
                                                     SLR_par_gl("WV_size_elasticity");
 
+*** Migration ***
+        pop_out(t,c) = P_dens(t,c) * D_actual(t,c);
+        pop_in(t,c) = sum(c2, migration(c, c2) * pop_out(t,c2));
+        migration_impact(t,c) = SLR_par_gl("migrant_out") * pop_out(t,c) * Y_pc(t,c) +
+                                    SLR_par_gl("migrant_in") * pop_in(t,c) * Y_pc(t,c);
+
+
 *** Protection costs ***
-        consump_term(t,c)             =     RHO + ETA * Y_pc_growth(t,c);
+        consump_term(t,c)             =     SLR_par_gl("time_preference") + SLR_par_gl("du_consump_elast") * Y_pc_growth(t,c);
         NPVVP(t,c)                    =     (1 + consump_term(t,c)) / consump_term(t,c)
                                                 * SLR_par_c(c, "coast_protection_cost") * d_SLR(t);
         NPVVW(t,c)                    =     W(t,c) * VW(t,c) * (1 + consump_term(t,c)) /
                                                 (consump_term(t,c) -
                                                     SLR_par_gl("WV_income_elasticity") * Y_pc_growth(t,c) -
                                                     SLR_par_gl("WV_popdens_elasticity") * P_growth(t,c) -
-                                                    SLR_par_gl("WV_size_elasticity") * W_growth(t,c)
-                                        );
+                                                    SLR_par_gl("WV_size_elasticity") * W_growth(t,c) );
         NPVVD(t,c)                    =     D_potential(t,c) * VD(t,c) *
                                                 (1 + consump_term(t,c)) /
                                                 (consump_term(t,c) - SLR_par_gl("DV_income_elasticity") * Y_dens_growth(t,c));

@@ -9,12 +9,9 @@
 parameters 
 *** General states ***
 
-* Global scalars
-        RHO     "Time preference"                            / 0.5 /
-        ETA     "Marginul utility of consumption elasticity" / 1.0 /
-
 *** Sea level rise parameters
 * Sea level rise
+        slr0                    Sea level rise at first time step (m since preindustrial) / 0.3 /
         SLR(t)                  Total sea level rise at time t (m) compared to preindustrial
         d_SLR(t)                Sea level rise at time t (m) compared to previous time step (t-1)
 
@@ -69,8 +66,8 @@ migration(c,c2) = sum((r,r2)$(rcmap(r,c) and rcmap(r2,c2)), migration_r(r,r2) * 
 * Initial conditions 
 *   These are tuned to show a reasonable trend in
 *   D_actual for USA. They NEED PROPER TUNING!
-        SLR("2010")             = 0.3;
-        Protection("2010",c)    = 0.8;
+        SLR("2010")             = slr0 + SLR_par_gl("SL_temp_sensitivity") * tatm0;
+        Protection("2010",c)    = 0.5;
         P_growth("2010",c)      = 0;
         Y_pc_growth("2010",c)   = 0;
         Y_dens_growth("2010",c) = 0;
