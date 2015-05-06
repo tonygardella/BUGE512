@@ -32,6 +32,13 @@
         VD(t,c)                       =     SLR_par_gl("land_value") *
                                                 (Y_dens(t,c) / SLR_par_gl("income_density")) ** 
                                                     SLR_par_gl("land_value_elasticity");
+
+*** Migration ***
+        pop_out(t,c) = P_dens(t,c) * D_actual(t,c);
+        pop_in(t,c) = sum(c2, migration(c, c2) * pop_out(t,c2));
+        migration_impact(t,c) = SLR_par_gl("migrant_out") * pop_out(t,c) * Y_pc(t,c) +
+                                    SLR_par_gl("migrant_in") * pop_in(t,c) * Y_pc(t,c);
+
 *** Wetland ***
         W(t,cwet)$(ord(t)>1)             =     SLR_par_c(cwet, "wetland_loss_SLR") * d_SLR(t) +
                                                 SLR_par_c(cwet, "wetland_loss_coastalsqueeze") * Protection(t, cwet) * d_SLR(t);
@@ -45,12 +52,6 @@
                                                     SLR_par_gl("WV_popdens_elasticity") *
                                                 (1 - CW(t,c)/SLR_par_c(c, "W_1990")) **
                                                     SLR_par_gl("WV_size_elasticity");
-
-*** Migration ***
-        pop_out(t,c) = P_dens(t,c) * D_actual(t,c);
-        pop_in(t,c) = sum(c2, migration(c, c2) * pop_out(t,c2));
-        migration_impact(t,c) = SLR_par_gl("migrant_out") * pop_out(t,c) * Y_pc(t,c) +
-                                    SLR_par_gl("migrant_in") * pop_in(t,c) * Y_pc(t,c);
 
 
 *** Protection costs ***

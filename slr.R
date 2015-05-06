@@ -50,9 +50,70 @@ grid.arrange(p1, p2, p3, nrow=3, ncol=1)
 dev.off()
 
 # Dryland (dryland)
-# ppng("slr-figures/dryland.png", 8)
-p1 <- ggplot(slr.cp) + aes(x=year, y=100*D_actual*VD/y_net) + 
+ppng("slr-figures/dryland.png", 5)
+th <- theme(text = element_text(size=8))
+p1 <- ggplot(slr.cp) + aes(x=year, y=CD_actual) + 
+    geom_line() +
+    facet_grid(country ~ ., scales="free_y") +
+    labs(x="year", y="Cumulative land area inundated (sq. km)") + th
+p2 <- ggplot(slr.cp) + aes(x=year, y=100*D_actual*VD/y_net) + 
     geom_line() + 
-        facet_grid(country ~ ., scales="free_y") +
-            labs(x="Year", y="Damages from dryland loss (%GDP)")
-plot(p1)
+    facet_grid(country ~ ., scales="free_y") +
+    labs(x="Year", y="Annual damages from dryland loss (%GDP)") + th
+grid.arrange(p1, p2, nrow=1, ncol=2)
+dev.off()
+
+# Wetland (wetland)
+ppng("slr-figures/wetland.png", 5)
+th <- theme(text = element_text(size=8),
+            axis.text = element_text(size=rel(0.65)))
+p1 <- ggplot(slr.cp) + aes(x=year, y=CW/W_1990) + 
+    geom_line() +
+    facet_grid(country ~ ., scales ="free_y") +
+    labs(x="year", y="Fraction of wetlands lost relative to 1990") + th
+p2 <- ggplot(slr.cp) + aes(x=year, y=100*W*VW/y_net) +
+    geom_line() + 
+    facet_grid(country ~ ., scales="free_y") +
+    labs(x="Year", y="Annual economic impact of wetland loss (%GDP)") +
+    th
+grid.arrange(p1, p2, nrow=1, ncol=2)
+dev.off()
+
+# Migration (migration)
+ppng("slr-figures/migration.png", 3)
+th <- theme(text=element_text(size=8),
+            axis.text = element_text(size=rel(0.65)))
+p <- ggplot(slr.cp) + aes(x=year, y=migration_impact/y_net*100) +
+    geom_line() +
+    facet_wrap(~ country, scales="free_y") +
+    labs(x="Year", y="Annual economic impact of migration (%GDP)") +
+    th
+plot(p)
+dev.off()
+
+# Protection (protection)
+png("slr-figures/protection.png", width=6.5, height=7, units="in", res=200)
+th <- theme(text=element_text(size=8), 
+            axis.text = element_text(size=rel(0.65)))
+p1 <- ggplot(slr.cp) + aes(x=year, y=NPVVP) + 
+    geom_line() +
+    facet_wrap(~ country, scales="free_y") +
+    labs(x="Year", y="Net present value of coastal protection ($)")+
+    th
+p2 <- ggplot(slr.cp) + aes(x=year, y=NPVVW) + 
+    geom_line() +
+    facet_wrap(~ country, scales="free_y") +
+    labs(x="Year", y="Net present value of wetland loss given full coastal protection ($)")+
+    th
+p3 <- ggplot(slr.cp) + aes(x=year, y=NPVVD) + 
+    geom_line() +
+    facet_wrap(~ country, scales="free_y") +
+    labs(x="Year", y="Net present value of dryland loss in the absence of coastal protection ($)")+
+    th
+p4 <- ggplot(slr.cp) + aes(x=year, y=Protection) + 
+    geom_line() +
+    facet_wrap(~ country, scales="free_y") +
+    labs(x="Year", y="Fraction of coastline protected")+
+    th
+grid.arrange(p1, p2, p3, p4, nrow=2, ncol=2)
+dev.off()

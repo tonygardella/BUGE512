@@ -70,6 +70,7 @@ migration(c,c2) = sum((r,r2)$(rcmap(r,c) and rcmap(r2,c2)), migration_r(r,r2) * 
         SLR("2010")             = slr0 + SLR_par_gl("SL_temp_sensitivity") * tatm0;
         Protection("2010",c)    = 0.5;
         P_growth("2010",c)      = 0;
+        P_dens_growth("2010",c) = 0;
         Y_pc_growth("2010",c)   = 0;
         Y_dens_growth("2010",c) = 0;
 
