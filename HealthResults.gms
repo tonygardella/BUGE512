@@ -376,7 +376,7 @@ loop(r,
 );
 put /;
 
-put "Change in Schistosomiasis Death Rate per 1000 due to Climate Change (by region)"
+put "Change in Schistosomiasis Death Rate per 1,000,000 due to Climate Change (by region)"
 put /;
 put "";
 loop(t,
@@ -1085,7 +1085,7 @@ loop(c,
 );
 put /;
 
-put "Change in Schistosomiasis Death Rate per 1000 due to Climate Change (by country)"
+put "Change in Schistosomiasis Death Rate per 1,000,000 due to Climate Change (by country)"
 put /;
 put "";
 loop(t,
