@@ -6,9 +6,8 @@ parameters
          pop_under65(t,c) proportion of population under 65 years of age
          value_life(t,c) value of a statisical life (mortality)
          value_life_baseline_USA_2010 value of life in baseline year 2010 for USA        /2000000/
-         value_year_morbidity(t,c) value of a year of morbidity
          total_deaths(t,c) total number of additional deaths associated with climate change
-         total_deaths_pop_fraction(t,c) total additional deaths as a percentage of population
+         total_deaths_percentage(t,c) total additional deaths as a percentage of population
          total_health_damages(t,c) total monetary loss due to additional deaths associated with climate change
          total_health_damages_percentage(t,c) total monetary loss as a percentage of GDP
 
@@ -17,8 +16,9 @@ parameters
          change_diarrhea_rate(t,c) change in diarrhea mortality rate due to climate change (deaths per 1000)
          damages_diarrhea(t,c) monetary damages from diarrhea deaths ($)
 
-*VECTOR BORNE
-         deaths_vector_borne additional vector borone deaths due to climate change
+*VECTOR BORNE -  broken into Malaria, Dengue Fever and Schistosomiasis
+         deaths_vector_borne(t,c) additional vector borne deaths due to climate change
+         change_vector_borne_rate(t,c) change in vector borne mortality rate due to climate change (deaths per 1000000)
          damages_vector_borne(t,c) monetary damages from vector borne deaths ($)
 
          deaths_malaria(t,c) additional malaria deaths due to climate change
@@ -35,9 +35,11 @@ parameters
 
 *CARDIOVASCULAR
          deaths_cardiovascular(t,c) total additional cardiovascular deaths due to climate change
+         change_cardiovascular_rate(t,c) change in cardiovascular mortality rate due to climate change (deaths per 100000)
          damages_cardiovascular(t,c) monetary damages from cardiovascular deaths ($)
 
          deaths_cardiovascular_heat(t,c) additional heat related cardiovascular deaths due to climate change
+         change_cardiovascular_heat_rate(t,c) change in heat related cardiovascular mortality rate due to climate change (deaths per 100000)
          damages_cardiovascular_heat(t,c) monetary damages from heat related cardiovascular deaths ($)
          deaths_cardiovascular_heat_over65(t,c) additional heat related cardiovascular deaths over 65 due to climate change
          change_cardiovascular_heat_over65_rate(t,c) change in cardiovascular heat related over 65 mortality rate due to climate change (deaths per 100000)
@@ -47,6 +49,7 @@ parameters
          damages_cardiovascular_heat_under65(t,c) monetary damages from heat related under 65 cardiovascular deaths ($)
 
          deaths_cardiovascular_cold(t,c) additional cold related cardiovascular deaths due to climate change
+         change_cardiovascular_cold_rate(t,c) change in cold related cardiovascular mortality rate due to climate change (deaths per 100000)
          damages_cardiovascular_cold(t,c) monetary damages from cold related cardiovascular deaths ($)
          deaths_cardiovascular_cold_over65(t,c) additional cold related cardiovascular deaths over 65 due to climate change
          damages_cardiovascular_cold_over65(t,c) monetary damages from cold related over 65 cardiovascular deaths ($)
@@ -57,15 +60,55 @@ parameters
 
 *RESPIRATORY
          deaths_respiratory(t,c) additional respiratory deaths due to climate change
-         damages_respiratory(t,c) monetary damages from respiratory deaths ($)
          change_respiratory_rate(t,c) change in respiratatory mortality rate due to climate change (deaths per 100000)
+         damages_respiratory(t,c) monetary damages from respiratory deaths ($)
+
 
 *REGIONAL SUMMATION
          pop_region(t,r)
          total_deaths_region(t,r)
-         total_deaths_pop_fraction_region(t,r)
+         total_deaths_percentage_region(t,r)
          total_health_damages_region(t,r)
          total_health_damages_percentage_region(t,r)
+         deaths_diarrhea_region(t,r)
+         change_diarrhea_rate_region(t,r)
+         damages_diarrhea_region(t,r)
+         deaths_vector_borne_region(t,r)
+         change_vector_borne_rate_region(t,r)
+         damages_vector_borne_region(t,r)
+         deaths_malaria_region(t,r)
+         change_malaria_rate_region(t,r)
+         damages_malaria_region(t,r)
+         deaths_dengue_region(t,r)
+         change_dengue_rate_region(t,r)
+         damages_dengue_region(t,r)
+         deaths_schistosomiasis_region(t,r)
+         change_schistosomiasis_rate_region(t,r)
+         damages_schistosomiasis_region(t,r)
+         deaths_cardiovascular_region(t,r)
+         change_cardiovascular_rate_region(t,r)
+         damages_cardiovascular_region(t,r)
+         deaths_cardiovascular_heat_region(t,r)
+         change_cardiovascular_heat_rate_region(t,r)
+         damages_cardiovascular_heat_region(t,r)
+         deaths_cardiovascular_heat_over65_region(t,r)
+         change_cardiovascular_heat_over65_rate_region(t,r)
+         damages_cardiovascular_heat_over65_region(t,r)
+         deaths_cardiovascular_heat_under65_region(t,r)
+         change_cardiovascular_heat_under65_rate_region(t,r)
+         damages_cardiovascular_heat_under65_region(t,r)
+         deaths_cardiovascular_cold_region(t,r)
+         change_cardiovascular_cold_rate_region(t,r)
+         damages_cardiovascular_cold_region(t,r)
+         deaths_cardiovascular_cold_over65_region(t,r)
+         change_cardiovascular_cold_over65_rate_region(t,r)
+         damages_cardiovascular_cold_over65_region(t,r)
+         deaths_cardiovascular_cold_under65_region(t,r)
+         change_cardiovascular_cold_under65_rate_region(t,r)
+         damages_cardiovascular_cold_under65_region(t,r)
+         deaths_respiratory_region(t,r)
+         change_respiratory_rate_region(t,r)
+         damages_respiratory_region(t,r)
 
 *TOL PARAMETERS - REGIONL MAPPING
          Tol_heat_over65_1(c)
@@ -84,11 +127,6 @@ parameters
                  "diarrhea_mort_response_warming"           1.14
                  "deg_nonlinearity_mortality_in_warming"    1.00
                  "income_elas_vector_mort"                 -2.65
-                 "mort_morb_no_description_1"               4992523
-                 "mort_morb_no_description_2"               19970
-                 "normalization_constant"                   24963
-                 "income_elas_value_of_life"                1.00
-                 "income_elas_value_of_year_morb"           1.00
                  "malaria_param"                            0.0794
                  "dengue_param"                             0.3534
                  "schistosomiasis_param"                   -0.1149

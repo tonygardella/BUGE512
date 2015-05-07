@@ -9,10 +9,6 @@ urbanization(t,c) = ((global_param_health("urbanization_param_1")*sqrt(y_pc(t,c)
 
 value_life(t,c) = (value_life_baseline_USA_2010 / Y_gross("2010","USA")) * Y_net(t,c);
 
-value_year_morbidity(t,c) = global_param_health("mort_morb_no_description_2") *
-         (y_pc(t,c) / global_param_health("normalization_constant"))**
-         global_param_health("income_elas_value_of_year_morb");
-
 *DIARRHEA
 
 change_diarrhea_rate(t,c) = (country_rate(c,"diarrhea") / 100) *
@@ -60,6 +56,9 @@ deaths_schistosomiasis(t,c) = change_schistosomiasis_rate(t,c) * pop(t,c) / 1000
 
 damages_schistosomiasis(t,c) = deaths_schistosomiasis(t,c) * value_life(t,c);
 
+change_vector_borne_rate(t,c) = change_malaria_rate(t,c) + change_dengue_rate(t,c)
+                                + change_schistosomiasis_rate(t,c);
+
 deaths_vector_borne(t,c) = deaths_malaria(t,c) + deaths_dengue(t,c) + deaths_schistosomiasis(t,c);
 
 damages_vector_borne(t,c) = damages_malaria(t,c) + damages_dengue(t,c) + damages_schistosomiasis(t,c);
@@ -84,6 +83,8 @@ deaths_cardiovascular_heat_under65(t,c) = (change_cardiovascular_heat_under65_ra
 
 damages_cardiovascular_heat_under65(t,c) = deaths_cardiovascular_heat_under65(t,c) * value_life(t,c);
 
+change_cardiovascular_heat_rate(t,c) = damages_cardiovascular_heat_under65(t,c) + damages_cardiovascular_heat_over65(t,c);
+
 deaths_cardiovascular_heat(t,c) = deaths_cardiovascular_heat_over65(t,c) + deaths_cardiovascular_heat_under65(t,c) ;
 
 damages_cardiovascular_heat(t,c) = deaths_cardiovascular_heat(t,c) * value_life(t,c);
@@ -106,9 +107,13 @@ deaths_cardiovascular_cold_under65(t,c) = change_cardiovascular_cold_under65_rat
 
 damages_cardiovascular_cold_under65(t,c) = deaths_cardiovascular_cold_under65(t,c) * value_life(t,c);
 
+change_cardiovascular_cold_rate(t,c) = damages_cardiovascular_cold_under65(t,c) + damages_cardiovascular_cold_over65(t,c);
+
 deaths_cardiovascular_cold(t,c) = deaths_cardiovascular_cold_over65(t,c) + deaths_cardiovascular_cold_under65(t,c);
 
 damages_cardiovascular_cold(t,c) = deaths_cardiovascular_cold(t,c) * value_life(t,c);
+
+change_cardiovascular_rate(t,c) = change_cardiovascular_heat_rate(t,c) + change_cardiovascular_cold_rate(t,c);
 
 deaths_cardiovascular(t,c) = deaths_cardiovascular_heat(t,c) + deaths_cardiovascular_cold(t,c);
 
@@ -129,25 +134,11 @@ damages_respiratory(t,c) = deaths_respiratory(t,c) * value_life(t,c);
 total_deaths(t,c) = deaths_diarrhea(t,c) + deaths_vector_borne(t,c) +
          deaths_cardiovascular(t,c) + deaths_respiratory(t,c);
 
-total_deaths_pop_fraction(t,c) = total_deaths(t,c) / pop(t,c) * 100;
+total_deaths_percentage(t,c) = total_deaths(t,c) / pop(t,c) * 100;
 
 total_health_damages(t,c) = total_deaths(t,c) * value_life(t,c);
 
 total_health_damages_percentage(t,c) = total_health_damages(t,c) / Y_gross(t,c) * 100;
-
-*REGIONL SUMMATION
-
-pop_region(t,r) = sum(rcmap(r,c), pop(t,c));
-
-total_deaths_region(t,r)= sum(rcmap(r,c),total_deaths(t,c));
-
-total_deaths_pop_fraction_region(t,r) = total_deaths_region(t,r) / pop_region(t,r) * 100;
-
-total_health_damages_region(t,r) = sum(rcmap(r,c),total_health_damages(t,c));
-
-total_health_damages_percentage_region(t,r) = total_health_damages_region(t,r) / y_region(t,r);
-
-
 
 *DISPLAYS GROUPED BY SECTION
 $ontext
@@ -155,7 +146,6 @@ $ontext
 display urbanization;
 display pop_under65;
 display value_life;
-display value_year_morbidity;
 
 display total_deaths;
 display total_deaths_pop_fraction;
