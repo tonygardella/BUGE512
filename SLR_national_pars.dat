@@ -1,4 +1,4 @@
-      area_2000 coast_length dryland_loss max_dryland_loss DEM   land_value wetland_loss_SLR wetland_loss_coastalsqueeze exposed_wetland W_1990    coast_protection_cost
+cty   area_2000 coast_length dryland_loss max_dryland_loss DEM   land_value wetland_loss_SLR wetland_loss_coastalsqueeze exposed_wetland W_1990    coast_protection_cost
 AUS   7633565   25760.0      3135         7633565          0.548 1514759    256              183                         2511            55385.64  36.6
 NZL   262443    15134        3135         262443           0.548 1514759    256              183                         2511            55385.64  36.6
 BLZ   22806     386          12004        22806            0.678 509083     14775            238                         54279           76001.27  42.3

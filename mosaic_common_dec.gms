@@ -109,7 +109,9 @@ bigphi(t,c,impact)
 
 * This is here because it containts national Area
 table SLR_par_c(c,*)    "Country parameters related to sea-level rise"
-$include SLR_national_pars.dat
+$ondelim onlisting
+$include SLR_national_pars.csv
+$offdelim offlisting
 ;
 
         Area("2010",c)          = SLR_par_c(c,"area_2000");

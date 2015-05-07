@@ -9,14 +9,11 @@
 parameters 
 *** General states ***
 
-* Global scalars
-        RHO     "Time preference"                            / 0.5 /
-        ETA     "Marginul utility of consumption elasticity" / 1.0 /
-
-
 *** Sea level rise parameters
 * Sea level rise
-        SLR(t)                  Sea level rise at time t (m)
+        slr0                    Sea level rise at first time step (m since preindustrial) / 0.3 /
+        SLR(t)                  Total sea level rise at time t (m) compared to preindustrial
+        d_SLR(t)                Sea level rise at time t (m) compared to previous time step (t-1)
 
 * Dryland loss
         CD_potential(t,c)       Cumulative potential dryland loss in year t 
@@ -32,10 +29,13 @@ parameters
         pop_in(t,c)             Population immigrating into country c at time t
         migration_impact(t,c)   Net impact of migration (in $) of country c at time t
         pop_r(r)                Regional population in 2010. Used only for migration aggregation
+        P_dens_growth(t,c)      Population density growth rate
 
 * Wetland loss
         W(t,c)                  Wetland loss in region r at time t
         CW(t,c)                 Cumulative wetland loss in region r at time t
+        W_growth(t,c)           Wetland growth
+        W_size(t,c)             Wetland size
         VW(t,c)                 Value of wetlands in region r at time t
 
 * Protection
@@ -67,9 +67,10 @@ migration(c,c2) = sum((r,r2)$(rcmap(r,c) and rcmap(r2,c2)), migration_r(r,r2) * 
 * Initial conditions 
 *   These are tuned to show a reasonable trend in
 *   D_actual for USA. They NEED PROPER TUNING!
-        SLR("2010")             = 0.01;
-        Protection("2010",c)    = 0.2;
+        SLR("2010")             = slr0 + SLR_par_gl("SL_temp_sensitivity") * tatm0;
+        Protection("2010",c)    = 0.5;
         P_growth("2010",c)      = 0;
+        P_dens_growth("2010",c) = 0;
         Y_pc_growth("2010",c)   = 0;
         Y_dens_growth("2010",c) = 0;
 
@@ -84,28 +85,22 @@ sets
         CD_actual(t,cdry)      = 0;
         w(t,cdry)              = 0;
         CW(t,cdry)             = 0;
+        W_size(t,cdry)         = SLR_par_c(cdry, "W_1990");
+        W_growth(t,cdry)       = 0;
         Protection(t,cdry)     = 0;
+        Area(t,cdry)           = SLR_par_c(cdry, "Area_2000");
         cwet(c)                = yes$(SLR_par_c(c,"coast_length") > 0);
 
-* Compute maximum land loss
-parameters      CWmax(c)
-                CDmax(c)
-                Area_frac(c)
-                Area_r(r)
-                Area_rc(c)
-;
-        Area_r(r) = sum(c$rcmap(r,c), Area("2010",c));
-        Area_rc(c) = sum(r$rcmap(r,c), Area_r(r));
-        Area_frac(c) = Area("2010", c) / Area_rc(c);
-        CWmax(c) = SLR_par_c(c, "exposed_wetland") * Area_frac(c);
-        CDmax(c) = Area("2010", c) - CWmax(c) - 10;
 
 * Compute land loss for pre-industrial sea-level
         D_potential("2010",cwet)   = min(SLR_par_c(cwet, "dryland_loss") * SLR("2010")**(SLR_par_c(cwet, "DEM")), 
-                                                CDmax(cwet));
+                                                SLR_par_c(cwet, "max_dryland_loss"));
         D_actual("2010",cwet)      = (1 - Protection("2010",cwet)) * D_potential("2010",cwet);
         CD_actual("2010",cwet)     = D_actual("2010",cwet);
+
         W("2010",cwet)             = SLR_par_c(cwet, "wetland_loss_SLR") * SLR("2010") +
                                       SLR_par_c(cwet, "wetland_loss_coastalsqueeze") * Protection("2010", cwet) * SLR("2010");
-        CW("2010",cwet)            = min(W("2010",cwet), CWmax(cwet));
+        CW("2010",cwet)            = min(W("2010",cwet), SLR_par_c(cwet, "exposed_wetland"));
+        W_size("2010", cwet)    = max(SLR_par_c(cwet, "W_1990") - CW("2010", cwet), 0.01);
+        W_growth("2010",cwet)     =   W_size("2010", cwet)/SLR_par_c(cwet, "W_1990") - 1;
 
